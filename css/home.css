@@ -119,62 +119,6 @@
 }
 
 /* ============================= */
-/* MINI PLAYER                   */
-/* ============================= */
-
-.mini-player {
-  margin-top: 24px;
-  padding: 18px;
-  border-radius: 14px;
-  background: rgba(255,255,255,0.05);
-  border: 1px solid rgba(255,255,255,0.12);
-  width: 260px;
-}
-
-.mini-player-top {
-  display: flex;
-  justify-content: space-between;
-  font-size: 13px;
-  margin-bottom: 12px;
-  color: rgba(255,255,255,0.8);
-}
-
-/* barras animadas */
-
-.wave-bars {
-  display: flex;
-  align-items: end;
-  gap: 4px;
-  height: 30px;
-}
-
-.wave-bars span {
-  width: 6px;
-  border-radius: 4px;
-  background: linear-gradient(180deg,#ff4ec4,#34d9ff);
-  animation: wave 1.4s infinite ease-in-out;
-}
-
-.wave-bars span:nth-child(1){height:14px}
-.wave-bars span:nth-child(2){height:22px}
-.wave-bars span:nth-child(3){height:12px}
-.wave-bars span:nth-child(4){height:26px}
-.wave-bars span:nth-child(5){height:18px}
-.wave-bars span:nth-child(6){height:28px}
-.wave-bars span:nth-child(7){height:14px}
-.wave-bars span:nth-child(8){height:24px}
-.wave-bars span:nth-child(9){height:16px}
-.wave-bars span:nth-child(10){height:20px}
-
-/* animação barras */
-
-@keyframes wave {
-  0% { transform: scaleY(0.7); }
-  50% { transform: scaleY(1.2); }
-  100% { transform: scaleY(0.7); }
-}
-
-/* ============================= */
 /* FRASE CENTRAL                 */
 /* ============================= */
 
