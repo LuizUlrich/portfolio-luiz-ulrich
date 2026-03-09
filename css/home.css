@@ -47,7 +47,7 @@
 .split-left::before {
   background-image:
     linear-gradient(rgba(0,0,0,0.45), rgba(0,0,0,0.8)),
-    url("../assets/img/bg-luiz.jpg");
+    url("../assets/img/bg-luiz.webp");
 }
 
 /* fundo lado DJ */
@@ -55,7 +55,7 @@
 .split-right::before {
   background-image:
     linear-gradient(rgba(0,0,0,0.35), rgba(0,0,0,0.75)),
-    url("../assets/img/bg-ulrich.jpg");
+    url("../assets/img/bg-ulrich.webp");
 }
 
 /* efeito hover */
