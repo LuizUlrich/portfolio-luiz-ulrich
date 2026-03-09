@@ -1,0 +1,47 @@
+.luiz-hero {
+  background:
+    radial-gradient(circle at top right, rgba(212, 175, 55, 0.08), transparent 25%),
+    linear-gradient(180deg, #0a0a0f 0%, #101019 100%);
+}
+
+.career-timeline {
+  position: relative;
+  display: grid;
+  gap: 1.4rem;
+}
+
+.career-timeline::before {
+  content: "";
+  position: absolute;
+  left: 14px;
+  top: 10px;
+  bottom: 10px;
+  width: 2px;
+  background: rgba(212, 175, 55, 0.22);
+}
+
+.timeline-card {
+  position: relative;
+  display: grid;
+  grid-template-columns: 28px 1fr;
+  gap: 1rem;
+  align-items: start;
+}
+
+.timeline-marker {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--gold), var(--gold-soft));
+  box-shadow: 0 0 0 6px rgba(212, 175, 55, 0.08);
+  position: relative;
+  z-index: 2;
+}
+
+.timeline-period {
+  display: inline-block;
+  margin-bottom: 0.55rem;
+  color: var(--gold-soft);
+  font-size: 0.95rem;
+  font-weight: 600;
+}

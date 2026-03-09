@@ -1,0 +1,196 @@
+.home-body {
+  overflow: hidden;
+}
+
+.split-home {
+  position: relative;
+  display: flex;
+  min-height: 100vh;
+}
+
+.split-panel {
+  position: relative;
+  flex: 1;
+  display: flex;
+  align-items: end;
+  padding: 3rem;
+  overflow: hidden;
+  transition: flex 0.5s ease, filter 0.5s ease;
+}
+
+.split-panel::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  transform: scale(1);
+  transition: transform 0.7s ease, filter 0.7s ease;
+}
+
+.split-left::before {
+  background-image:
+    linear-gradient(rgba(0, 0, 0, 0.28), rgba(0, 0, 0, 0.5)),
+    url("../assets/img/bg-luiz.jpg");
+  filter: saturate(0.72) brightness(0.68);
+}
+
+.split-right::before {
+  background-image:
+    linear-gradient(rgba(0, 0, 0, 0.22), rgba(0, 0, 0, 0.54)),
+    url("../assets/img/bg-ulrich.jpg");
+  filter: saturate(1) brightness(0.75);
+}
+
+.split-home:hover .split-panel:not(:hover) {
+  filter: brightness(0.78);
+}
+
+.split-panel:hover {
+  flex: 1.18;
+}
+
+.split-panel:hover::before {
+  transform: scale(1.08);
+}
+
+.split-left:hover::before {
+  filter: saturate(1) brightness(0.9);
+}
+
+.split-right:hover::before {
+  filter: saturate(1.3) brightness(0.96);
+}
+
+.split-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, transparent 30%, rgba(0, 0, 0, 0.72) 100%);
+  z-index: 1;
+}
+
+.split-content {
+  position: relative;
+  z-index: 2;
+  max-width: 460px;
+  transform: translateY(16px);
+  transition: transform 0.45s ease;
+}
+
+.split-panel:hover .split-content {
+  transform: translateY(0);
+}
+
+.panel-tag {
+  display: inline-block;
+  margin-bottom: 0.9rem;
+  padding: 0.45rem 0.85rem;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  color: #fff;
+  font-size: 0.9rem;
+}
+
+.split-content h1 {
+  font-size: clamp(2.2rem, 5vw, 4.2rem);
+  line-height: 1.02;
+  margin-bottom: 0.8rem;
+}
+
+.split-content p {
+  color: rgba(255, 255, 255, 0.84);
+  font-size: 1.02rem;
+}
+
+.mini-player {
+  width: 100%;
+  max-width: 290px;
+  margin-top: 1.2rem;
+  padding: 1rem;
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(8px);
+}
+
+.mini-player-top {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0.9rem;
+  font-size: 0.9rem;
+}
+
+.wave-bars {
+  display: flex;
+  align-items: end;
+  gap: 0.3rem;
+  height: 36px;
+}
+
+.wave-bars span {
+  display: block;
+  width: 8px;
+  border-radius: 999px;
+  background: linear-gradient(180deg, var(--pink), var(--cyan));
+  animation: wave 1.5s infinite ease-in-out;
+}
+
+.wave-bars span:nth-child(1) { height: 18px; animation-delay: 0s; }
+.wave-bars span:nth-child(2) { height: 28px; animation-delay: 0.1s; }
+.wave-bars span:nth-child(3) { height: 15px; animation-delay: 0.2s; }
+.wave-bars span:nth-child(4) { height: 32px; animation-delay: 0.3s; }
+.wave-bars span:nth-child(5) { height: 20px; animation-delay: 0.4s; }
+.wave-bars span:nth-child(6) { height: 34px; animation-delay: 0.5s; }
+.wave-bars span:nth-child(7) { height: 16px; animation-delay: 0.6s; }
+.wave-bars span:nth-child(8) { height: 30px; animation-delay: 0.7s; }
+.wave-bars span:nth-child(9) { height: 22px; animation-delay: 0.8s; }
+.wave-bars span:nth-child(10) { height: 26px; animation-delay: 0.9s; }
+
+.center-signature {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  z-index: 5;
+  transform: translate(-50%, -50%);
+  padding: 0.8rem 1rem;
+  border-radius: 999px;
+  background: rgba(8, 8, 12, 0.45);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(10px);
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 0.9rem;
+}
+
+@keyframes wave {
+  0%, 100% { transform: scaleY(0.7); opacity: 0.7; }
+  50% { transform: scaleY(1.1); opacity: 1; }
+}
+
+@media (max-width: 900px) {
+  .split-home {
+    flex-direction: column;
+  }
+
+  .split-panel {
+    min-height: 50vh;
+  }
+
+  .split-panel:hover {
+    flex: 1;
+  }
+}
+
+@media (max-width: 640px) {
+  .home-body {
+    overflow: auto;
+  }
+
+  .split-panel {
+    padding: 2rem;
+  }
+
+  .center-signature {
+    max-width: 90%;
+    text-align: center;
+  }
+}

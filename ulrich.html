@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ulrich | DJ</title>
+  <meta
+    name="description"
+    content="Universo de Ulrich com sets, energia, identidade sonora e alegria de pista."
+  />
+  <link rel="stylesheet" href="css/global.css" />
+  <link rel="stylesheet" href="css/ulrich.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="container nav">
+      <a href="index.html" class="logo">Ulrich</a>
+
+      <nav class="menu" id="menu">
+        <a href="index.html">Início</a>
+        <a href="#manifesto">Manifesto</a>
+        <a href="#set-principal">Set principal</a>
+        <a href="#sets">Sets</a>
+        <a href="#identidade">Identidade</a>
+        <a href="presskit.html">Press Kit</a>
+        <a href="contato.html">Contato</a>
+      </nav>
+
+      <button class="menu-toggle" id="menuToggle" aria-label="Abrir menu">
+        ☰
+      </button>
+    </div>
+  </header>
+
+  <main>
+    <section class="page-hero ulrich-hero">
+      <div class="container hero-grid">
+        <div>
+          <span class="eyebrow">Som elegante e profundo</span>
+          <h1>Ulrich</h1>
+          <p class="hero-description">
+            O lado criativo, feliz e dançante. Música para mover a pista, criar momentos leves
+            e fazer as pessoas curtirem de verdade.
+          </p>
+
+          <div class="hero-actions">
+            <a href="#set-principal" class="btn btn-primary">Ouvir set principal</a>
+            <a href="presskit.html" class="btn btn-secondary">Abrir press kit</a>
+          </div>
+        </div>
+
+        <div class="player-card">
+          <span class="card-label">Mood</span>
+          <strong>Groove, alegria, pista e presença.</strong>
+        </div>
+      </div>
+    </section>
+
+    <section id="manifesto" class="section">
+      <div class="container">
+        <div class="section-title">
+          <span>Manifesto</span>
+          <h2>Quem é Ulrich</h2>
+        </div>
+
+        <div class="content-card">
+          <p>
+            Ulrich é meu lado musical. É onde eu me expresso através do groove, da energia,
+            da pista e da alegria de ver as pessoas curtindo o momento.
+          </p>
+          <p>
+            Gosto de sets elegantes, profundos e dançantes. Alguns mais felizes, alguns mais doidos,
+            alguns mais pessoais — mas sempre com identidade e vontade de fazer a música acontecer.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section id="set-principal" class="section section-soft">
+      <div class="container">
+        <div class="section-title">
+          <span>Set principal</span>
+          <h2>Ulrich Session 001</h2>
+        </div>
+
+        <div class="featured-set-grid">
+          <div class="set-cover-large">SESSION 001</div>
+
+          <div class="custom-player-card">
+            <audio id="mainAudio" src="assets/audio/ulrich-session-001.mp3"></audio>
+
+            <div class="custom-player-top">
+              <p class="player-kicker">Agora tocando</p>
+              <h3>Ulrich Session 001</h3>
+              <span>Deep House • Groove elegante • Energia boa • 30 min</span>
+            </div>
+
+            <div class="player-controls">
+              <button id="playPauseBtn" class="player-btn" aria-label="Tocar ou pausar">▶</button>
+
+              <div class="progress-wrap">
+                <span id="currentTime">0:00</span>
+                <input id="progressBar" type="range" min="0" max="100" value="0" />
+                <span id="duration">0:00</span>
+              </div>
+            </div>
+
+            <div class="volume-wrap">
+              <label for="volumeBar">Volume</label>
+              <input id="volumeBar" type="range" min="0" max="1" step="0.01" value="0.7" />
+            </div>
+
+            <p class="player-note">
+              Reproduza daqui ou use os links dos outros sets para ouvir no SoundCloud.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="sets" class="section">
+      <div class="container">
+        <div class="section-title">
+          <span>Sets</span>
+          <h2>Vibes diferentes, mesma identidade</h2>
+        </div>
+
+        <div class="set-grid">
+          <article class="set-card">
+            <div class="set-cover">SET 001</div>
+            <h3>Ulrich Session 001</h3>
+            <p>Deep House • Groove envolvente • Warm-up elegante</p>
+            <a href="#" class="set-link">Ouvir no SoundCloud</a>
+          </article>
+
+          <article class="set-card">
+            <div class="set-cover">SET 002</div>
+            <h3>Happy Motion</h3>
+            <p>House dançante • Energia boa • Sorrisos na pista</p>
+            <a href="#" class="set-link">Ouvir no SoundCloud</a>
+          </article>
+
+          <article class="set-card">
+            <div class="set-cover">SET 003</div>
+            <h3>Doideira Boa</h3>
+            <p>Mais solto, mais criativo, mais a minha cara</p>
+            <a href="#" class="set-link">Ouvir no SoundCloud</a>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="identidade" class="section section-soft">
+      <div class="container">
+        <div class="section-title">
+          <span>Identidade</span>
+          <h2>O que move esse projeto</h2>
+        </div>
+
+        <div class="cards-grid">
+          <article class="project-card">
+            <h3>Energia boa</h3>
+            <p>O objetivo é criar uma pista viva, gostosa e cheia de movimento.</p>
+          </article>
+
+          <article class="project-card">
+            <h3>Som com presença</h3>
+            <p>Groove, profundidade e elegância para envolver sem perder dança.</p>
+          </article>
+
+          <article class="project-card">
+            <h3>Conexão real</h3>
+            <p>Ver as pessoas felizes, sorrindo e curtindo é uma das partes mais legais de tocar.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script src="js/menu.js"></script>
+  <script src="js/ulrich-player.js"></script>
+</body>
+</html>
