@@ -1,60 +1,19 @@
-# Luiz Ulrich Portfolio
+Luiz Ulrich — Personal Website
 
-Personal portfolio and digital identity project of Luiz Ulrich.
+Website pessoal com duas vertentes:
 
-This website represents two connected professional dimensions:
+Tecnologia
+Portfólio profissional com foco em suporte computacional,
+sistemas, processos e desenvolvimento.
 
-- **Luiz Ulrich** — technology, systems, support, digital problem solving
-- **Ulrich** — electronic music, DJ sets, artistic identity and performance
+Ulrich
+Projeto artístico como DJ.
 
-The project was designed to communicate personal branding, technical maturity, and a premium user experience through a clean multi-page architecture and a global persistent audio player.
+Stack
 
----
+HTML
+CSS
+JavaScript
 
-## Live Concept
-
-The portfolio is divided into two distinct but connected worlds:
-
-- **Technology**
-- **Music**
-
-Both are unified by the same mindset: precision, consistency, taste, and evolution.
-
----
-
-## Tech Stack
-
-- HTML5
-- CSS3
-- JavaScript (Vanilla)
-- Vercel
-- Git / GitHub
-
----
-
-## Features
-
-- Split-brand homepage
-- Responsive multi-page architecture
-- Global persistent audio player
-- Reusable design system
-- Modular CSS and JavaScript structure
-- SEO-ready metadata
-- Clean visual hierarchy
-- Professional project storytelling
-
----
-
-## Project Structure
-
-```text
-portfolio-luiz-ulrich/
-├─ index.html
-├─ luiz.html
-├─ ulrich.html
-├─ presskit.html
-├─ contato.html
-├─ README.md
-├─ css/
-├─ js/
-└─ assets/
+Estrutura modular com foco em performance,
+organização e escalabilidade.

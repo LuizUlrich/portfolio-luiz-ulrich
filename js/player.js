@@ -1,7 +1,7 @@
 document.addEventListener("DOMContentLoaded", () => {
   const TRACKS = [
     {
-      title: "Set Talent 2026",
+      title: "El Fortin Talent 2026",
       artist: "Ulrich",
       src: "/assets/audio/El Fortin Talent 2026 @ Ulrich [18.01.2026].mp3"
     },
