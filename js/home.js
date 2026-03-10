@@ -1,16 +1,17 @@
 document.addEventListener("DOMContentLoaded", () => {
-  const panels = document.querySelectorAll(".panel");
+  const cards = document.querySelectorAll(".side-card");
 
-  panels.forEach((panel) => {
-    panel.addEventListener("mouseenter", () => {
-      panels.forEach((item) => item.classList.remove("is-dimmed"));
-      panels.forEach((item) => {
-        if (item !== panel) item.classList.add("is-dimmed");
+  cards.forEach((card) => {
+    card.addEventListener("mouseenter", () => {
+      cards.forEach((item) => {
+        if (item !== card) item.style.opacity = "0.78";
       });
     });
 
-    panel.addEventListener("mouseleave", () => {
-      panels.forEach((item) => item.classList.remove("is-dimmed"));
+    card.addEventListener("mouseleave", () => {
+      cards.forEach((item) => {
+        item.style.opacity = "";
+      });
     });
   });
 });

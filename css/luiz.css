@@ -1,5 +1,5 @@
 .page-hero {
-  padding-top: 3rem;
+  padding-top: 2.5rem;
 }
 
 .hero-panel {
@@ -7,11 +7,5 @@
 }
 
 .project-card p {
-  margin-bottom: 1.1rem;
-}
-
-@media (max-width: 920px) {
-  .page-hero {
-    padding-top: 2rem;
-  }
+  margin-bottom: 1rem;
 }

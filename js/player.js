@@ -3,7 +3,7 @@ document.addEventListener("DOMContentLoaded", () => {
     {
       title: "Set Talent 2026",
       artist: "Ulrich",
-      src: "/assets/audio/Ulrich - #elfortintalent2026.mp3"
+      src: "/assets/audio/El Fortin Talent 2026 @ Ulrich [18.01.2026].mp3"
     },
     {
       title: "Set Afro House",
@@ -13,7 +13,6 @@ document.addEventListener("DOMContentLoaded", () => {
   ];
 
   const STORAGE_KEY = "luiz-ulrich-player-state";
-
   let audio = document.getElementById("globalAudio");
 
   if (!audio) {
@@ -69,10 +68,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function formatTime(seconds) {
     if (!Number.isFinite(seconds)) return "0:00";
-
     const mins = Math.floor(seconds / 60);
     const secs = Math.floor(seconds % 60);
-
     return `${mins}:${String(secs).padStart(2, "0")}`;
   }
 
@@ -98,26 +95,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
         <div class="player-range-group">
           <span class="player-time" id="currentTime">0:00</span>
-          <input
-            class="player-range"
-            id="progressBar"
-            type="range"
-            min="0"
-            max="100"
-            value="0"
-            aria-label="Progresso da música"
-          />
+          <input class="player-range" id="progressBar" type="range" min="0" max="100" value="0" aria-label="Progresso da música" />
           <span class="player-time" id="durationTime">0:00</span>
-          <input
-            class="player-range player-volume"
-            id="volumeBar"
-            type="range"
-            min="0"
-            max="1"
-            step="0.01"
-            value="0.85"
-            aria-label="Volume"
-          />
+          <input class="player-range player-volume" id="volumeBar" type="range" min="0" max="1" step="0.01" value="0.85" aria-label="Volume" />
         </div>
       </div>
     `;
@@ -171,7 +151,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     state.index = (index + TRACKS.length) % TRACKS.length;
     const track = TRACKS[state.index];
-
     if (!track) return;
 
     const shouldReplaceSrc = audio.getAttribute("src") !== track.src;
@@ -205,17 +184,14 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     if (autoplay) {
-      audio
-        .play()
-        .then(() => {
-          state.playing = true;
-          updateMeta();
-          updatePlayerVisibility();
-          saveState();
-        })
-        .catch((error) => {
-          console.error("Erro ao tocar o áudio:", error);
-        });
+      audio.play().then(() => {
+        state.playing = true;
+        updateMeta();
+        updatePlayerVisibility();
+        saveState();
+      }).catch((error) => {
+        console.error("Erro ao tocar o áudio:", error);
+      });
     } else {
       saveState();
     }
@@ -228,17 +204,14 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     if (audio.paused) {
-      audio
-        .play()
-        .then(() => {
-          state.playing = true;
-          updateMeta();
-          updatePlayerVisibility();
-          saveState();
-        })
-        .catch((error) => {
-          console.error("Erro ao tocar o áudio:", error);
-        });
+      audio.play().then(() => {
+        state.playing = true;
+        updateMeta();
+        updatePlayerVisibility();
+        saveState();
+      }).catch((error) => {
+        console.error("Erro ao tocar o áudio:", error);
+      });
     } else {
       audio.pause();
       state.playing = false;
@@ -270,7 +243,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
   progressBar.addEventListener("input", () => {
     if (!Number.isFinite(audio.duration) || audio.duration <= 0) return;
-
     const percentage = Number(progressBar.value) / 100;
     audio.currentTime = percentage * audio.duration;
     saveState();
