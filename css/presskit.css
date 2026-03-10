@@ -17,6 +17,27 @@
   grid-column: 1 / -1;
 }
 
+.presskit-bio-grid {
+  display: grid;
+  grid-template-columns: 1.2fr 0.8fr;
+  gap: 1.5rem;
+  align-items: center;
+}
+
+.presskit-bio-photo-wrap {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.presskit-bio-photo {
+  width: 100%;
+  max-width: 340px;
+  border-radius: 22px;
+  border: 1px solid rgba(255,255,255,0.08);
+  box-shadow: 0 12px 28px rgba(0,0,0,0.22);
+  object-fit: cover;
+}
+
 @media (max-width: 980px) {
   .presskit-layout {
     grid-template-columns: 1fr;
@@ -24,5 +45,13 @@
 
   .presskit-bio {
     grid-column: auto;
+  }
+
+  .presskit-bio-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .presskit-bio-photo-wrap {
+    justify-content: flex-start;
   }
 }
