@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Spotify Wrapped até aqui</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <audio id="bgMusic" preload="auto" loop>
+    <source src="audio/musica.mp3" type="audio/mpeg" />
+  </audio>
+
+  <div class="progress-wrap">
+    <div class="progress-bars" id="progressBars"></div>
+  </div>
+
+  <div class="particles" id="particles"></div>
+
+  <div class="hud left-hud">
+    Espaço = pausar/continuar • ← voltar • → avançar
+  </div>
+
+  <div class="hud right-hud">
+    <div class="eq">
+      <span></span><span></span><span></span><span></span>
+    </div>
+    <div>
+      <div class="hud-title">Now playing</div>
+      <div class="hud-subtitle">A trilha da história de vocês</div>
+    </div>
+  </div>
+
+  <!-- 1 -->
+  <section class="screen active" data-duration="20000">
+    <div class="bg-gradient"></div>
+    <div class="screen-inner intro-layout">
+      <div class="badge">Seu Wrapped personalizado 💚</div>
+      <h1 class="title title-xl">Spotify Wrapped<br>até aqui</h1>
+      <p class="subtitle">
+        Luiz Felipe Ulrich ❤️ Jessica Soares Freire
+      </p>
+      <button class="primary-btn" id="startBtn">Começar nossa história</button>
+    </div>
+  </section>
+
+  <!-- 2 -->
+  <section class="screen" data-duration="20000">
+    <img class="bg-media" src="midia/foto1.jpg" alt="">
+    <div class="bg-overlay"></div>
+    <div class="screen-inner story-layout">
+      <div class="story-media portrait">
+        <img src="midia/foto1.jpg" alt="Primeira vez que ficaram">
+      </div>
+      <div class="story-text">
+        <div class="badge">03/08/2025</div>
+        <h2 class="title">Quem diria, não é mesmo?</h2>
+        <p class="subtitle">Foi aqui em que nossa história começou.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3 -->
+  <section class="screen" data-duration="20000">
+    <img class="bg-media" src="midia/foto2.jpg" alt="">
+    <div class="bg-overlay"></div>
+    <div class="screen-inner story-layout">
+      <div class="story-media portrait">
+        <img src="midia/foto2.jpg" alt="Segundo final de semana">
+      </div>
+      <div class="story-text">
+        <div class="badge">Capítulo 2</div>
+        <h2 class="title">Nosso segundo final de semana</h2>
+        <p class="subtitle">Quando percebemos que não foi loucura.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4 -->
+  <section class="screen" data-duration="20000">
+    <img class="bg-media" src="midia/foto10.jpg" alt="">
+    <div class="bg-overlay"></div>
+    <div class="screen-inner story-layout">
+      <div class="story-media portrait">
+        <img src="midia/foto10.jpg" alt="Fazendo janta pra ela">
+      </div>
+      <div class="story-text">
+        <div class="badge">Antes do namoro</div>
+        <h2 class="title">Eu fazendo janta pra você</h2>
+        <p class="subtitle">
+          Antes mesmo de namorarmos, eu já queria te impressionar com meus dotes culinários KSKSKSKSKS.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5 -->
+  <section class="screen" data-duration="20000">
+    <img class="bg-media" src="midia/foto9.jpg" alt="">
+    <div class="bg-overlay"></div>
+    <div class="screen-inner story-layout">
+      <div class="story-media portrait">
+        <img src="midia/foto9.jpg" alt="Primeira visita ao apartamento">
+      </div>
+      <div class="story-text">
+        <div class="badge">Primeira visita</div>
+        <h2 class="title">Rua das Hortências, 80</h2>
+        <p class="subtitle">
+          Minha primeira visita ao NOSSO país Água Verde, já fui recebido com táuba e refrescos.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6 -->
+  <section class="screen" data-duration="20000">
+    <img class="bg-media" src="midia/foto3.jpg" alt="">
+    <div class="bg-overlay"></div>
+    <div class="screen-inner story-layout">
+      <div class="story-media portrait">
+        <img src="midia/foto3.jpg" alt="A gente em casa">
+      </div>
+      <div class="story-text">
+        <div class="badge">Modo caos</div>
+        <h2 class="title">A gente MALUCO em casa</h2>
+        <p class="subtitle">
+          Nada fora do comum para a 253, porque elegância e bagunça sempre andaram juntas com a gente.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 7 -->
+  <section class="screen" data-duration="20000">
+    <img class="bg-media" src="midia/foto4.jpg" alt="">
+    <div class="bg-overlay"></div>
+    <div class="screen-inner story-layout">
+      <div class="story-media portrait">
+        <img src="midia/foto4.jpg" alt="Festa Lofi">
+      </div>
+      <div class="story-text">
+        <div class="badge">Festa da Lofi</div>
+        <h2 class="title">Mais um da série "só uma passadinha"</h2>
+        <p class="subtitle">
+          Naquela festa do Lofi em que a gente claramente resolveu se passar, Mateo com Negroni, você com Cuba e eu com Redbull e baseado KSKSKSKSKS
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 8 -->
+  <section class="screen" data-duration="20000">
+    <img class="bg-media" src="midia/foto6.jpg" alt="">
+    <div class="bg-overlay"></div>
+    <div class="screen-inner story-layout">
+      <div class="story-media portrait">
+        <img src="midia/foto6.jpg" alt="Melhor foto">
+      </div>
+      <div class="story-text">
+        <div class="badge">Nossa melhor foto</div>
+        <h2 class="title">Só nós dois</h2>
+        <p class="subtitle">
+          Eu beijando o seu pescoço. E sinceramente? Essa foto é capa de álbum.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 9 -->
+  <section class="screen" data-duration="20000" data-highlight="true">
+    <img class="bg-media" src="midia/foto5.jpg" alt="">
+    <div class="bg-overlay"></div>
+    <div class="screen-inner story-layout">
+      <div class="story-media portrait">
+        <img src="midia/foto5.jpg" alt="Pedido de namoro">
+      </div>
+      <div class="story-text">
+        <div class="badge">11/01/2026</div>
+        <h2 class="title">O dia em que te pedi em namoro</h2>
+        <p class="subtitle">
+          A foto tá maluca, mas não tanto quanto a gente. Foi um dos “ACHO que sim” mais importantes da minha vida.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 10 -->
+  <section class="screen" data-duration="20000">
+    <video class="bg-media" src="midia/video3.mp4" muted playsinline loop></video>
+    <div class="bg-overlay"></div>
+    <div class="screen-inner story-layout">
+      <div class="story-media portrait">
+        <video src="midia/video3.mp4" muted playsinline loop></video>
+      </div>
+      <div class="story-text">
+        <div class="badge">Começo do namoro</div>
+        <h2 class="title">A gente treinando junto</h2>
+        <p class="subtitle">
+          Logo que começamos a namorar, já tava claro: além de casal, dupla de gostosos.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 11 -->
+  <section class="screen" data-duration="20000">
+    <video class="bg-media" src="midia/video4.mp4" muted playsinline loop></video>
+    <div class="bg-overlay"></div>
+    <div class="screen-inner story-layout">
+      <div class="story-media portrait">
+        <video src="midia/video4.mp4" muted playsinline loop></video>
+      </div>
+      <div class="story-text">
+        <div class="badge">DNA</div>
+        <h2 class="title">Nós muito malucos</h2>
+        <p class="subtitle">
+          A gente grudaaaaaado, uma semana depois de eu te pedir em namoro.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 12 -->
+  <section class="screen" data-duration="20000" data-highlight="true">
+    <img class="bg-media" src="midia/foto7.jpg" alt="">
+    <div class="bg-overlay"></div>
+    <div class="screen-inner story-layout">
+      <div class="story-media portrait">
+        <img src="midia/foto7.jpg" alt="Alianças">
+      </div>
+      <div class="story-text">
+        <div class="badge">20/02/2026</div>
+        <h2 class="title">O dia das alianças</h2>
+        <p class="subtitle">
+          Um buquê, um sonho, tremedeira... e a confirmação física de um "EU TE AMO ❤️"
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 13 -->
+  <section class="screen" data-duration="20000">
+    <div class="bg-gradient glow"></div>
+    <div class="screen-inner center-layout">
+      <div class="big-word">BRILHOU</div>
+      <p class="subtitle big-subtitle">
+        E desde que eu brilhei....<br>
+        Minha luz virou você.
+      </p>
+    </div>
+  </section>
+
+  <!-- 14 -->
+  <section class="screen" data-duration="20000">
+    <div class="bg-gradient glow"></div>
+    <div class="screen-inner center-layout">
+      <p class="secret-line">O quanto eu te amo?</p>
+      <p class="secret-line">de 0 a 10?</p>
+      <div class="love-number">100</div>
+    </div>
+  </section>
+
+  <!-- 15 -->
+  <section class="screen" data-duration="20000">
+    <div class="bg-gradient"></div>
+    <div class="screen-inner center-layout">
+      <div class="badge">Wrapped stats</div>
+      <h2 class="title">Top 1 do meu ano</h2>
+      <div class="big-word small-green">VOCÊ</div>
+      <p class="subtitle big-subtitle">
+        Artista favorita: Jess<br>
+        Faixa mais tocada: a nossa história<br>
+        Gênero dominante: amor com caos, risadas e MUUUUUITA saudade
+      </p>
+    </div>
+  </section>
+
+  <!-- 16 -->
+  <section class="screen" data-duration="20000" data-highlight="true">
+    <div class="bg-gradient finale"></div>
+    <div class="screen-inner center-layout">
+      <div class="badge">Mensagem final</div>
+      <h2 class="title">Feliz Dia das Mulheres, meu amor</h2>
+      <p class="subtitle big-subtitle final-text">
+        Obrigado por cada momento, cada lembrança, cada loucura boa e cada detalhe que fez você virar parte tão importante da minha vida.
+        Eu te amo meu anjo ❤️
+      </p>
+      <button class="primary-btn ghost-btn" id="restartBtn">Repetir nossa história</button>
+    </div>
+  </section>
+
+  <script src="script.js"></script>
+</body>
+</html>
