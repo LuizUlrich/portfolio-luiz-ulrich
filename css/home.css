@@ -1,162 +1,97 @@
-/* ============================= */
-/* HOME SPLIT LAYOUT             */
-/* ============================= */
-
-.home-body {
-  margin: 0;
-  overflow: hidden;
+.home-page {
+  padding-bottom: 0;
 }
 
-/* container principal */
+.split-hero {
+  min-height: calc(100vh - var(--header-h));
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
 
-.split-home {
-  display: flex;
-  height: 100vh;
-  width: 100%;
+.panel {
   position: relative;
-}
-
-/* cada lado da tela */
-
-.split-panel {
-  flex: 1;
-  position: relative;
+  min-height: calc(100vh - var(--header-h));
   display: flex;
-  align-items: center;   /* centraliza vertical */
-  justify-content: center;
-  padding: 60px;
+  align-items: end;
+  padding: 3rem;
   overflow: hidden;
-  transition: flex 0.5s ease, filter 0.5s ease;
+  transition: flex 300ms ease, transform 300ms ease;
 }
 
-/* imagem de fundo */
-
-.split-panel::before {
+.panel::before {
   content: "";
   position: absolute;
   inset: 0;
-  background-size: cover;
-  background-position: center;
-  transform: scale(1);
-  transition: transform 0.8s ease;
-  z-index: 0;
+  opacity: 0.9;
+  transition: transform 600ms ease, opacity 400ms ease;
 }
 
-/* fundo lado profissional */
-
-.split-left::before {
-  background-image:
-    linear-gradient(rgba(0,0,0,0.45), rgba(0,0,0,0.8)),
-    url("../assets/img/bg-luiz.webp");
+.panel:hover::before {
+  transform: scale(1.04);
+  opacity: 1;
 }
 
-/* fundo lado DJ */
-
-.split-right::before {
-  background-image:
-    linear-gradient(rgba(0,0,0,0.35), rgba(0,0,0,0.75)),
-    url("../assets/img/bg-ulrich.webp");
+.panel-tech::before {
+  background:
+    linear-gradient(180deg, rgba(4,6,10,0.2), rgba(4,6,10,0.88)),
+    url("../assets/images/luiz-hero.jpg") center/cover no-repeat;
 }
 
-/* efeito hover */
-
-.split-panel:hover {
-  flex: 1.15;
+.panel-music::before {
+  background:
+    linear-gradient(180deg, rgba(7,4,10,0.2), rgba(7,4,10,0.9)),
+    url("../assets/images/ulrich-hero.jpg") center/cover no-repeat;
 }
 
-.split-panel:hover::before {
-  transform: scale(1.05);
-}
-
-/* escurece lado não ativo */
-
-.split-home:hover .split-panel:not(:hover) {
-  filter: brightness(0.65);
-}
-
-/* overlay escuro */
-
-.split-overlay {
+.panel-overlay {
   position: absolute;
   inset: 0;
-  background: linear-gradient(180deg, transparent 40%, rgba(0,0,0,0.85));
-  z-index: 1;
+  background: linear-gradient(180deg, transparent 0%, rgba(0,0,0,0.22) 40%, rgba(0,0,0,0.64) 100%);
 }
 
-/* conteúdo interno */
-
-.split-content {
+.panel-content {
   position: relative;
   z-index: 2;
-  max-width: 420px;
+  max-width: 520px;
 }
 
-/* label */
+.panel h1 {
+  margin-bottom: 0.7rem;
+}
 
-.panel-tag {
+.eyebrow {
   display: inline-block;
-  padding: 6px 14px;
-  border-radius: 20px;
-  border: 1px solid rgba(255,255,255,0.2);
-  margin-bottom: 18px;
-  font-size: 14px;
-  color: white;
+  font-size: 0.76rem;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  color: var(--accent-strong);
+  font-weight: 700;
+  margin-bottom: 1rem;
 }
 
-/* título */
-
-.split-content h1 {
-  font-size: clamp(40px, 5vw, 72px);
-  margin-bottom: 12px;
+.panel-cta {
+  display: inline-block;
+  margin-top: 1rem;
+  color: #fff7e6;
+  font-weight: 700;
 }
 
-/* descrição */
-
-.split-content p {
-  color: rgba(255,255,255,0.75);
-  font-size: 16px;
-  line-height: 1.5;
+.bridge-section {
+  position: relative;
+  z-index: 2;
 }
 
-/* ============================= */
-/* FRASE CENTRAL                 */
-/* ============================= */
-
-.center-signature {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%,-50%);
-  padding: 8px 18px;
-  border-radius: 30px;
-  background: rgba(0,0,0,0.45);
-  border: 1px solid rgba(255,255,255,0.1);
-  backdrop-filter: blur(10px);
-  color: rgba(255,255,255,0.9);
-  font-size: 14px;
-}
-
-/* ============================= */
-/* RESPONSIVO                    */
-/* ============================= */
-
-@media (max-width: 900px) {
-
-  .split-home {
-    flex-direction: column;
+@media (max-width: 860px) {
+  .split-hero {
+    grid-template-columns: 1fr;
   }
 
-  .split-panel {
+  .panel,
+  .panel::before {
     min-height: 50vh;
-    padding: 40px;
   }
 
-  .split-panel:hover {
-    flex: 1;
+  .panel {
+    padding: 2rem 1.25rem;
   }
-
-  .center-signature {
-    display: none;
-  }
-
 }

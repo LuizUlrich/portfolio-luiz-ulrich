@@ -1,5 +1,3 @@
-.contact-hero {
-  background:
-    radial-gradient(circle at top right, rgba(212, 175, 55, 0.08), transparent 20%),
-    linear-gradient(180deg, #09090d 0%, #101018 100%);
+.contact-grid {
+  margin-top: 2rem;
 }

@@ -1,8 +1,16 @@
-const splitPanels = document.querySelectorAll(".split-panel");
+document.addEventListener("DOMContentLoaded", () => {
+  const panels = document.querySelectorAll(".panel");
 
-splitPanels.forEach((panel) => {
-  panel.addEventListener("mouseenter", () => {
-    splitPanels.forEach((item) => item.classList.remove("is-hovered"));
-    panel.classList.add("is-hovered");
+  panels.forEach((panel) => {
+    panel.addEventListener("mouseenter", () => {
+      panels.forEach((item) => item.classList.remove("is-dimmed"));
+      panels.forEach((item) => {
+        if (item !== panel) item.classList.add("is-dimmed");
+      });
+    });
+
+    panel.addEventListener("mouseleave", () => {
+      panels.forEach((item) => item.classList.remove("is-dimmed"));
+    });
   });
 });

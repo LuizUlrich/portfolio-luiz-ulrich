@@ -3,210 +3,239 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Luiz Ulrich | Carreira</title>
+  <title>Luiz Ulrich | Tecnologia, Sistemas e Portfólio</title>
   <meta
     name="description"
-    content="Área profissional de Luiz Ulrich com carreira, skills, trajetória e projetos."
+    content="Portfólio profissional de Luiz Ulrich com foco em tecnologia, sistemas, suporte computacional, troubleshooting e projetos digitais."
   />
+  <meta property="og:title" content="Luiz Ulrich | Tecnologia, Sistemas e Portfólio" />
+  <meta
+    property="og:description"
+    content="Tecnologia, sistemas, suporte, melhoria contínua e construção de soluções digitais."
+  />
+  <meta property="og:image" content="assets/images/preview-luiz.jpg" />
+  <link rel="icon" href="assets/icons/favicon.ico" />
   <link rel="stylesheet" href="css/global.css" />
+  <link rel="stylesheet" href="css/components.css" />
   <link rel="stylesheet" href="css/luiz.css" />
 </head>
 <body>
-  <header class="site-header">
-    <div class="container nav">
-      <a href="index.html" class="logo">Luiz Ulrich</a>
+  <header class="site-header glass">
+    <div class="container header-inner">
+      <a class="brand" href="index.html" aria-label="Ir para a página inicial">
+        <span class="brand-mark">LU</span>
+        <span class="brand-text">Luiz Ulrich</span>
+      </a>
 
-      <nav class="menu" id="menu">
-        <a href="index.html">Início</a>
-        <a href="#identidade">Quem sou</a>
-        <a href="#mentalidade">Mentalidade</a>
-        <a href="#skills">Skills</a>
-        <a href="#timeline">Trajetória</a>
-        <a href="#projetos">Projetos</a>
+      <nav class="main-nav" id="mainNav" aria-label="Navegação principal">
+        <a href="luiz.html" class="is-active">Luiz</a>
+        <a href="ulrich.html">Ulrich</a>
+        <a href="presskit.html">Press Kit</a>
         <a href="contato.html">Contato</a>
       </nav>
 
-      <button class="menu-toggle" id="menuToggle" aria-label="Abrir menu">
-        ☰
+      <button
+        class="menu-toggle"
+        id="menuToggle"
+        aria-label="Abrir menu"
+        aria-expanded="false"
+        aria-controls="mainNav"
+      >
+        <span></span>
+        <span></span>
+        <span></span>
       </button>
     </div>
   </header>
 
   <main>
-    <section class="page-hero luiz-hero">
+    <section class="hero page-hero section">
       <div class="container hero-grid">
-        <div>
-          <span class="eyebrow">Profissional em crescimento</span>
+        <div class="hero-copy reveal">
+          <span class="section-kicker">Technology</span>
           <h1>Luiz Ulrich</h1>
-          <p class="hero-description">
-            Sou alguém dedicado, esforçado e com muita vontade de crescer. Gosto de tecnologia,
-            de resolver problemas e sonho em construir uma carreira grande com prática, inteligência e constância.
+          <p class="lead">
+            Suporte, sistemas, troubleshooting e construção de soluções com foco
+            em clareza, eficiência e evolução contínua.
           </p>
 
           <div class="hero-actions">
-            <a href="#timeline" class="btn btn-primary">Ver trajetória</a>
-            <a href="#projetos" class="btn btn-secondary">Ver projetos</a>
+            <a class="btn btn-primary" href="#projetos">Ver projetos</a>
+            <a class="btn btn-secondary" href="contato.html">Entrar em contato</a>
           </div>
         </div>
 
-        <div class="highlight-card">
-          <span class="card-label">Direção</span>
-          <strong>
-            Construindo uma carreira sólida em tecnologia com visão de longo prazo,
-            evolução constante e ambição real.
-          </strong>
+        <div class="hero-panel info-card reveal">
+          <h2>Como eu penso</h2>
+          <ul class="clean-list">
+            <li>Entendo o problema antes de executar.</li>
+            <li>Estruturo a solução para reduzir atrito.</li>
+            <li>Busco melhoria contínua em processos e experiência.</li>
+            <li>Aprendo rápido e evoluo com prática real.</li>
+          </ul>
         </div>
       </div>
     </section>
 
-    <section id="identidade" class="section">
-      <div class="container">
-        <div class="section-title">
-          <span>Quem sou</span>
-          <h2>Construção profissional de verdade</h2>
-        </div>
-
-        <div class="content-card">
-          <p>
-            Tenho facilidade para aprender rápido, entender estruturas, enxergar padrões
-            e encontrar soluções. Gosto de fazer as coisas direito, melhorar processos
-            e evoluir de forma consistente.
-          </p>
-          <p>
-            Essa área do site é minha base profissional. É onde mostro quem eu sou,
-            como penso, o que estou construindo e para onde quero levar minha carreira.
-          </p>
-        </div>
+    <section class="section">
+      <div class="container reveal">
+        <span class="section-kicker">Sobre</span>
+        <h2>Quem sou</h2>
+        <p class="section-text">
+          Sou um profissional em construção constante na área de tecnologia, com
+          foco em suporte computacional, implantação, análise de problemas,
+          operação de sistemas e presença digital. Gosto de entender contexto,
+          identificar gargalos e transformar complexidade em algo funcional.
+        </p>
       </div>
     </section>
 
-    <section id="mentalidade" class="section section-soft">
-      <div class="container">
-        <div class="section-title">
-          <span>Mentalidade</span>
-          <h2>Ambição com pé no chão</h2>
-        </div>
-
-        <div class="cards-grid">
-          <article class="project-card">
-            <h3>Dedicação</h3>
-            <p>
-              Levo meu crescimento profissional a sério. Gosto de aprender, praticar e subir de nível.
-            </p>
-          </article>
-
-          <article class="project-card">
-            <h3>Visão</h3>
-            <p>
-              Quero construir uma carreira grande, gerar valor real e me tornar um profissional altamente competente.
-            </p>
-          </article>
-
-          <article class="project-card">
-            <h3>Constância</h3>
-            <p>
-              Não penso só em começar bem. Penso em crescer de forma sólida e sustentável.
-            </p>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <section id="skills" class="section">
-      <div class="container">
-        <div class="section-title">
-          <span>Skills</span>
-          <h2>Base técnica e prática</h2>
-        </div>
+    <section class="section alt">
+      <div class="container reveal">
+        <span class="section-kicker">Stack</span>
+        <h2>Stack e atuação</h2>
 
         <div class="skills-grid">
-          <div class="skill-box">Suporte Técnico</div>
-          <div class="skill-box">Troubleshooting</div>
-          <div class="skill-box">Implantação de Sistemas</div>
-          <div class="skill-box">Treinamento de Usuários</div>
-          <div class="skill-box">Atendimento ao Cliente</div>
-          <div class="skill-box">Documentação</div>
-          <div class="skill-box">HTML</div>
-          <div class="skill-box">CSS</div>
-          <div class="skill-box">JavaScript</div>
-          <div class="skill-box">GitHub</div>
-          <div class="skill-box">Lógica</div>
-          <div class="skill-box">Organização Estratégica</div>
-        </div>
-      </div>
-    </section>
-
-    <section id="timeline" class="section section-soft">
-      <div class="container">
-        <div class="section-title">
-          <span>Trajetória</span>
-          <h2>Evolução profissional</h2>
-        </div>
-
-        <div class="career-timeline">
-          <article class="timeline-card">
-            <div class="timeline-marker"></div>
-            <div class="timeline-content">
-              <span class="timeline-period">Base</span>
-              <h3>Disciplina, rotina e visão prática</h3>
-              <p>
-                Minhas experiências anteriores ajudaram a fortalecer organização, responsabilidade e visão de processo.
-              </p>
-            </div>
+          <article class="info-card">
+            <h3>Tecnologias</h3>
+            <ul class="tag-list">
+              <li>HTML</li>
+              <li>CSS</li>
+              <li>JavaScript</li>
+              <li>Python</li>
+              <li>SQL</li>
+            </ul>
           </article>
 
-          <article class="timeline-card">
-            <div class="timeline-marker"></div>
-            <div class="timeline-content">
-              <span class="timeline-period">Hoje</span>
-              <h3>Suporte, sistemas e resolução de problemas</h3>
-              <p>
-                Atuo lidando com demandas reais, usuários, implantação, orientação e melhoria do dia a dia operacional.
-              </p>
-            </div>
+          <article class="info-card">
+            <h3>Ferramentas</h3>
+            <ul class="tag-list">
+              <li>Git</li>
+              <li>GitHub</li>
+              <li>VS Code</li>
+              <li>Linux</li>
+              <li>Vercel</li>
+            </ul>
           </article>
 
-          <article class="timeline-card">
-            <div class="timeline-marker"></div>
-            <div class="timeline-content">
-              <span class="timeline-period">Próximo nível</span>
-              <h3>Tecnologia, projetos digitais e crescimento de carreira</h3>
-              <p>
-                Minha meta é ampliar minha atuação, construir projetos próprios e evoluir para níveis cada vez maiores.
-              </p>
-            </div>
+          <article class="info-card">
+            <h3>Atuação</h3>
+            <ul class="tag-list">
+              <li>Suporte técnico</li>
+              <li>Implantação</li>
+              <li>Troubleshooting</li>
+              <li>Treinamento</li>
+              <li>Documentação</li>
+            </ul>
           </article>
         </div>
       </div>
     </section>
 
-    <section id="projetos" class="section">
-      <div class="container">
-        <div class="section-title">
-          <span>Projetos</span>
-          <h2>O que estou construindo</h2>
+    <section class="section" id="projetos">
+      <div class="container reveal">
+        <span class="section-kicker">Projects</span>
+        <h2>Projetos e casos</h2>
+
+        <div class="project-grid">
+          <article class="project-card">
+            <div class="project-top">
+              <span class="project-label">Projeto pessoal</span>
+              <h3>Portfolio Platform</h3>
+            </div>
+            <p>
+              Plataforma pessoal construída para representar duas identidades:
+              tecnologia e música, com linguagem visual consistente e experiência premium.
+            </p>
+            <ul class="project-points">
+              <li><strong>Problema:</strong> representar duas frentes sem confusão visual.</li>
+              <li><strong>Solução:</strong> arquitetura multi-page com design system e player global.</li>
+              <li><strong>Stack:</strong> HTML, CSS, JavaScript, GitHub, Vercel.</li>
+              <li><strong>Impacto:</strong> posicionamento profissional mais forte e memorável.</li>
+            </ul>
+          </article>
+
+          <article class="project-card">
+            <div class="project-top">
+              <span class="project-label">Operação / sistema</span>
+              <h3>Migração e integração operacional</h3>
+            </div>
+            <p>
+              Organização de fluxo operacional envolvendo transferência de dados,
+              sincronização de estoque e integração entre plataformas.
+            </p>
+            <ul class="project-points">
+              <li><strong>Problema:</strong> continuidade operacional durante transição de conta e estrutura.</li>
+              <li><strong>Solução:</strong> migração estruturada, validação e alinhamento de dados.</li>
+              <li><strong>Stack:</strong> ERP, catálogo, processos operacionais e suporte técnico.</li>
+              <li><strong>Impacto:</strong> redução de risco e continuidade da operação.</li>
+            </ul>
+          </article>
+
+          <article class="project-card">
+            <div class="project-top">
+              <span class="project-label">Presença digital</span>
+              <h3>Site institucional e posicionamento</h3>
+            </div>
+            <p>
+              Desenvolvimento de presença digital com foco em apresentação,
+              clareza visual, branding e experiência de navegação.
+            </p>
+            <ul class="project-points">
+              <li><strong>Problema:</strong> baixa força de apresentação online.</li>
+              <li><strong>Solução:</strong> estruturação de páginas, narrativa e identidade visual.</li>
+              <li><strong>Stack:</strong> HTML, CSS, JavaScript, Vercel.</li>
+              <li><strong>Impacto:</strong> percepção mais profissional e maior autoridade.</li>
+            </ul>
+          </article>
         </div>
+      </div>
+    </section>
 
-        <div class="cards-grid">
-          <article class="project-card">
-            <h3>Portfólio Pessoal</h3>
-            <p>Meu próprio ecossistema digital, unindo carreira, criatividade e projetos.</p>
+    <section class="section alt">
+      <div class="container reveal">
+        <span class="section-kicker">Journey</span>
+        <h2>Trajetória</h2>
+        <div class="timeline">
+          <article class="timeline-item">
+            <span class="timeline-dot"></span>
+            <div>
+              <h3>Suporte e operação</h3>
+              <p>
+                Atuação prática com atendimento, análise de problemas, implantação
+                e suporte em contexto real de operação.
+              </p>
+            </div>
           </article>
 
-          <article class="project-card">
-            <h3>Retrospectiva Spotify</h3>
-            <p>Experiência visual interativa criada como projeto autoral e criativo.</p>
+          <article class="timeline-item">
+            <span class="timeline-dot"></span>
+            <div>
+              <h3>Evolução técnica</h3>
+              <p>
+                Estudo contínuo de HTML, CSS, JavaScript, Python, SQL, Linux,
+                redes e pensamento de sistemas.
+              </p>
+            </div>
           </article>
 
-          <article class="project-card">
-            <h3>Landing Pages e Experimentos</h3>
-            <p>Projetos para praticar construção web, presença digital e linguagem visual.</p>
+          <article class="timeline-item">
+            <span class="timeline-dot"></span>
+            <div>
+              <h3>Construção de portfólio</h3>
+              <p>
+                Desenvolvimento de projetos com foco em marca pessoal, presença
+                digital, clareza e prova de capacidade técnica.
+              </p>
+            </div>
           </article>
         </div>
       </div>
     </section>
   </main>
 
-  <script src="js/menu.js"></script>
+  <script src="js/menu.js" defer></script>
+  <script src="js/player.js" defer></script>
+  <script src="js/app.js" defer></script>
 </body>
 </html>

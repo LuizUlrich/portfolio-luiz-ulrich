@@ -3,46 +3,109 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Luiz Ulrich</title>
+  <title>Luiz Ulrich | Technology & Music</title>
   <meta
     name="description"
-    content="Luiz Ulrich e Ulrich — carreira, tecnologia, música, criatividade e projetos."
+    content="Portfólio de Luiz Ulrich. Tecnologia, sistemas, resolução de problemas e identidade artística como DJ eletrônico."
   />
+  <meta property="og:title" content="Luiz Ulrich | Technology & Music" />
+  <meta
+    property="og:description"
+    content="Uma identidade dividida entre tecnologia e música, unida por precisão, consistência e evolução."
+  />
+  <meta property="og:image" content="assets/images/preview.jpg" />
+  <meta property="og:type" content="website" />
+  <link rel="icon" href="assets/icons/favicon.ico" />
   <link rel="stylesheet" href="css/global.css" />
+  <link rel="stylesheet" href="css/components.css" />
   <link rel="stylesheet" href="css/home.css" />
 </head>
-<body class="home-body">
-  <main class="split-home">
-    <a href="luiz.html" class="split-panel split-left" aria-label="Ir para a área profissional de Luiz Ulrich">
-      <div class="split-overlay"></div>
-      <div class="split-content">
-        <span class="panel-tag">Profissional em crescimento</span>
-        <h1>Luiz Ulrich</h1>
-        <p>Carreira, tecnologia, ambição e construção profissional.</p>
-      </div>
-    </a>
+<body class="home-page">
+  <header class="site-header glass">
+    <div class="container header-inner">
+      <a class="brand" href="index.html" aria-label="Ir para a página inicial">
+        <span class="brand-mark">LU</span>
+        <span class="brand-text">Luiz Ulrich</span>
+      </a>
 
-    <a href="ulrich.html" class="split-panel split-right" aria-label="Ir para a área artística de Ulrich">
-      <div class="split-overlay"></div>
-      <div class="split-content">
-        <span class="panel-tag">Criativo e dançante</span>
-        <h1>Ulrich</h1>
-        <p>Som elegante, energia boa, pista em movimento e identidade musical.</p>
+      <nav class="main-nav" id="mainNav" aria-label="Navegação principal">
+        <a href="luiz.html">Luiz</a>
+        <a href="ulrich.html">Ulrich</a>
+        <a href="presskit.html">Press Kit</a>
+        <a href="contato.html">Contato</a>
+      </nav>
 
+      <button
+        class="menu-toggle"
+        id="menuToggle"
+        aria-label="Abrir menu"
+        aria-expanded="false"
+        aria-controls="mainNav"
+      >
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </header>
 
-          <div class="wave-bars">
-            <span></span><span></span><span></span><span></span><span></span>
-            <span></span><span></span><span></span><span></span><span></span>
-          </div>
+  <main>
+    <section class="split-hero" aria-label="Escolha entre tecnologia e música">
+      <a class="panel panel-tech" href="luiz.html">
+        <div class="panel-overlay"></div>
+        <div class="panel-content">
+          <span class="eyebrow">Technology</span>
+          <h1>Luiz</h1>
+          <p>Systems, support, problem solving and digital growth.</p>
+          <span class="panel-cta">Entrar como Luiz</span>
+        </div>
+      </a>
+
+      <a class="panel panel-music" href="ulrich.html">
+        <div class="panel-overlay"></div>
+        <div class="panel-content">
+          <span class="eyebrow">Music</span>
+          <h1>Ulrich</h1>
+          <p>Driving energy, identity, sets and dancefloor control.</p>
+          <span class="panel-cta">Entrar como Ulrich</span>
+        </div>
+      </a>
+    </section>
+
+    <section class="bridge-section section">
+      <div class="container narrow reveal">
+        <span class="section-kicker">One mindset</span>
+        <h2>Dois mundos. A mesma assinatura.</h2>
+        <p class="lead">
+          Tecnologia e música parecem universos diferentes, mas para mim nascem
+          da mesma base: precisão, leitura de contexto, evolução contínua e
+          construção de experiência.
+        </p>
+
+        <div class="bridge-grid">
+          <article class="info-card">
+            <h3>Como Luiz</h3>
+            <p>
+              Transformo problemas em sistemas mais claros, processos mais
+              funcionais e experiências mais organizadas.
+            </p>
+          </article>
+
+          <article class="info-card">
+            <h3>Como Ulrich</h3>
+            <p>
+              Construo jornada, tensão e energia para fazer a pista sentir cada
+              momento com intenção.
+            </p>
+          </article>
         </div>
       </div>
-    </a>
-
-    <div class="center-signature">
-      <span>Entre profissionalismo e lazer.</span>
-    </div>
+    </section>
   </main>
 
-  <script src="js/home.js"></script>
+  <script src="js/menu.js" defer></script>
+  <script src="js/home.js" defer></script>
+  <script src="js/player.js" defer></script>
+  <script src="js/app.js" defer></script>
 </body>
 </html>
