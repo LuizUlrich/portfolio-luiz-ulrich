@@ -38,7 +38,8 @@ document.addEventListener("DOMContentLoaded", () => {
           index: 0,
           time: 0,
           volume: 0.85,
-          playing: false
+          playing: false,
+          hasInteracted: false
         };
       }
 
@@ -47,6 +48,7 @@ document.addEventListener("DOMContentLoaded", () => {
         time: 0,
         volume: 0.85,
         playing: false,
+        hasInteracted: false,
         ...JSON.parse(saved)
       };
     } catch {
@@ -54,7 +56,8 @@ document.addEventListener("DOMContentLoaded", () => {
         index: 0,
         time: 0,
         volume: 0.85,
-        playing: false
+        playing: false,
+        hasInteracted: false
       };
     }
   }
@@ -69,7 +72,8 @@ document.addEventListener("DOMContentLoaded", () => {
         index: state.index,
         time: audio.currentTime || 0,
         volume: audio.volume,
-        playing: !audio.paused
+        playing: !audio.paused,
+        hasInteracted: state.hasInteracted
       })
     );
   }
@@ -79,11 +83,6 @@ document.addEventListener("DOMContentLoaded", () => {
     const mins = Math.floor(seconds / 60);
     const secs = Math.floor(seconds % 60);
     return `${mins}:${String(secs).padStart(2, "0")}`;
-  }
-
-  function isHomePage() {
-    const path = window.location.pathname;
-    return path === "/" || path.endsWith("/index.html") || path.endsWith("index.html");
   }
 
   function ensurePlayerUI() {
@@ -117,7 +116,7 @@ document.addEventListener("DOMContentLoaded", () => {
           </button>
         </div>
 
-        <div class="player-range-group">
+        <div class="player-bottom">
           <span class="player-time" id="currentTime">0:00</span>
 
           <input
@@ -166,18 +165,25 @@ document.addEventListener("DOMContentLoaded", () => {
   const currentTimeEl = document.getElementById("currentTime");
   const durationTimeEl = document.getElementById("durationTime");
 
+  function showPlayer() {
+    if (!playerEl) return;
+    playerEl.classList.add("is-visible");
+  }
+
+  function hidePlayer() {
+    if (!playerEl) return;
+    playerEl.classList.remove("is-visible");
+  }
+
   function updatePlayerVisibility() {
     if (!playerEl) return;
 
-    const hasStartedPlayback =
-      !!audio.src &&
-      (state.playing || (audio.currentTime > 0 && !Number.isNaN(audio.currentTime)));
-
-    if (isHomePage() && !hasStartedPlayback && audio.paused) {
-      playerEl.style.display = "none";
-    } else {
-      playerEl.style.display = "block";
+    if (!state.hasInteracted) {
+      hidePlayer();
+      return;
     }
+
+    showPlayer();
   }
 
   function updateMeta() {
@@ -192,12 +198,23 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
+  function markInteraction() {
+    if (!state.hasInteracted) {
+      state.hasInteracted = true;
+      saveState();
+    }
+  }
+
   function loadTrack(index, options = {}) {
-    const { autoplay = false, restoreTime = 0 } = options;
+    const { autoplay = false, restoreTime = 0, markAsInteracted = false } = options;
 
     state.index = (index + TRACKS.length) % TRACKS.length;
     const track = TRACKS[state.index];
     if (!track) return;
+
+    if (markAsInteracted) {
+      markInteraction();
+    }
 
     const shouldReplaceSrc = audio.getAttribute("src") !== track.src;
 
@@ -247,8 +264,14 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function togglePlay() {
+    markInteraction();
+
     if (!audio.src) {
-      loadTrack(state.index, { autoplay: true, restoreTime: state.time || 0 });
+      loadTrack(state.index, {
+        autoplay: true,
+        restoreTime: state.time || 0,
+        markAsInteracted: true
+      });
       return;
     }
 
@@ -274,11 +297,21 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function nextTrack() {
-    loadTrack(state.index + 1, { autoplay: true, restoreTime: 0 });
+    markInteraction();
+    loadTrack(state.index + 1, {
+      autoplay: true,
+      restoreTime: 0,
+      markAsInteracted: true
+    });
   }
 
   function prevTrack() {
-    loadTrack(state.index - 1, { autoplay: true, restoreTime: 0 });
+    markInteraction();
+    loadTrack(state.index - 1, {
+      autoplay: true,
+      restoreTime: 0,
+      markAsInteracted: true
+    });
   }
 
   playPauseBtn.addEventListener("click", togglePlay);
@@ -324,6 +357,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   audio.addEventListener("play", () => {
     state.playing = true;
+    markInteraction();
     updateMeta();
     updatePlayerVisibility();
     saveState();
@@ -343,20 +377,28 @@ document.addEventListener("DOMContentLoaded", () => {
   document.querySelectorAll(".play-track-btn").forEach((button) => {
     button.addEventListener("click", () => {
       const index = Number(button.dataset.track || 0);
-      loadTrack(index, { autoplay: true, restoreTime: 0 });
+      loadTrack(index, {
+        autoplay: true,
+        restoreTime: 0,
+        markAsInteracted: true
+      });
     });
   });
 
-  loadTrack(state.index, {
-    autoplay: false,
-    restoreTime: state.time || 0
-  });
+  if (state.hasInteracted) {
+    loadTrack(state.index, {
+      autoplay: false,
+      restoreTime: state.time || 0,
+      markAsInteracted: false
+    });
 
-  audio.currentTime = state.time || 0;
+    audio.currentTime = state.time || 0;
+  }
+
   updateMeta();
   updatePlayerVisibility();
 
-  if (state.playing) {
+  if (state.playing && state.hasInteracted) {
     audio.play().catch((error) => {
       console.error("Erro ao restaurar reprodução:", error);
       state.playing = false;

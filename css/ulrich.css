@@ -8,7 +8,6 @@
   letter-spacing: 0.08em;
 }
 
-/* removido efeito decorativo pesado para melhorar performance */
 .set-card,
 .info-card {
   position: relative;
