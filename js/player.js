@@ -13,6 +13,13 @@ document.addEventListener("DOMContentLoaded", () => {
   ];
 
   const STORAGE_KEY = "luiz-ulrich-player-state";
+  const ICONS = {
+    play: "/assets/icons/play.svg",
+    pause: "/assets/icons/pause.svg",
+    next: "/assets/icons/next.svg",
+    prev: "/assets/icons/prev.svg"
+  };
+
   let audio = document.getElementById("globalAudio");
 
   if (!audio) {
@@ -53,6 +60,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   let state = loadState();
+  let lastSavedSecond = -1;
 
   function saveState() {
     localStorage.setItem(
@@ -73,6 +81,11 @@ document.addEventListener("DOMContentLoaded", () => {
     return `${mins}:${String(secs).padStart(2, "0")}`;
   }
 
+  function isHomePage() {
+    const path = window.location.pathname;
+    return path === "/" || path.endsWith("/index.html") || path.endsWith("index.html");
+  }
+
   function ensurePlayerUI() {
     if (document.querySelector(".global-player")) return;
 
@@ -83,21 +96,55 @@ document.addEventListener("DOMContentLoaded", () => {
     player.innerHTML = `
       <div class="global-player__inner">
         <div class="global-player__meta">
-          <h3 id="playerTrackTitle">Nenhum set carregado</h3>
-          <p id="playerTrackArtist">Ulrich</p>
+          <div class="global-player__labels">
+            <span class="global-player__tag">Tocando agora</span>
+            <h3 id="playerTrackTitle">Nenhum set carregado</h3>
+            <p id="playerTrackArtist">Ulrich</p>
+          </div>
         </div>
 
         <div class="global-player__controls">
-          <button class="player-btn" id="prevTrackBtn" type="button" aria-label="Set anterior">⏮</button>
-          <button class="player-btn" id="playPauseBtn" type="button" aria-label="Tocar ou pausar">▶</button>
-          <button class="player-btn" id="nextTrackBtn" type="button" aria-label="Próximo set">⏭</button>
+          <button class="player-btn" id="prevTrackBtn" type="button" aria-label="Set anterior">
+            <img src="${ICONS.prev}" alt="" aria-hidden="true" />
+          </button>
+
+          <button class="player-btn player-btn--primary" id="playPauseBtn" type="button" aria-label="Tocar ou pausar">
+            <img id="playPauseIcon" src="${ICONS.play}" alt="" aria-hidden="true" />
+          </button>
+
+          <button class="player-btn" id="nextTrackBtn" type="button" aria-label="Próximo set">
+            <img src="${ICONS.next}" alt="" aria-hidden="true" />
+          </button>
         </div>
 
         <div class="player-range-group">
           <span class="player-time" id="currentTime">0:00</span>
-          <input class="player-range" id="progressBar" type="range" min="0" max="100" value="0" aria-label="Progresso da música" />
+
+          <input
+            class="player-range"
+            id="progressBar"
+            type="range"
+            min="0"
+            max="100"
+            value="0"
+            aria-label="Progresso da música"
+          />
+
           <span class="player-time" id="durationTime">0:00</span>
-          <input class="player-range player-volume" id="volumeBar" type="range" min="0" max="1" step="0.01" value="0.85" aria-label="Volume" />
+
+          <div class="player-volume-wrap">
+            <span class="player-volume-label">Vol</span>
+            <input
+              class="player-range player-volume"
+              id="volumeBar"
+              type="range"
+              min="0"
+              max="1"
+              step="0.01"
+              value="0.85"
+              aria-label="Volume"
+            />
+          </div>
         </div>
       </div>
     `;
@@ -111,17 +158,13 @@ document.addEventListener("DOMContentLoaded", () => {
   const titleEl = document.getElementById("playerTrackTitle");
   const artistEl = document.getElementById("playerTrackArtist");
   const playPauseBtn = document.getElementById("playPauseBtn");
+  const playPauseIcon = document.getElementById("playPauseIcon");
   const prevTrackBtn = document.getElementById("prevTrackBtn");
   const nextTrackBtn = document.getElementById("nextTrackBtn");
   const progressBar = document.getElementById("progressBar");
   const volumeBar = document.getElementById("volumeBar");
   const currentTimeEl = document.getElementById("currentTime");
   const durationTimeEl = document.getElementById("durationTime");
-
-  function isHomePage() {
-    const path = window.location.pathname;
-    return path === "/" || path.endsWith("/index.html") || path.endsWith("index.html");
-  }
 
   function updatePlayerVisibility() {
     if (!playerEl) return;
@@ -143,7 +186,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
     titleEl.textContent = current.title;
     artistEl.textContent = current.artist;
-    playPauseBtn.textContent = audio.paused ? "▶" : "⏸";
+
+    if (playPauseIcon) {
+      playPauseIcon.src = audio.paused ? ICONS.play : ICONS.pause;
+    }
   }
 
   function loadTrack(index, options = {}) {
@@ -184,14 +230,17 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     if (autoplay) {
-      audio.play().then(() => {
-        state.playing = true;
-        updateMeta();
-        updatePlayerVisibility();
-        saveState();
-      }).catch((error) => {
-        console.error("Erro ao tocar o áudio:", error);
-      });
+      audio
+        .play()
+        .then(() => {
+          state.playing = true;
+          updateMeta();
+          updatePlayerVisibility();
+          saveState();
+        })
+        .catch((error) => {
+          console.error("Erro ao tocar o áudio:", error);
+        });
     } else {
       saveState();
     }
@@ -204,14 +253,17 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     if (audio.paused) {
-      audio.play().then(() => {
-        state.playing = true;
-        updateMeta();
-        updatePlayerVisibility();
-        saveState();
-      }).catch((error) => {
-        console.error("Erro ao tocar o áudio:", error);
-      });
+      audio
+        .play()
+        .then(() => {
+          state.playing = true;
+          updateMeta();
+          updatePlayerVisibility();
+          saveState();
+        })
+        .catch((error) => {
+          console.error("Erro ao tocar o áudio:", error);
+        });
     } else {
       audio.pause();
       state.playing = false;
@@ -256,7 +308,12 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     currentTimeEl.textContent = formatTime(audio.currentTime);
-    saveState();
+
+    const currentSecond = Math.floor(audio.currentTime);
+    if (currentSecond !== lastSavedSecond) {
+      lastSavedSecond = currentSecond;
+      saveState();
+    }
   });
 
   audio.addEventListener("loadedmetadata", () => {

@@ -1,7 +1,6 @@
 .ulrich-page {
   background:
-    radial-gradient(circle at top, rgba(111, 74, 219, 0.12), transparent 22%),
-    radial-gradient(circle at bottom right, rgba(217, 179, 106, 0.08), transparent 20%),
+    radial-gradient(circle at top, rgba(111, 74, 219, 0.06), transparent 18%),
     linear-gradient(180deg, #070709 0%, #09090b 100%);
 }
 
@@ -9,6 +8,7 @@
   letter-spacing: 0.08em;
 }
 
+/* removido efeito decorativo pesado para melhorar performance */
 .set-card,
 .info-card {
   position: relative;
@@ -17,11 +17,5 @@
 
 .set-card::after,
 .info-card::after {
-  content: "";
-  position: absolute;
-  inset: auto -25% -55% auto;
-  width: 180px;
-  height: 180px;
-  background: radial-gradient(circle, rgba(217,179,106,0.1), transparent 68%);
-  pointer-events: none;
+  content: none;
 }
