@@ -1,28 +1,46 @@
 document.addEventListener("DOMContentLoaded", () => {
-  const toggle = document.getElementById("menuToggle");
-  const nav = document.getElementById("mainNav");
+  const menuToggle = document.getElementById("menuToggle");
+  const mainNav = document.getElementById("mainNav");
 
-  if (!toggle || !nav) return;
+  if (!menuToggle || !mainNav) return;
 
-  toggle.addEventListener("click", () => {
-    const isOpen = nav.classList.toggle("is-open");
-    toggle.setAttribute("aria-expanded", String(isOpen));
+  const closeMenu = () => {
+    mainNav.classList.remove("is-open");
+    menuToggle.classList.remove("is-active");
+    menuToggle.setAttribute("aria-expanded", "false");
+  };
+
+  const openMenu = () => {
+    mainNav.classList.add("is-open");
+    menuToggle.classList.add("is-active");
+    menuToggle.setAttribute("aria-expanded", "true");
+  };
+
+  menuToggle.addEventListener("click", () => {
+    const isOpen = mainNav.classList.contains("is-open");
+    if (isOpen) {
+      closeMenu();
+      return;
+    }
+    openMenu();
   });
 
-  nav.querySelectorAll("a").forEach((link) => {
-    link.addEventListener("click", () => {
-      nav.classList.remove("is-open");
-      toggle.setAttribute("aria-expanded", "false");
-    });
+  mainNav.querySelectorAll("a").forEach((link) => {
+    link.addEventListener("click", closeMenu);
   });
 
   document.addEventListener("click", (event) => {
-    const clickedInsideNav = nav.contains(event.target);
-    const clickedToggle = toggle.contains(event.target);
+    const clickedInsideNav = mainNav.contains(event.target);
+    const clickedToggle = menuToggle.contains(event.target);
 
     if (!clickedInsideNav && !clickedToggle) {
-      nav.classList.remove("is-open");
-      toggle.setAttribute("aria-expanded", "false");
+      closeMenu();
+    }
+  });
+
+  window.addEventListener("resize", () => {
+    if (window.innerWidth > 760) {
+      closeMenu();
     }
   });
 });

@@ -29,53 +29,42 @@ document.addEventListener("DOMContentLoaded", () => {
     document.body.appendChild(audio);
   }
 
+  const defaultState = {
+    index: 0,
+    time: 0,
+    volume: 0.85,
+    playing: false,
+    hasInteracted: false
+  };
+
   function loadState() {
     try {
       const saved = localStorage.getItem(STORAGE_KEY);
-
-      if (!saved) {
-        return {
-          index: 0,
-          time: 0,
-          volume: 0.85,
-          playing: false,
-          hasInteracted: false
-        };
-      }
-
-      return {
-        index: 0,
-        time: 0,
-        volume: 0.85,
-        playing: false,
-        hasInteracted: false,
-        ...JSON.parse(saved)
-      };
+      if (!saved) return { ...defaultState };
+      return { ...defaultState, ...JSON.parse(saved) };
     } catch {
-      return {
-        index: 0,
-        time: 0,
-        volume: 0.85,
-        playing: false,
-        hasInteracted: false
-      };
+      return { ...defaultState };
     }
   }
 
-  let state = loadState();
+  const state = loadState();
+  let ui = null;
+  let isSeeking = false;
   let lastSavedSecond = -1;
 
+  audio.volume = state.volume;
+  audio.src = TRACKS[state.index]?.src || TRACKS[0].src;
+
   function saveState() {
-    localStorage.setItem(
-      STORAGE_KEY,
-      JSON.stringify({
-        index: state.index,
-        time: audio.currentTime || 0,
-        volume: audio.volume,
-        playing: !audio.paused,
-        hasInteracted: state.hasInteracted
-      })
-    );
+    const payload = {
+      index: state.index,
+      time: Number.isFinite(audio.currentTime) ? audio.currentTime : 0,
+      volume: audio.volume,
+      playing: !audio.paused,
+      hasInteracted: state.hasInteracted
+    };
+
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(payload));
   }
 
   function formatTime(seconds) {
@@ -86,326 +75,247 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function ensurePlayerUI() {
-    if (document.querySelector(".global-player")) return;
+    if (ui) return ui;
 
-    const player = document.createElement("section");
-    player.className = "global-player";
-    player.setAttribute("aria-label", "Player global de áudio");
-
-    player.innerHTML = `
+    const wrapper = document.createElement("section");
+    wrapper.className = "global-player";
+    wrapper.setAttribute("aria-label", "Player global de áudio");
+    wrapper.innerHTML = `
       <div class="global-player__inner">
         <div class="global-player__meta">
-          <div class="global-player__labels">
-            <span class="global-player__tag">Tocando agora</span>
-            <h3 id="playerTrackTitle">Nenhum set carregado</h3>
-            <p id="playerTrackArtist">Ulrich</p>
+          <span class="global-player__eyebrow">Tocando agora</span>
+          <div class="global-player__title">Nenhum set carregado</div>
+          <div class="global-player__artist">Ulrich</div>
+        </div>
+
+        <div class="global-player__center">
+          <div class="global-player__controls">
+            <button class="player-icon-btn" type="button" data-action="prev" aria-label="Set anterior">
+              <img src="${ICONS.prev}" alt="" />
+            </button>
+
+            <button class="player-icon-btn player-icon-btn--primary" type="button" data-action="toggle" aria-label="Tocar ou pausar">
+              <img src="${ICONS.play}" alt="" />
+            </button>
+
+            <button class="player-icon-btn" type="button" data-action="next" aria-label="Próximo set">
+              <img src="${ICONS.next}" alt="" />
+            </button>
           </div>
-        </div>
 
-        <div class="global-player__controls">
-          <button class="player-btn" id="prevTrackBtn" type="button" aria-label="Set anterior">
-            <img src="${ICONS.prev}" alt="" aria-hidden="true" />
-          </button>
-
-          <button class="player-btn player-btn--primary" id="playPauseBtn" type="button" aria-label="Tocar ou pausar">
-            <img id="playPauseIcon" src="${ICONS.play}" alt="" aria-hidden="true" />
-          </button>
-
-          <button class="player-btn" id="nextTrackBtn" type="button" aria-label="Próximo set">
-            <img src="${ICONS.next}" alt="" aria-hidden="true" />
-          </button>
-        </div>
-
-        <div class="player-bottom">
-          <span class="player-time" id="currentTime">0:00</span>
-
-          <input
-            class="player-range"
-            id="progressBar"
-            type="range"
-            min="0"
-            max="100"
-            value="0"
-            aria-label="Progresso da música"
-          />
-
-          <span class="player-time" id="durationTime">0:00</span>
-
-          <div class="player-volume-wrap">
-            <span class="player-volume-label">Vol</span>
+          <div class="global-player__progress">
+            <span class="global-player__time" data-role="current">0:00</span>
             <input
-              class="player-range player-volume"
-              id="volumeBar"
+              class="global-player__range"
+              data-role="seek"
               type="range"
               min="0"
-              max="1"
-              step="0.01"
-              value="0.85"
-              aria-label="Volume"
+              max="100"
+              step="0.1"
+              value="0"
+              aria-label="Linha do tempo"
             />
+            <span class="global-player__time" data-role="duration">0:00</span>
           </div>
+        </div>
+
+        <div class="global-player__side">
+          <label for="global-volume">Vol</label>
+          <input
+            id="global-volume"
+            class="global-player__volume-input"
+            data-role="volume"
+            type="range"
+            min="0"
+            max="1"
+            step="0.01"
+            value="${state.volume}"
+            aria-label="Volume"
+          />
         </div>
       </div>
     `;
 
-    document.body.appendChild(player);
+    document.body.appendChild(wrapper);
+    document.body.classList.add("has-player");
+
+    ui = {
+      wrapper,
+      title: wrapper.querySelector(".global-player__title"),
+      artist: wrapper.querySelector(".global-player__artist"),
+      playButton: wrapper.querySelector('[data-action="toggle"]'),
+      playButtonIcon: wrapper.querySelector('[data-action="toggle"] img'),
+      prevButton: wrapper.querySelector('[data-action="prev"]'),
+      nextButton: wrapper.querySelector('[data-action="next"]'),
+      seek: wrapper.querySelector('[data-role="seek"]'),
+      current: wrapper.querySelector('[data-role="current"]'),
+      duration: wrapper.querySelector('[data-role="duration"]'),
+      volume: wrapper.querySelector('[data-role="volume"]')
+    };
+
+    ui.prevButton.addEventListener("click", () => changeTrack(-1, true));
+    ui.nextButton.addEventListener("click", () => changeTrack(1, true));
+    ui.playButton.addEventListener("click", togglePlayback);
+
+    ui.seek.addEventListener("input", () => {
+      isSeeking = true;
+      ui.current.textContent = formatTime(Number(ui.seek.value));
+    });
+
+    ui.seek.addEventListener("change", () => {
+      audio.currentTime = Number(ui.seek.value);
+      isSeeking = false;
+      saveState();
+    });
+
+    ui.volume.addEventListener("input", () => {
+      audio.volume = Number(ui.volume.value);
+      state.volume = audio.volume;
+      saveState();
+    });
+
+    return ui;
   }
 
-  ensurePlayerUI();
+  function updatePlayerUI() {
+    if (!ui) return;
 
-  const playerEl = document.querySelector(".global-player");
-  const titleEl = document.getElementById("playerTrackTitle");
-  const artistEl = document.getElementById("playerTrackArtist");
-  const playPauseBtn = document.getElementById("playPauseBtn");
-  const playPauseIcon = document.getElementById("playPauseIcon");
-  const prevTrackBtn = document.getElementById("prevTrackBtn");
-  const nextTrackBtn = document.getElementById("nextTrackBtn");
-  const progressBar = document.getElementById("progressBar");
-  const volumeBar = document.getElementById("volumeBar");
-  const currentTimeEl = document.getElementById("currentTime");
-  const durationTimeEl = document.getElementById("durationTime");
+    const track = TRACKS[state.index] || TRACKS[0];
+    ui.title.textContent = track.title;
+    ui.artist.textContent = track.artist;
+
+    const isPlaying = !audio.paused;
+    ui.playButton.setAttribute("aria-label", isPlaying ? "Pausar" : "Tocar");
+    ui.playButtonIcon.src = isPlaying ? ICONS.pause : ICONS.play;
+
+    ui.current.textContent = formatTime(audio.currentTime);
+    ui.duration.textContent = formatTime(audio.duration);
+
+    ui.seek.max = Number.isFinite(audio.duration) ? audio.duration : 100;
+    if (!isSeeking) {
+      ui.seek.value = Number.isFinite(audio.currentTime) ? audio.currentTime : 0;
+    }
+
+    ui.volume.value = audio.volume;
+  }
 
   function showPlayer() {
-    if (!playerEl) return;
-    playerEl.classList.add("is-visible");
+    const player = ensurePlayerUI();
+    player.wrapper.classList.add("is-visible");
   }
 
   function hidePlayer() {
-    if (!playerEl) return;
-    playerEl.classList.remove("is-visible");
+    if (!ui) return;
+    ui.wrapper.classList.remove("is-visible");
   }
 
-  function updatePlayerVisibility() {
-    if (!playerEl) return;
-
-    if (!state.hasInteracted) {
-      hidePlayer();
-      return;
-    }
-
-    showPlayer();
-  }
-
-  function updateMeta() {
-    const current = TRACKS[state.index];
-    if (!current) return;
-
-    titleEl.textContent = current.title;
-    artistEl.textContent = current.artist;
-
-    if (playPauseIcon) {
-      playPauseIcon.src = audio.paused ? ICONS.play : ICONS.pause;
-    }
-  }
-
-  function markInteraction() {
-    if (!state.hasInteracted) {
-      state.hasInteracted = true;
-      saveState();
-    }
-  }
-
-  function loadTrack(index, options = {}) {
-    const { autoplay = false, restoreTime = 0, markAsInteracted = false } = options;
-
-    state.index = (index + TRACKS.length) % TRACKS.length;
+  function setTrack(index, preserveTime = false) {
+    state.index = ((index % TRACKS.length) + TRACKS.length) % TRACKS.length;
     const track = TRACKS[state.index];
-    if (!track) return;
+    const nextTime = preserveTime ? state.time : 0;
 
-    if (markAsInteracted) {
-      markInteraction();
-    }
-
-    const shouldReplaceSrc = audio.getAttribute("src") !== track.src;
-
-    if (shouldReplaceSrc) {
-      audio.src = track.src;
-      audio.load();
-    }
-
-    updateMeta();
-    updatePlayerVisibility();
+    audio.src = track.src;
+    audio.load();
 
     const applyTime = () => {
-      if (
-        Number.isFinite(restoreTime) &&
-        restoreTime > 0 &&
-        restoreTime < (audio.duration || Infinity)
-      ) {
-        audio.currentTime = restoreTime;
+      if (nextTime > 0 && Number.isFinite(audio.duration)) {
+        audio.currentTime = Math.min(nextTime, Math.max(audio.duration - 1, 0));
       }
+      updatePlayerUI();
     };
 
-    if (shouldReplaceSrc) {
-      audio.addEventListener("loadedmetadata", applyTime, { once: true });
-    } else if (
-      Number.isFinite(restoreTime) &&
-      restoreTime > 0 &&
-      restoreTime < (audio.duration || Infinity)
-    ) {
-      audio.currentTime = restoreTime;
-    }
+    audio.addEventListener("loadedmetadata", applyTime, { once: true });
+    updatePlayerUI();
+    saveState();
+  }
 
-    if (autoplay) {
-      audio
-        .play()
-        .then(() => {
-          state.playing = true;
-          updateMeta();
-          updatePlayerVisibility();
-          saveState();
-        })
-        .catch((error) => {
-          console.error("Erro ao tocar o áudio:", error);
-        });
-    } else {
+  async function playCurrent() {
+    try {
+      await audio.play();
+      state.hasInteracted = true;
+      showPlayer();
+      updatePlayerUI();
       saveState();
+    } catch (error) {
+      console.warn("Não foi possível iniciar o áudio automaticamente:", error);
+      updatePlayerUI();
     }
   }
 
-  function togglePlay() {
-    markInteraction();
+  function pauseCurrent() {
+    audio.pause();
+    updatePlayerUI();
+    saveState();
+  }
 
-    if (!audio.src) {
-      loadTrack(state.index, {
-        autoplay: true,
-        restoreTime: state.time || 0,
-        markAsInteracted: true
-      });
+  function togglePlayback() {
+    if (audio.paused) {
+      playCurrent();
       return;
     }
-
-    if (audio.paused) {
-      audio
-        .play()
-        .then(() => {
-          state.playing = true;
-          updateMeta();
-          updatePlayerVisibility();
-          saveState();
-        })
-        .catch((error) => {
-          console.error("Erro ao tocar o áudio:", error);
-        });
-    } else {
-      audio.pause();
-      state.playing = false;
-      updateMeta();
-      updatePlayerVisibility();
-      saveState();
-    }
+    pauseCurrent();
   }
 
-  function nextTrack() {
-    markInteraction();
-    loadTrack(state.index + 1, {
-      autoplay: true,
-      restoreTime: 0,
-      markAsInteracted: true
-    });
-  }
-
-  function prevTrack() {
-    markInteraction();
-    loadTrack(state.index - 1, {
-      autoplay: true,
-      restoreTime: 0,
-      markAsInteracted: true
-    });
-  }
-
-  playPauseBtn.addEventListener("click", togglePlay);
-  nextTrackBtn.addEventListener("click", nextTrack);
-  prevTrackBtn.addEventListener("click", prevTrack);
-
-  volumeBar.value = String(state.volume ?? 0.85);
-  audio.volume = Number(volumeBar.value);
-
-  volumeBar.addEventListener("input", () => {
-    audio.volume = Number(volumeBar.value);
-    saveState();
-  });
-
-  progressBar.addEventListener("input", () => {
-    if (!Number.isFinite(audio.duration) || audio.duration <= 0) return;
-    const percentage = Number(progressBar.value) / 100;
-    audio.currentTime = percentage * audio.duration;
-    saveState();
-  });
-
-  audio.addEventListener("timeupdate", () => {
-    if (Number.isFinite(audio.duration) && audio.duration > 0) {
-      const value = (audio.currentTime / audio.duration) * 100;
-      progressBar.value = String(value);
-      durationTimeEl.textContent = formatTime(audio.duration);
+  function changeTrack(direction, autoplay = false) {
+    state.time = 0;
+    setTrack(state.index + direction, false);
+    if (autoplay) {
+      playCurrent();
     }
-
-    currentTimeEl.textContent = formatTime(audio.currentTime);
-
-    const currentSecond = Math.floor(audio.currentTime);
-    if (currentSecond !== lastSavedSecond) {
-      lastSavedSecond = currentSecond;
-      saveState();
-    }
-  });
-
-  audio.addEventListener("loadedmetadata", () => {
-    durationTimeEl.textContent = formatTime(audio.duration);
-    currentTimeEl.textContent = formatTime(audio.currentTime);
-    updatePlayerVisibility();
-  });
-
-  audio.addEventListener("play", () => {
-    state.playing = true;
-    markInteraction();
-    updateMeta();
-    updatePlayerVisibility();
-    saveState();
-  });
-
-  audio.addEventListener("pause", () => {
-    state.playing = false;
-    updateMeta();
-    updatePlayerVisibility();
-    saveState();
-  });
-
-  audio.addEventListener("ended", () => {
-    nextTrack();
-  });
+  }
 
   document.querySelectorAll(".play-track-btn").forEach((button) => {
     button.addEventListener("click", () => {
-      const index = Number(button.dataset.track || 0);
-      loadTrack(index, {
-        autoplay: true,
-        restoreTime: 0,
-        markAsInteracted: true
-      });
+      const requestedIndex = Number(button.dataset.track || 0);
+      state.time = 0;
+      setTrack(requestedIndex, false);
+      playCurrent();
     });
   });
 
-  if (state.hasInteracted) {
-    loadTrack(state.index, {
-      autoplay: false,
-      restoreTime: state.time || 0,
-      markAsInteracted: false
-    });
+  audio.addEventListener("loadedmetadata", () => {
+    if (state.time > 0 && !audio.currentTime) {
+      audio.currentTime = state.time;
+    }
+    updatePlayerUI();
+  });
 
-    audio.currentTime = state.time || 0;
-  }
+  audio.addEventListener("timeupdate", () => {
+    updatePlayerUI();
 
-  updateMeta();
-  updatePlayerVisibility();
-
-  if (state.playing && state.hasInteracted) {
-    audio.play().catch((error) => {
-      console.error("Erro ao restaurar reprodução:", error);
-      state.playing = false;
-      updatePlayerVisibility();
+    const currentSecond = Math.floor(audio.currentTime || 0);
+    if (currentSecond !== lastSavedSecond) {
+      lastSavedSecond = currentSecond;
+      state.time = audio.currentTime || 0;
       saveState();
-    });
+    }
+  });
+
+  audio.addEventListener("play", () => {
+    showPlayer();
+    updatePlayerUI();
+  });
+
+  audio.addEventListener("pause", () => {
+    updatePlayerUI();
+  });
+
+  audio.addEventListener("ended", () => {
+    changeTrack(1, true);
+  });
+
+  ensurePlayerUI();
+  setTrack(state.index, state.time > 0);
+
+  if (state.hasInteracted) {
+    showPlayer();
+  } else {
+    hidePlayer();
   }
 
-  window.addEventListener("beforeunload", saveState);
+  if (state.hasInteracted && state.playing) {
+    playCurrent();
+  } else {
+    updatePlayerUI();
+  }
 });

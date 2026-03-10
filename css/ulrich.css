@@ -1,42 +1,29 @@
-.ulrich-page {
+.ulrich-hero {
   background:
-    radial-gradient(circle at top, rgba(111, 74, 219, 0.06), transparent 18%),
-    linear-gradient(180deg, #070709 0%, #09090b 100%);
+    radial-gradient(circle at top right, rgba(236, 72, 153, 0.12), transparent 20%),
+    radial-gradient(circle at bottom left, rgba(34, 211, 238, 0.1), transparent 20%),
+    linear-gradient(180deg, #09090d 0%, #11111b 100%);
 }
 
-.ulrich-hero .hero-copy h1 {
-  letter-spacing: 0.08em;
+.ulrich-page .hero-copy h1 {
+  letter-spacing: 0.04em;
 }
 
 .hero-media {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  display: grid;
+  align-items: stretch;
 }
 
-.hero-photo {
-  width: 100%;
-  max-width: 460px;
-  border-radius: 24px;
-  border: 1px solid rgba(255,255,255,0.08);
-  box-shadow: 0 12px 28px rgba(0,0,0,0.22);
-  object-fit: cover;
+.set-card {
+  background:
+    linear-gradient(135deg, rgba(139, 92, 246, 0.08), rgba(236, 72, 153, 0.06)),
+    var(--card);
 }
 
-.set-card,
-.info-card {
-  position: relative;
-  overflow: hidden;
+.expression-section h2 {
+  margin-bottom: 2.4rem;
 }
 
-.set-card::after,
-.info-card::after {
-  content: none;
-}
-
-@media (max-width: 720px) {
-  .hero-photo {
-    max-width: 100%;
-    border-radius: 20px;
-  }
+.expression-section .approach-grid {
+  margin-top: 0.9rem;
 }

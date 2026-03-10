@@ -2,3 +2,7 @@
   margin-top: 2rem;
   margin-bottom: 3rem;
 }
+
+.contact-grid .info-card {
+  min-height: 100%;
+}
