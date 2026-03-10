@@ -1,14 +1,14 @@
 document.addEventListener("DOMContentLoaded", () => {
   const TRACKS = [
     {
-      title: "Ulrich - #elfortintalent2026",
+      title: "Set Talent 2026",
       artist: "Ulrich",
       src: "/assets/audio/Ulrich - #elfortintalent2026.mp3"
     },
     {
-      title: "Ulrich - Extended Session",
+      title: "Set Afro House",
       artist: "Ulrich",
-      src: "/assets/audio/Ulrich - Extended Session.mp3"
+      src: "/assets/audio/Afro House @ Ulrich [23.08.2025].mp3"
     }
   ];
 
@@ -91,9 +91,9 @@ document.addEventListener("DOMContentLoaded", () => {
         </div>
 
         <div class="global-player__controls">
-          <button class="player-btn" id="prevTrackBtn" type="button" aria-label="Faixa anterior">⏮</button>
+          <button class="player-btn" id="prevTrackBtn" type="button" aria-label="Set anterior">⏮</button>
           <button class="player-btn" id="playPauseBtn" type="button" aria-label="Tocar ou pausar">▶</button>
-          <button class="player-btn" id="nextTrackBtn" type="button" aria-label="Próxima faixa">⏭</button>
+          <button class="player-btn" id="nextTrackBtn" type="button" aria-label="Próximo set">⏭</button>
         </div>
 
         <div class="player-range-group">
@@ -213,7 +213,9 @@ document.addEventListener("DOMContentLoaded", () => {
           updatePlayerVisibility();
           saveState();
         })
-        .catch(() => {});
+        .catch((error) => {
+          console.error("Erro ao tocar o áudio:", error);
+        });
     } else {
       saveState();
     }
@@ -234,7 +236,9 @@ document.addEventListener("DOMContentLoaded", () => {
           updatePlayerVisibility();
           saveState();
         })
-        .catch(() => {});
+        .catch((error) => {
+          console.error("Erro ao tocar o áudio:", error);
+        });
     } else {
       audio.pause();
       state.playing = false;
@@ -324,7 +328,8 @@ document.addEventListener("DOMContentLoaded", () => {
   updatePlayerVisibility();
 
   if (state.playing) {
-    audio.play().catch(() => {
+    audio.play().catch((error) => {
+      console.error("Erro ao restaurar reprodução:", error);
       state.playing = false;
       updatePlayerVisibility();
       saveState();
