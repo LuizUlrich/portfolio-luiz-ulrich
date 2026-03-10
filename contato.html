@@ -6,7 +6,7 @@
   <title>Luiz Ulrich | Contato</title>
   <meta
     name="description"
-    content="Entre em contato com Luiz Ulrich para oportunidades em tecnologia, projetos digitais, branding ou música."
+    content="Entre em contato com Luiz Ulrich para oportunidades em tecnologia, projetos digitais, branding pessoal ou apresentações como DJ."
   />
   <link rel="icon" href="assets/icons/favicon.ico" />
   <link rel="stylesheet" href="css/global.css" />
@@ -16,7 +16,7 @@
 <body>
   <header class="site-header glass">
     <div class="container header-inner">
-      <a class="brand" href="index.html">
+      <a class="brand" href="index.html" aria-label="Ir para a página inicial">
         <span class="brand-mark">LU</span>
         <span class="brand-text">Luiz Ulrich</span>
       </a>
@@ -28,8 +28,16 @@
         <a href="contato.html" class="is-active">Contato</a>
       </nav>
 
-      <button class="menu-toggle" id="menuToggle" aria-label="Abrir menu" aria-expanded="false" aria-controls="mainNav">
-        <span></span><span></span><span></span>
+      <button
+        class="menu-toggle"
+        id="menuToggle"
+        aria-label="Abrir menu"
+        aria-expanded="false"
+        aria-controls="mainNav"
+      >
+        <span></span>
+        <span></span>
+        <span></span>
       </button>
     </div>
   </header>
@@ -46,22 +54,59 @@
       <div class="contact-grid">
         <article class="info-card">
           <h2>Tecnologia</h2>
-          <p>Projetos, oportunidades, sistemas, suporte e presença digital.</p>
+          <p>
+            Projetos, oportunidades, sistemas, suporte, presença digital e
+            soluções com foco em clareza e evolução.
+          </p>
         </article>
 
         <article class="info-card">
           <h2>Música</h2>
-          <p>Bookings, press kit, sets e collabs.</p>
+          <p>
+            Bookings, press kit, sets, collabs e oportunidades ligadas ao
+            projeto Ulrich.
+          </p>
         </article>
 
         <article class="info-card">
           <h2>Canais</h2>
-          <ul class="clean-list">
-            <li>Email: luizfelipeulrich@gmail.com</li>
-            <li>LinkedIn: linkedin.com/in/luizulrich</li>
-            <li>GitHub: github.com/LuizUlrich</li>
-            <li>Instagram: @luiz.ulrich</li>
-          </ul>
+
+          <div class="contact-actions">
+            <a class="contact-btn" href="mailto:luizfelipeulrich@gmail.com">
+              <span class="contact-btn__label">Email</span>
+              <span class="contact-btn__value">luizfelipeulrich@gmail.com</span>
+            </a>
+
+            <a
+              class="contact-btn"
+              href="https://www.linkedin.com/in/luizulrich"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <span class="contact-btn__label">LinkedIn</span>
+              <span class="contact-btn__value">linkedin.com/in/luizulrich</span>
+            </a>
+
+            <a
+              class="contact-btn"
+              href="https://github.com/LuizUlrich"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <span class="contact-btn__label">GitHub</span>
+              <span class="contact-btn__value">github.com/LuizUlrich</span>
+            </a>
+
+            <a
+              class="contact-btn"
+              href="https://wa.me/5547991779379"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <span class="contact-btn__label">WhatsApp</span>
+              <span class="contact-btn__value">+55 47 99177-9379</span>
+            </a>
+          </div>
         </article>
       </div>
     </div>

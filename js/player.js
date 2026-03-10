@@ -3,12 +3,12 @@ document.addEventListener("DOMContentLoaded", () => {
     {
       title: "Ulrich - #elfortintalent2026",
       artist: "Ulrich",
-      src: "assets/audio/Ulrich - #elfortintalent2026.mp3"
+      src: "/assets/audio/Ulrich - #elfortintalent2026.mp3"
     },
     {
-      title: "Afro House @ Ulrich [23.08.2025]",
+      title: "Ulrich - Extended Session",
       artist: "Ulrich",
-      src: "assets/audio/Afro House @ Ulrich [23.08.2025].mp3"
+      src: "/assets/audio/Ulrich - Extended Session.mp3"
     }
   ];
 
@@ -26,6 +26,7 @@ document.addEventListener("DOMContentLoaded", () => {
   function loadState() {
     try {
       const saved = localStorage.getItem(STORAGE_KEY);
+
       if (!saved) {
         return {
           index: 0,
@@ -34,7 +35,14 @@ document.addEventListener("DOMContentLoaded", () => {
           playing: false
         };
       }
-      return { index: 0, time: 0, volume: 0.85, playing: false, ...JSON.parse(saved) };
+
+      return {
+        index: 0,
+        time: 0,
+        volume: 0.85,
+        playing: false,
+        ...JSON.parse(saved)
+      };
     } catch {
       return {
         index: 0,
@@ -61,8 +69,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function formatTime(seconds) {
     if (!Number.isFinite(seconds)) return "0:00";
+
     const mins = Math.floor(seconds / 60);
     const secs = Math.floor(seconds % 60);
+
     return `${mins}:${String(secs).padStart(2, "0")}`;
   }
 
@@ -72,6 +82,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const player = document.createElement("section");
     player.className = "global-player";
     player.setAttribute("aria-label", "Player global de áudio");
+
     player.innerHTML = `
       <div class="global-player__inner">
         <div class="global-player__meta">
@@ -87,17 +98,36 @@ document.addEventListener("DOMContentLoaded", () => {
 
         <div class="player-range-group">
           <span class="player-time" id="currentTime">0:00</span>
-          <input class="player-range" id="progressBar" type="range" min="0" max="100" value="0" aria-label="Progresso da música" />
+          <input
+            class="player-range"
+            id="progressBar"
+            type="range"
+            min="0"
+            max="100"
+            value="0"
+            aria-label="Progresso da música"
+          />
           <span class="player-time" id="durationTime">0:00</span>
-          <input class="player-range player-volume" id="volumeBar" type="range" min="0" max="1" step="0.01" value="0.85" aria-label="Volume" />
+          <input
+            class="player-range player-volume"
+            id="volumeBar"
+            type="range"
+            min="0"
+            max="1"
+            step="0.01"
+            value="0.85"
+            aria-label="Volume"
+          />
         </div>
       </div>
     `;
+
     document.body.appendChild(player);
   }
 
   ensurePlayerUI();
 
+  const playerEl = document.querySelector(".global-player");
   const titleEl = document.getElementById("playerTrackTitle");
   const artistEl = document.getElementById("playerTrackArtist");
   const playPauseBtn = document.getElementById("playPauseBtn");
@@ -107,6 +137,25 @@ document.addEventListener("DOMContentLoaded", () => {
   const volumeBar = document.getElementById("volumeBar");
   const currentTimeEl = document.getElementById("currentTime");
   const durationTimeEl = document.getElementById("durationTime");
+
+  function isHomePage() {
+    const path = window.location.pathname;
+    return path === "/" || path.endsWith("/index.html") || path.endsWith("index.html");
+  }
+
+  function updatePlayerVisibility() {
+    if (!playerEl) return;
+
+    const hasStartedPlayback =
+      !!audio.src &&
+      (state.playing || (audio.currentTime > 0 && !Number.isNaN(audio.currentTime)));
+
+    if (isHomePage() && !hasStartedPlayback && audio.paused) {
+      playerEl.style.display = "none";
+    } else {
+      playerEl.style.display = "block";
+    }
+  }
 
   function updateMeta() {
     const current = TRACKS[state.index];
@@ -125,26 +174,49 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (!track) return;
 
-    if (audio.getAttribute("src") !== track.src) {
+    const shouldReplaceSrc = audio.getAttribute("src") !== track.src;
+
+    if (shouldReplaceSrc) {
       audio.src = track.src;
       audio.load();
     }
 
     updateMeta();
+    updatePlayerVisibility();
 
     const applyTime = () => {
-      if (Number.isFinite(restoreTime) && restoreTime > 0 && restoreTime < (audio.duration || Infinity)) {
+      if (
+        Number.isFinite(restoreTime) &&
+        restoreTime > 0 &&
+        restoreTime < (audio.duration || Infinity)
+      ) {
         audio.currentTime = restoreTime;
       }
     };
 
-    audio.addEventListener("loadedmetadata", applyTime, { once: true });
-
-    if (autoplay) {
-      audio.play().catch(() => {});
+    if (shouldReplaceSrc) {
+      audio.addEventListener("loadedmetadata", applyTime, { once: true });
+    } else if (
+      Number.isFinite(restoreTime) &&
+      restoreTime > 0 &&
+      restoreTime < (audio.duration || Infinity)
+    ) {
+      audio.currentTime = restoreTime;
     }
 
-    saveState();
+    if (autoplay) {
+      audio
+        .play()
+        .then(() => {
+          state.playing = true;
+          updateMeta();
+          updatePlayerVisibility();
+          saveState();
+        })
+        .catch(() => {});
+    } else {
+      saveState();
+    }
   }
 
   function togglePlay() {
@@ -154,13 +226,22 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     if (audio.paused) {
-      audio.play().catch(() => {});
+      audio
+        .play()
+        .then(() => {
+          state.playing = true;
+          updateMeta();
+          updatePlayerVisibility();
+          saveState();
+        })
+        .catch(() => {});
     } else {
       audio.pause();
+      state.playing = false;
+      updateMeta();
+      updatePlayerVisibility();
+      saveState();
     }
-
-    updateMeta();
-    saveState();
   }
 
   function nextTrack() {
@@ -185,6 +266,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   progressBar.addEventListener("input", () => {
     if (!Number.isFinite(audio.duration) || audio.duration <= 0) return;
+
     const percentage = Number(progressBar.value) / 100;
     audio.currentTime = percentage * audio.duration;
     saveState();
@@ -201,13 +283,23 @@ document.addEventListener("DOMContentLoaded", () => {
     saveState();
   });
 
+  audio.addEventListener("loadedmetadata", () => {
+    durationTimeEl.textContent = formatTime(audio.duration);
+    currentTimeEl.textContent = formatTime(audio.currentTime);
+    updatePlayerVisibility();
+  });
+
   audio.addEventListener("play", () => {
+    state.playing = true;
     updateMeta();
+    updatePlayerVisibility();
     saveState();
   });
 
   audio.addEventListener("pause", () => {
+    state.playing = false;
     updateMeta();
+    updatePlayerVisibility();
     saveState();
   });
 
@@ -227,11 +319,17 @@ document.addEventListener("DOMContentLoaded", () => {
     restoreTime: state.time || 0
   });
 
-  if (state.playing) {
-    audio.play().catch(() => {});
-  }
-
+  audio.currentTime = state.time || 0;
   updateMeta();
+  updatePlayerVisibility();
+
+  if (state.playing) {
+    audio.play().catch(() => {
+      state.playing = false;
+      updatePlayerVisibility();
+      saveState();
+    });
+  }
 
   window.addEventListener("beforeunload", saveState);
 });
