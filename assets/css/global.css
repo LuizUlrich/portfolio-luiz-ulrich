@@ -299,10 +299,10 @@ ul {
 
 .global-player {
   position: fixed;
-  left: 50%;
+  left: 77%;
   bottom: 0.75rem;
   transform: translateX(-50%);
-  width: min(96%, 1180px);
+  width: min(96%, 640px);
   z-index: 1100;
   display: none;
   border: 1px solid var(--line-strong);
