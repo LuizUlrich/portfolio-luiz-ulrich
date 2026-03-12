@@ -1,9 +1,51 @@
-.presskit-header {
-  margin-bottom: 2rem;
+.presskit-page {
+  background:
+    radial-gradient(circle at 84% 12%, rgba(255, 107, 124, 0.1), transparent 20%),
+    linear-gradient(180deg, #070608 0%, #12080d 52%, #0c090d 100%);
 }
 
-.presskit-bio {
+.presskit-hero {
   background:
-    linear-gradient(135deg, rgba(139, 92, 246, 0.08), rgba(236, 72, 153, 0.06)),
-    var(--card);
+    radial-gradient(circle at 84% 10%, rgba(255, 107, 124, 0.14), transparent 22%),
+    linear-gradient(180deg, rgba(255, 107, 124, 0.03), transparent 36%);
+}
+
+.presskit-grid {
+  display: grid;
+  grid-template-columns: 1.25fr 0.75fr;
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+.presskit-card {
+  min-height: 100%;
+  border-color: rgba(255, 107, 124, 0.1);
+}
+
+.presskit-card--wide p + p {
+  margin-top: 1rem;
+}
+
+.presskit-points,
+.presskit-summary-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+.presskit-summary-grid {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.presskit-summary-grid .info-card p {
+  color: var(--text-soft);
+}
+
+@media (max-width: 980px) {
+  .presskit-grid,
+  .presskit-points,
+  .presskit-summary-grid {
+    grid-template-columns: 1fr;
+  }
 }

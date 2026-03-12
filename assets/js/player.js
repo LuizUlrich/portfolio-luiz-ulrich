@@ -82,13 +82,14 @@ document.addEventListener("DOMContentLoaded", () => {
     wrapper.setAttribute("aria-label", "Player global de áudio");
     wrapper.innerHTML = `
       <div class="global-player__inner">
-        <div class="global-player__meta">
-          <span class="global-player__eyebrow">Tocando agora</span>
-          <div class="global-player__title">Nenhum set carregado</div>
-          <div class="global-player__artist">Ulrich</div>
-        </div>
+        <div class="global-player__main">
+          <div class="global-player__badge" aria-hidden="true">UL</div>
 
-        <div class="global-player__center">
+          <div class="global-player__meta">
+            <div class="global-player__title">Nenhum set carregado</div>
+            <div class="global-player__artist">Ulrich</div>
+          </div>
+
           <div class="global-player__controls">
             <button class="player-icon-btn" type="button" data-action="prev" aria-label="Set anterior">
               <img src="${ICONS.prev}" alt="" />
@@ -102,36 +103,23 @@ document.addEventListener("DOMContentLoaded", () => {
               <img src="${ICONS.next}" alt="" />
             </button>
           </div>
-
-          <div class="global-player__progress">
-            <span class="global-player__time" data-role="current">0:00</span>
-            <input
-              class="global-player__range"
-              data-role="seek"
-              type="range"
-              min="0"
-              max="100"
-              step="0.1"
-              value="0"
-              aria-label="Linha do tempo"
-            />
-            <span class="global-player__time" data-role="duration">0:00</span>
-          </div>
         </div>
 
-        <div class="global-player__side">
-          <label for="global-volume">Vol</label>
+        <div class="global-player__timeline">
+          <span class="global-player__time" data-role="current">0:00</span>
+
           <input
-            id="global-volume"
-            class="global-player__volume-input"
-            data-role="volume"
+            class="global-player__range"
+            data-role="seek"
             type="range"
             min="0"
-            max="1"
-            step="0.01"
-            value="${state.volume}"
-            aria-label="Volume"
+            max="100"
+            step="0.1"
+            value="0"
+            aria-label="Linha do tempo"
           />
+
+          <span class="global-player__time" data-role="duration">0:00</span>
         </div>
       </div>
     `;
@@ -149,8 +137,7 @@ document.addEventListener("DOMContentLoaded", () => {
       nextButton: wrapper.querySelector('[data-action="next"]'),
       seek: wrapper.querySelector('[data-role="seek"]'),
       current: wrapper.querySelector('[data-role="current"]'),
-      duration: wrapper.querySelector('[data-role="duration"]'),
-      volume: wrapper.querySelector('[data-role="volume"]')
+      duration: wrapper.querySelector('[data-role="duration"]')
     };
 
     ui.prevButton.addEventListener("click", () => changeTrack(-1, true));
@@ -165,12 +152,6 @@ document.addEventListener("DOMContentLoaded", () => {
     ui.seek.addEventListener("change", () => {
       audio.currentTime = Number(ui.seek.value);
       isSeeking = false;
-      saveState();
-    });
-
-    ui.volume.addEventListener("input", () => {
-      audio.volume = Number(ui.volume.value);
-      state.volume = audio.volume;
       saveState();
     });
 
@@ -192,11 +173,10 @@ document.addEventListener("DOMContentLoaded", () => {
     ui.duration.textContent = formatTime(audio.duration);
 
     ui.seek.max = Number.isFinite(audio.duration) ? audio.duration : 100;
+
     if (!isSeeking) {
       ui.seek.value = Number.isFinite(audio.currentTime) ? audio.currentTime : 0;
     }
-
-    ui.volume.value = audio.volume;
   }
 
   function showPlayer() {
@@ -253,12 +233,14 @@ document.addEventListener("DOMContentLoaded", () => {
       playCurrent();
       return;
     }
+
     pauseCurrent();
   }
 
   function changeTrack(direction, autoplay = false) {
     state.time = 0;
     setTrack(state.index + direction, false);
+
     if (autoplay) {
       playCurrent();
     }
@@ -298,6 +280,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   audio.addEventListener("pause", () => {
     updatePlayerUI();
+    saveState();
   });
 
   audio.addEventListener("ended", () => {

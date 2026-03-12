@@ -1,25 +1,80 @@
+.home-page {
+  background:
+    radial-gradient(circle at 12% 24%, rgba(214, 178, 75, 0.08), transparent 20%),
+    radial-gradient(circle at 88% 18%, rgba(255, 255, 255, 0.025), transparent 18%),
+    linear-gradient(180deg, #06070b 0%, #0a0d15 52%, #090b11 100%);
+}
+
 .home-page .home-hero {
   background:
-    radial-gradient(circle at top right, rgba(212, 175, 55, 0.08), transparent 24%),
-    radial-gradient(circle at bottom left, rgba(34, 211, 238, 0.05), transparent 22%);
+    radial-gradient(circle at 82% 10%, rgba(214, 178, 75, 0.1), transparent 22%),
+    radial-gradient(circle at 12% 85%, rgba(125, 162, 255, 0.08), transparent 18%);
 }
 
 .home-page .hero-copy {
   padding-top: 0.8rem;
 }
 
+.home-page .hero-copy h1 {
+  max-width: 9ch;
+}
+
+.home-page .lead {
+  max-width: 62ch;
+}
+
 .career-card {
   background:
-    linear-gradient(135deg, rgba(212, 175, 55, 0.08), transparent),
-    var(--card);
+    radial-gradient(circle at top right, rgba(125, 162, 255, 0.12), transparent 34%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0.01)),
+    var(--surface);
 }
 
 .music-card {
   background:
-    linear-gradient(135deg, rgba(139, 92, 246, 0.12), rgba(236, 72, 153, 0.06)),
-    var(--card);
+    radial-gradient(circle at top right, rgba(255, 107, 124, 0.12), transparent 34%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0.01)),
+    var(--surface);
+}
+
+.career-card,
+.feature-card--luiz {
+  border-color: rgba(125, 162, 255, 0.14);
+}
+
+.music-card,
+.feature-card--ulrich {
+  border-color: rgba(255, 107, 124, 0.14);
+}
+
+.feature-card--luiz {
+  background:
+    radial-gradient(circle at top right, rgba(125, 162, 255, 0.1), transparent 36%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0.01)),
+    var(--surface);
+}
+
+.feature-card--ulrich {
+  background:
+    radial-gradient(circle at top right, rgba(255, 107, 124, 0.1), transparent 36%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0.01)),
+    var(--surface);
+}
+
+.home-highlights {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
 .home-sections .feature-card {
   min-height: 100%;
+}
+
+@media (max-width: 760px) {
+  .home-highlights {
+    grid-template-columns: 1fr;
+  }
+
+  .home-page .hero-copy h1 {
+    max-width: none;
+  }
 }
