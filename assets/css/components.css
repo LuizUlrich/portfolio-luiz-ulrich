@@ -11,6 +11,7 @@
   border: 1px solid rgba(255, 255, 255, 0.07);
   border-radius: var(--radius);
   box-shadow: var(--shadow-soft);
+  isolation: isolate;
 }
 
 .info-card::before,
@@ -25,6 +26,25 @@
   background: linear-gradient(90deg, transparent, rgba(var(--accent-rgb), 0.26), transparent);
   opacity: 0.45;
   pointer-events: none;
+}
+
+.info-card::after,
+.project-card::after,
+.set-card::after,
+.contact-btn::after,
+.hero-panel::after {
+  content: "";
+  position: absolute;
+  inset: auto -12% -42% auto;
+  width: 180px;
+  height: 180px;
+  border-radius: 999px;
+  background: radial-gradient(circle, rgba(var(--accent-rgb), 0.12), transparent 70%);
+  opacity: 0;
+  transform: scale(0.9);
+  transition: opacity 0.28s ease, transform 0.28s ease;
+  pointer-events: none;
+  z-index: -1;
 }
 
 .info-card,
@@ -56,6 +76,15 @@
   transform: translateY(-4px);
   border-color: rgba(var(--accent-rgb), 0.14);
   box-shadow: var(--shadow-md);
+}
+
+.info-card:hover::after,
+.project-card:hover::after,
+.set-card:hover::after,
+.contact-btn:hover::after,
+.hero-panel:hover::after {
+  opacity: 1;
+  transform: scale(1);
 }
 
 .hero-panel h2,
@@ -130,6 +159,7 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  gap: 0.55rem;
   min-height: 48px;
   padding: 0.9rem 1.28rem;
   border-radius: 16px;
@@ -144,6 +174,18 @@
 
 .btn:hover {
   transform: translateY(-2px);
+}
+
+.btn::after {
+  content: "↗";
+  font-size: 0.92rem;
+  opacity: 0.72;
+  transition: transform 0.25s ease, opacity 0.25s ease;
+}
+
+.btn:hover::after {
+  opacity: 1;
+  transform: translate(2px, -1px);
 }
 
 .btn-primary {
@@ -293,6 +335,34 @@
   margin-top: 1.5rem;
 }
 
+.signal-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.9rem;
+  margin-top: 1.4rem;
+}
+
+.signal-card {
+  padding: 1rem 1.05rem;
+  border-radius: var(--radius-md);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0.008)),
+    rgba(255, 255, 255, 0.012);
+}
+
+.signal-card strong {
+  display: block;
+  color: #fff;
+  font-size: 1.05rem;
+  margin-bottom: 0.25rem;
+}
+
+.signal-card span {
+  color: var(--text-soft);
+  font-size: 0.92rem;
+}
+
 .spaced-top {
   margin-top: 1rem;
 }
@@ -334,5 +404,9 @@
   .hero-media,
   .presskit-bio-photo-wrap {
     min-height: 280px;
+  }
+
+  .signal-grid {
+    grid-template-columns: 1fr;
   }
 }
