@@ -40,3 +40,40 @@
 .ulrich-page .set-card {
   border-color: rgba(229, 92, 104, 0.09);
 }
+
+.presskit-grid {
+  display: grid;
+  grid-template-columns: 1.25fr 0.75fr;
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+.presskit-card {
+  min-height: 100%;
+  border-color: rgba(229, 92, 104, 0.1);
+}
+
+.presskit-card--wide p + p {
+  margin-top: 1rem;
+}
+
+.presskit-points {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+.presskit-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 1.5rem;
+}
+
+@media (max-width: 980px) {
+  .presskit-grid,
+  .presskit-points {
+    grid-template-columns: 1fr;
+  }
+}
