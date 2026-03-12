@@ -1,6 +1,6 @@
 .home-page {
   background:
-    radial-gradient(circle at 12% 22%, rgba(214, 178, 75, 0.05), transparent 18%),
+    radial-gradient(circle at 12% 22%, rgba(170, 20, 35, 0.05), transparent 18%),
     radial-gradient(circle at 88% 14%, rgba(255, 255, 255, 0.02), transparent 16%),
     linear-gradient(180deg, #06070b 0%, #0a0d15 52%, #090b11 100%);
 }
@@ -9,8 +9,8 @@
   padding-top: 6.9rem;
   padding-bottom: 4.6rem;
   background:
-    radial-gradient(circle at 82% 8%, rgba(214, 178, 75, 0.08), transparent 22%),
-    radial-gradient(circle at 8% 88%, rgba(125, 162, 255, 0.05), transparent 18%);
+    radial-gradient(circle at 82% 8%, rgba(170, 20, 35, 0.08), transparent 22%),
+    radial-gradient(circle at 8% 88%, rgba(196, 36, 52, 0.05), transparent 18%);
 }
 
 .home-hero-grid {
@@ -50,17 +50,17 @@
 }
 
 .hero-spotlight--luiz {
-  border-color: rgba(125, 162, 255, 0.12);
+  border-color: rgba(196, 36, 52, 0.12);
   background:
-    radial-gradient(circle at top right, rgba(125, 162, 255, 0.08), transparent 34%),
+    radial-gradient(circle at top right, rgba(196, 36, 52, 0.08), transparent 34%),
     linear-gradient(180deg, rgba(255, 255, 255, 0.018), rgba(255, 255, 255, 0.008)),
     var(--surface);
 }
 
 .hero-spotlight--ulrich {
-  border-color: rgba(255, 107, 124, 0.12);
+  border-color: rgba(229, 92, 104, 0.12);
   background:
-    radial-gradient(circle at top right, rgba(255, 107, 124, 0.08), transparent 34%),
+    radial-gradient(circle at top right, rgba(229, 92, 104, 0.08), transparent 34%),
     linear-gradient(180deg, rgba(255, 255, 255, 0.018), rgba(255, 255, 255, 0.008)),
     var(--surface);
 }
@@ -155,19 +155,19 @@
 }
 
 .dual-btn-luiz {
-  border-color: rgba(40,90,160,0.35);
+  border-color: rgba(120,12,24,0.35);
 }
 
 .dual-btn-luiz:hover {
-  background: rgba(40,90,160,0.08);
+  background: rgba(120,12,24,0.08);
 }
 
 .dual-btn-ulrich {
-  border-color: rgba(150,30,30,0.35);
+  border-color: rgba(170,20,35,0.35);
 }
 
 .dual-btn-ulrich:hover {
-  background: rgba(150,30,30,0.08);
+  background: rgba(170,20,35,0.08);
 }
 
 .overview-grid {
@@ -182,24 +182,24 @@
 }
 
 .feature-card--luiz {
-  border-color: rgba(125, 162, 255, 0.12);
+  border-color: rgba(196, 36, 52, 0.12);
   background:
-    radial-gradient(circle at top right, rgba(125, 162, 255, 0.08), transparent 36%),
+    radial-gradient(circle at top right, rgba(196, 36, 52, 0.08), transparent 36%),
     linear-gradient(180deg, rgba(255, 255, 255, 0.018), rgba(255, 255, 255, 0.008)),
     var(--surface);
 }
 
 .feature-card--ulrich {
-  border-color: rgba(255, 107, 124, 0.12);
+  border-color: rgba(229, 92, 104, 0.12);
   background:
-    radial-gradient(circle at top right, rgba(255, 107, 124, 0.08), transparent 36%),
+    radial-gradient(circle at top right, rgba(229, 92, 104, 0.08), transparent 36%),
     linear-gradient(180deg, rgba(255, 255, 255, 0.018), rgba(255, 255, 255, 0.008)),
     var(--surface);
 }
 
 .feature-card--contact {
   background:
-    radial-gradient(circle at top right, rgba(214, 178, 75, 0.06), transparent 36%),
+    radial-gradient(circle at top right, rgba(170, 20, 35, 0.06), transparent 36%),
     linear-gradient(180deg, rgba(255, 255, 255, 0.018), rgba(255, 255, 255, 0.008)),
     var(--surface);
 }
@@ -242,7 +242,7 @@
   border: 1px solid rgba(255, 255, 255, 0.07);
   border-radius: var(--radius);
   background:
-    radial-gradient(circle at top right, rgba(214, 178, 75, 0.06), transparent 30%),
+    radial-gradient(circle at top right, rgba(170, 20, 35, 0.06), transparent 30%),
     linear-gradient(180deg, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0.008)),
     var(--surface);
   box-shadow: var(--shadow-soft);
@@ -273,14 +273,14 @@
 }
 
 .signature-chip--luiz {
-  border-color: rgba(125, 162, 255, 0.14);
-  background: rgba(125, 162, 255, 0.05);
+  border-color: rgba(196, 36, 52, 0.14);
+  background: rgba(196, 36, 52, 0.05);
   color: #d8e4ff;
 }
 
 .signature-chip--ulrich {
-  border-color: rgba(255, 107, 124, 0.14);
-  background: rgba(255, 107, 124, 0.05);
+  border-color: rgba(229, 92, 104, 0.14);
+  background: rgba(229, 92, 104, 0.05);
   color: #ffd3d9;
 }
 

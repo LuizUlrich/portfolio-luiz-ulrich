@@ -109,11 +109,11 @@
 }
 
 .mini-card--luiz::after {
-  background: linear-gradient(180deg, rgba(125, 162, 255, 0.9), rgba(125, 162, 255, 0.12));
+  background: linear-gradient(180deg, rgba(196, 36, 52, 0.9), rgba(196, 36, 52, 0.12));
 }
 
 .mini-card--ulrich::after {
-  background: linear-gradient(180deg, rgba(255, 107, 124, 0.9), rgba(255, 107, 124, 0.12));
+  background: linear-gradient(180deg, rgba(229, 92, 104, 0.9), rgba(229, 92, 104, 0.12));
 }
 
 .mini-card strong {
@@ -154,17 +154,17 @@
 
 .btn-primary--luiz:hover {
   transform: translateY(-2px);
-  box-shadow: 0 14px 40px rgba(36,71,139,0.45);
+  box-shadow: 0 14px 40px rgba(120, 12, 24, 0.42);
 }
 
 .btn-primary--luiz {
-  background: linear-gradient(135deg, #2b4cff, #7da2ff);
+  background: linear-gradient(135deg, #8a1824, #c42435);
   color: #ffffff;
-  box-shadow: 0 10px 30px rgba(43, 76, 255, 0.35);
+  box-shadow: 0 10px 30px rgba(138, 24, 36, 0.3);
 }
 
 .btn-primary--ulrich {
-  background: linear-gradient(135deg, #8a1824, #ff6b7c);
+  background: linear-gradient(135deg, #8a1824, #e55c68);
   color: #fff9fa;
   box-shadow: 0 10px 26px rgba(138, 24, 36, 0.26);
 }
@@ -176,13 +176,13 @@
 }
 
 .btn-secondary--luiz {
-  border-color: rgba(125, 162, 255, 0.15);
-  background: rgba(125, 162, 255, 0.05);
+  border-color: rgba(196, 36, 52, 0.15);
+  background: rgba(196, 36, 52, 0.05);
 }
 
 .btn-secondary--ulrich {
-  border-color: rgba(255, 107, 124, 0.15);
-  background: rgba(255, 107, 124, 0.05);
+  border-color: rgba(229, 92, 104, 0.15);
+  background: rgba(229, 92, 104, 0.05);
 }
 
 .text-link {
@@ -199,11 +199,11 @@
 }
 
 .text-link--luiz {
-  color: #c3d4ff;
+  color: #f2a5ae;
 }
 
 .text-link--ulrich {
-  color: #ffc0c8;
+  color: #ffd0d6;
 }
 
 .project-top {

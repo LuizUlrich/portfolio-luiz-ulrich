@@ -17,14 +17,14 @@
   --line: rgba(255, 255, 255, 0.07);
   --line-strong: rgba(255, 255, 255, 0.13);
 
-  --gold: #d6b24b;
-  --gold-soft: #f0d98b;
+  --gold: #aa1423;
+  --gold-soft: #f3a1ab;
 
-  --blue: #7da2ff;
-  --blue-deep: #16305f;
+  --blue: #c42435;
+  --blue-deep: #4a0a12;
 
-  --red: #ff6b7c;
-  --red-deep: #5a0f18;
+  --red: #e55c68;
+  --red-deep: #450810;
 
   --shadow-soft: 0 14px 36px rgba(0, 0, 0, 0.22);
   --shadow-md: 0 20px 52px rgba(0, 0, 0, 0.3);
@@ -40,26 +40,26 @@
 
   --accent: var(--gold);
   --accent-soft: var(--gold-soft);
-  --accent-rgb: 214, 178, 75;
+  --accent-rgb: 170, 20, 35;
 }
 
 .luiz-page {
   --accent: var(--blue);
-  --accent-soft: #c3d4ff;
-  --accent-rgb: 125, 162, 255;
+  --accent-soft: #f2a5ae;
+  --accent-rgb: 196, 36, 52;
 }
 
 .ulrich-page,
 .presskit-page {
   --accent: var(--red);
-  --accent-soft: #ffc0c8;
-  --accent-rgb: 255, 107, 124;
+  --accent-soft: #ffd0d6;
+  --accent-rgb: 229, 92, 104;
 }
 
 .contact-page {
   --accent: var(--gold);
   --accent-soft: var(--gold-soft);
-  --accent-rgb: 214, 178, 75;
+  --accent-rgb: 170, 20, 35;
 }
 
 * {
@@ -476,7 +476,7 @@ ul {
   height: 42px;
   border: none;
   background: linear-gradient(135deg, var(--gold), var(--gold-soft));
-  box-shadow: 0 8px 22px rgba(214, 178, 75, 0.22);
+  box-shadow: 0 8px 22px rgba(170, 20, 35, 0.22);
   opacity: 1;
 }
 

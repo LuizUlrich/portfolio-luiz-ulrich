@@ -1,13 +1,13 @@
 .presskit-page {
   background:
-    radial-gradient(circle at 84% 12%, rgba(255, 107, 124, 0.1), transparent 20%),
+    radial-gradient(circle at 84% 12%, rgba(229, 92, 104, 0.1), transparent 20%),
     linear-gradient(180deg, #070608 0%, #12080d 52%, #0c090d 100%);
 }
 
 .presskit-hero {
   background:
-    radial-gradient(circle at 84% 10%, rgba(255, 107, 124, 0.14), transparent 22%),
-    linear-gradient(180deg, rgba(255, 107, 124, 0.03), transparent 36%);
+    radial-gradient(circle at 84% 10%, rgba(229, 92, 104, 0.14), transparent 22%),
+    linear-gradient(180deg, rgba(229, 92, 104, 0.03), transparent 36%);
 }
 
 .presskit-grid {
@@ -19,7 +19,7 @@
 
 .presskit-card {
   min-height: 100%;
-  border-color: rgba(255, 107, 124, 0.1);
+  border-color: rgba(229, 92, 104, 0.1);
 }
 
 .presskit-card--wide p + p {
