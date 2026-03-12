@@ -1,19 +1,18 @@
 .ulrich-page {
   background:
-    radial-gradient(circle at 84% 12%, rgba(255, 107, 124, 0.1), transparent 20%),
-    radial-gradient(circle at 12% 78%, rgba(255, 107, 124, 0.05), transparent 18%),
+    radial-gradient(circle at 84% 12%, rgba(255, 107, 124, 0.08), transparent 20%),
+    radial-gradient(circle at 12% 78%, rgba(255, 107, 124, 0.04), transparent 18%),
     linear-gradient(180deg, #070608 0%, #12080d 52%, #0c090d 100%);
 }
 
 .ulrich-hero {
   background:
-    radial-gradient(circle at 84% 10%, rgba(255, 107, 124, 0.16), transparent 22%),
-    linear-gradient(180deg, rgba(255, 107, 124, 0.03), transparent 36%);
+    radial-gradient(circle at 84% 10%, rgba(255, 107, 124, 0.13), transparent 22%),
+    linear-gradient(180deg, rgba(255, 107, 124, 0.025), transparent 36%);
 }
 
 .ulrich-page .hero-copy h1 {
-  letter-spacing: 0.03em;
-  text-shadow: 0 0 28px rgba(255, 107, 124, 0.08);
+  text-shadow: 0 0 26px rgba(255, 107, 124, 0.07);
 }
 
 .hero-media {
@@ -22,22 +21,22 @@
 }
 
 .set-card {
-  border-color: rgba(255, 107, 124, 0.12);
+  border-color: rgba(255, 107, 124, 0.1);
   background:
-    radial-gradient(circle at top right, rgba(255, 107, 124, 0.1), transparent 36%),
-    linear-gradient(180deg, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0.01)),
+    radial-gradient(circle at top right, rgba(255, 107, 124, 0.07), transparent 36%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.018), rgba(255, 255, 255, 0.008)),
     var(--surface);
 }
 
 .expression-section h2 {
-  margin-bottom: 2.2rem;
+  margin-bottom: 2rem;
 }
 
 .expression-section .approach-grid {
-  margin-top: 0.9rem;
+  margin-top: 0.85rem;
 }
 
 .ulrich-page .info-card,
 .ulrich-page .set-card {
-  border-color: rgba(255, 107, 124, 0.1);
+  border-color: rgba(255, 107, 124, 0.09);
 }

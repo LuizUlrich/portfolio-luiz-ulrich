@@ -1,20 +1,20 @@
 .contact-page {
   background:
-    radial-gradient(circle at 84% 12%, rgba(214, 178, 75, 0.09), transparent 20%),
-    radial-gradient(circle at 14% 76%, rgba(125, 162, 255, 0.05), transparent 18%),
+    radial-gradient(circle at 84% 12%, rgba(214, 178, 75, 0.08), transparent 20%),
+    radial-gradient(circle at 14% 76%, rgba(125, 162, 255, 0.04), transparent 18%),
     linear-gradient(180deg, #06070b 0%, #0b0d14 52%, #090b11 100%);
 }
 
 .contact-hero {
   background:
-    radial-gradient(circle at 84% 10%, rgba(214, 178, 75, 0.1), transparent 22%),
-    linear-gradient(180deg, rgba(214, 178, 75, 0.03), transparent 36%);
+    radial-gradient(circle at 84% 10%, rgba(214, 178, 75, 0.08), transparent 22%),
+    linear-gradient(180deg, rgba(214, 178, 75, 0.025), transparent 36%);
 }
 
 .contact-hero-panel {
   background:
-    radial-gradient(circle at top right, rgba(214, 178, 75, 0.08), transparent 34%),
-    linear-gradient(180deg, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0.01)),
+    radial-gradient(circle at top right, rgba(214, 178, 75, 0.06), transparent 34%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.018), rgba(255, 255, 255, 0.008)),
     var(--surface);
 }
 
@@ -22,37 +22,37 @@
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 1rem;
-  margin-top: 1.5rem;
+  margin-top: 1.35rem;
 }
 
 .contact-btn--luiz {
-  border-color: rgba(125, 162, 255, 0.14);
+  border-color: rgba(125, 162, 255, 0.1);
 }
 
 .contact-btn--ulrich {
-  border-color: rgba(255, 107, 124, 0.14);
+  border-color: rgba(255, 107, 124, 0.1);
 }
 
 .contact-dual-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 1rem;
-  margin-top: 1.5rem;
+  margin-top: 1.35rem;
 }
 
 .contact-side-card--luiz {
-  border-color: rgba(125, 162, 255, 0.12);
+  border-color: rgba(125, 162, 255, 0.09);
   background:
-    radial-gradient(circle at top right, rgba(125, 162, 255, 0.08), transparent 34%),
-    linear-gradient(180deg, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0.01)),
+    radial-gradient(circle at top right, rgba(125, 162, 255, 0.06), transparent 34%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.018), rgba(255, 255, 255, 0.008)),
     var(--surface);
 }
 
 .contact-side-card--ulrich {
-  border-color: rgba(255, 107, 124, 0.12);
+  border-color: rgba(255, 107, 124, 0.09);
   background:
-    radial-gradient(circle at top right, rgba(255, 107, 124, 0.08), transparent 34%),
-    linear-gradient(180deg, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0.01)),
+    radial-gradient(circle at top right, rgba(255, 107, 124, 0.06), transparent 34%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.018), rgba(255, 255, 255, 0.008)),
     var(--surface);
 }
 
