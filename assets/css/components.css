@@ -149,13 +149,18 @@
 .btn-primary {
   background: linear-gradient(135deg, var(--gold), var(--gold-soft));
   color: #121212;
-  box-shadow: 0 10px 26px rgba(214, 178, 75, 0.2);
+  box-shadow: 0 10px 26px oklch(77.624% 0.12714 89.738 / 0.2);
+}
+
+.btn-primary--luiz:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 14px 40px rgba(36,71,139,0.45);
 }
 
 .btn-primary--luiz {
-  background: linear-gradient(135deg, #24478b, #7da2ff);
-  color: #f7faff;
-  box-shadow: 0 10px 26px rgba(36, 71, 139, 0.24);
+  background: linear-gradient(135deg, #2b4cff, #7da2ff);
+  color: #ffffff;
+  box-shadow: 0 10px 30px rgba(43, 76, 255, 0.35);
 }
 
 .btn-primary--ulrich {

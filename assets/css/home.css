@@ -115,6 +115,61 @@
   margin-top: 1.2rem;
 }
 
+.dual-buttons {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+  margin-top: 22px;
+}
+
+.dual-btn {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 16px 20px;
+  border-radius: 14px;
+  text-decoration: none;
+  width: 100%;
+
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
+
+  transition: all .25s ease;
+}
+
+.dual-btn:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 35px rgba(0,0,0,0.35);
+}
+
+.dual-title {
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.dual-desc {
+  font-size: 13px;
+  color: var(--muted);
+  line-height: 1.4;
+}
+
+.dual-btn-luiz {
+  border-color: rgba(40,90,160,0.35);
+}
+
+.dual-btn-luiz:hover {
+  background: rgba(40,90,160,0.08);
+}
+
+.dual-btn-ulrich {
+  border-color: rgba(150,30,30,0.35);
+}
+
+.dual-btn-ulrich:hover {
+  background: rgba(150,30,30,0.08);
+}
+
 .overview-grid {
   display: grid;
   grid-template-columns: 1.15fr 0.9fr 0.82fr;
@@ -253,5 +308,11 @@
 
   .signature-panel {
     padding: 1.2rem;
+  }
+}
+
+@media (max-width: 720px) {
+  .dual-buttons {
+    grid-template-columns: 1fr;
   }
 }
