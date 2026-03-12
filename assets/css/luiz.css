@@ -17,7 +17,7 @@
 }
 
 .hero-panel {
-  align-self: stretch;
+  align-self: auto;
 }
 
 .hero-panel ul {
