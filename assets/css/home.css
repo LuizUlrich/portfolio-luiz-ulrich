@@ -111,10 +111,14 @@
   padding-bottom: 4.8rem;
 }
 
+.home-overview .feature-card + .feature-card {
+  margin-top: 1.2rem;
+}
+
 .overview-grid {
   display: grid;
   grid-template-columns: 1.15fr 0.9fr 0.82fr;
-  gap: 1rem;
+  gap: 1.8rem;
   align-items: stretch;
 }
 
