@@ -1,3 +1,8 @@
+const supportedImagePattern = /\.(?:jpe?g|png|webp)(?:[?#].*)?$/i;
+
+window.supportedImageExtensions = ["jpg", "jpeg", "png", "webp"];
+window.isSupportedImageAsset = (value = "") => supportedImagePattern.test(String(value).trim());
+
 document.addEventListener("DOMContentLoaded", () => {
   if (typeof window.initReveal === "function") {
     window.initReveal();

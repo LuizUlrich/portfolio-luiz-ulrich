@@ -20,6 +20,15 @@
   align-self: auto;
 }
 
+.luiz-hero-photo-wrap {
+  display: block;
+  margin-bottom: 1.15rem;
+}
+
+.luiz-hero-photo {
+  max-height: 360px;
+}
+
 .hero-panel ul {
   margin-top: 0.75rem;
 }
