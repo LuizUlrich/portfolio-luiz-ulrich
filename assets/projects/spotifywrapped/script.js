@@ -18,6 +18,14 @@ let segmentFills = [];
 let startTime = 0;
 let currentDuration = 20000;
 let elapsedBeforePause = 0;
+let holdTimer = null;
+let pointerStartX = 0;
+let pointerStartY = 0;
+let holdTriggered = false;
+let activePointerId = null;
+
+const HOLD_DELAY = 220;
+const TAP_MOVE_TOLERANCE = 14;
 
 function buildProgress() {
   progressBars.innerHTML = "";
@@ -127,6 +135,11 @@ function fadeOutMusic(targetVolume = 0.08, duration = 5000) {
 function resetTimers() {
   clearTimeout(timeoutId);
   cancelAnimationFrame(rafId);
+}
+
+function clearHoldTimer() {
+  clearTimeout(holdTimer);
+  holdTimer = null;
 }
 
 function showScreen(index) {
@@ -253,6 +266,7 @@ function startExperience() {
 
 function restartExperience() {
   resetTimers();
+  clearHoldTimer();
   pauseAllVideos();
   stopMusicFade();
 
@@ -339,6 +353,105 @@ document.addEventListener("click", () => {
 document.addEventListener("keydown", () => {
   tryStartMusic();
 }, { once: true });
+
+function isInteractiveTarget(target) {
+  return !!target?.closest("button, a, input, textarea, select, label");
+}
+
+function shouldUsePointerStoryControls() {
+  return window.matchMedia("(pointer: coarse)").matches || window.innerWidth <= 820;
+}
+
+function getTapAction(clientX) {
+  const width = window.innerWidth || document.documentElement.clientWidth || 1;
+  return clientX <= width * 0.35 ? "prev" : "next";
+}
+
+function handleStoryTap(clientX) {
+  if (!started) {
+    startExperience();
+    return;
+  }
+
+  if (paused) {
+    resumeStory();
+    return;
+  }
+
+  if (getTapAction(clientX) === "prev") {
+    prevScreen();
+  } else {
+    nextScreen();
+  }
+}
+
+document.addEventListener("pointerdown", (e) => {
+  if (!shouldUsePointerStoryControls()) return;
+  if (isInteractiveTarget(e.target)) return;
+  if (e.pointerType === "mouse" && e.button !== 0) return;
+
+  activePointerId = e.pointerId;
+  pointerStartX = e.clientX;
+  pointerStartY = e.clientY;
+  holdTriggered = false;
+  clearHoldTimer();
+
+  holdTimer = setTimeout(() => {
+    holdTriggered = true;
+    if (started && !paused) {
+      pauseStory();
+    }
+  }, HOLD_DELAY);
+}, { passive: true });
+
+document.addEventListener("pointermove", (e) => {
+  if (!shouldUsePointerStoryControls()) return;
+  if (e.pointerId !== activePointerId) return;
+
+  const movedX = Math.abs(e.clientX - pointerStartX);
+  const movedY = Math.abs(e.clientY - pointerStartY);
+
+  if (movedX > TAP_MOVE_TOLERANCE || movedY > TAP_MOVE_TOLERANCE) {
+    clearHoldTimer();
+  }
+}, { passive: true });
+
+function finishPointerInteraction(e) {
+  if (!shouldUsePointerStoryControls()) return;
+  if (e.pointerId !== activePointerId) return;
+
+  const movedX = Math.abs(e.clientX - pointerStartX);
+  const movedY = Math.abs(e.clientY - pointerStartY);
+  const movedTooMuch = movedX > TAP_MOVE_TOLERANCE || movedY > TAP_MOVE_TOLERANCE;
+
+  clearHoldTimer();
+
+  if (holdTriggered) {
+    if (started && paused) {
+      resumeStory();
+    }
+  } else if (!movedTooMuch && !isInteractiveTarget(e.target)) {
+    handleStoryTap(e.clientX);
+  }
+
+  holdTriggered = false;
+  activePointerId = null;
+}
+
+document.addEventListener("pointerup", finishPointerInteraction, { passive: true });
+document.addEventListener("pointercancel", (e) => {
+  if (!shouldUsePointerStoryControls()) return;
+  if (e.pointerId !== activePointerId) return;
+
+  clearHoldTimer();
+
+  if (holdTriggered && started && paused) {
+    resumeStory();
+  }
+
+  holdTriggered = false;
+  activePointerId = null;
+}, { passive: true });
 
 window.addEventListener("load", () => {
   console.log("Página carregada.");
