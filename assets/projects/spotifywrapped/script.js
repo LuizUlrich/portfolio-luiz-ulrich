@@ -4,6 +4,7 @@ const particles = document.getElementById("particles");
 const bgMusic = document.getElementById("bgMusic");
 const startBtn = document.getElementById("startBtn");
 const restartBtn = document.getElementById("restartBtn");
+const loveNumber = document.getElementById("loveNumber");
 
 let currentIndex = 0;
 let started = false;
@@ -23,9 +24,12 @@ let pointerStartX = 0;
 let pointerStartY = 0;
 let holdTriggered = false;
 let activePointerId = null;
+let loveCounterFrameId = null;
+let loveCounterTimeoutId = null;
 
 const HOLD_DELAY = 220;
 const TAP_MOVE_TOLERANCE = 14;
+const LOVE_COUNTER_DURATION = 1700;
 
 function buildProgress() {
   progressBars.innerHTML = "";
@@ -142,8 +146,104 @@ function clearHoldTimer() {
   holdTimer = null;
 }
 
+function resetLoveCounter() {
+  cancelAnimationFrame(loveCounterFrameId);
+  clearTimeout(loveCounterTimeoutId);
+  loveCounterFrameId = null;
+  loveCounterTimeoutId = null;
+
+  if (loveNumber) {
+    loveNumber.textContent = "0";
+    loveNumber.classList.remove("love-number-burst");
+  }
+
+  document.querySelectorAll(".love-burst, .love-burst-core").forEach((item) => item.remove());
+}
+
+function spawnLoveBurst() {
+  if (!loveNumber) return;
+
+  const burstIcons = ["❤", "💚", "❤", "✨", "💚", "❤", "❤", "💚", "✨", "❤"];
+  const rect = loveNumber.getBoundingClientRect();
+  const originX = rect.left + rect.width / 2;
+  const originY = rect.top + rect.height / 2;
+
+  const core = document.createElement("span");
+  core.className = "love-burst-core";
+  core.textContent = "❤";
+  core.style.left = `${originX}px`;
+  core.style.top = `${originY}px`;
+  document.body.appendChild(core);
+
+  setTimeout(() => {
+    core.remove();
+  }, 1200);
+
+  burstIcons.forEach((icon, index) => {
+    const burst = document.createElement("span");
+    const angle = (-100 + (200 / Math.max(1, burstIcons.length - 1)) * index) * (Math.PI / 180);
+    const distance = 140 + Math.random() * 150;
+    const driftX = Math.cos(angle) * distance;
+    const driftY = Math.sin(angle) * distance - 50;
+
+    burst.className = "love-burst";
+    burst.textContent = icon;
+    burst.style.left = `${originX}px`;
+    burst.style.top = `${originY}px`;
+    burst.style.setProperty("--burst-x", `${driftX}px`);
+    burst.style.setProperty("--burst-y", `${driftY}px`);
+    burst.style.setProperty("--burst-rotate", `${-45 + Math.random() * 90}deg`);
+    burst.style.setProperty("--burst-scale", `${1.2 + Math.random() * 0.9}`);
+    burst.style.setProperty("--burst-hue", icon === "💚" ? "0deg" : `${-8 + Math.random() * 16}deg`);
+    burst.style.fontSize = `${26 + Math.random() * 28}px`;
+
+    document.body.appendChild(burst);
+
+    setTimeout(() => {
+      burst.remove();
+    }, 1450);
+  });
+}
+
+function startLoveCounterIfNeeded() {
+  const current = screens[currentIndex];
+  if (!current?.matches("[data-love-counter='true']") || !loveNumber) return;
+
+  resetLoveCounter();
+
+  const counterStart = performance.now();
+
+  function animateLoveCounter(now) {
+    if (!screens[currentIndex]?.matches("[data-love-counter='true']")) {
+      loveCounterFrameId = null;
+      return;
+    }
+
+    const progress = Math.min((now - counterStart) / LOVE_COUNTER_DURATION, 1);
+    const value = Math.round(progress * 100);
+    loveNumber.textContent = String(value);
+
+    if (progress < 1) {
+      loveCounterFrameId = requestAnimationFrame(animateLoveCounter);
+      return;
+    }
+
+    loveCounterFrameId = null;
+    loveNumber.classList.add("love-number-burst");
+    spawnLoveBurst();
+
+    loveCounterTimeoutId = setTimeout(() => {
+      loveNumber.classList.remove("love-number-burst");
+      loveCounterTimeoutId = null;
+    }, 650);
+  }
+
+  loveCounterFrameId = requestAnimationFrame(animateLoveCounter);
+}
+
 function showScreen(index) {
   pauseAllVideos();
+  resetLoveCounter();
 
   screens.forEach((screen, i) => {
     screen.classList.toggle("active", i === index);
@@ -161,6 +261,7 @@ function showScreen(index) {
 
   setProgressForCurrentScreen(0);
   playVideosOnCurrentScreen();
+  startLoveCounterIfNeeded();
 
   resetTimers();
 
@@ -267,6 +368,7 @@ function startExperience() {
 function restartExperience() {
   resetTimers();
   clearHoldTimer();
+  resetLoveCounter();
   pauseAllVideos();
   stopMusicFade();
 
