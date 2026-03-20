@@ -31,7 +31,7 @@
 
 .hero-subtext {
   max-width: 56ch;
-  margin-top: 0.95rem;
+  margin-top: 1rem;
   color: var(--muted);
   font-size: 0.99rem;
 }
@@ -127,6 +127,10 @@
   font-weight: 700;
 }
 
+.hero-status-card p {
+  max-width: 68ch;
+}
+
 .dual-buttons {
   display: none !important;
 }
@@ -141,10 +145,6 @@
 .home-overview {
   padding-top: 4.6rem;
   padding-bottom: 4.8rem;
-}
-
-.home-overview .feature-card + .feature-card {
-  margin-top: 1.2rem;
 }
 
 .dual-buttons {
@@ -306,6 +306,10 @@
     rgba(255,255,255,0.012);
 }
 
+.metric-card span {
+  line-height: 1.55;
+}
+
 .metric-card strong {
   display: block;
   margin-bottom: 0.35rem;
@@ -376,6 +380,10 @@
     grid-template-columns: 1fr;
   }
 
+  .home-overview .feature-card + .feature-card {
+    margin-top: 1.2rem;
+  }
+
   .home-page .hero-copy h1 {
     max-width: none;
   }
@@ -412,6 +420,10 @@
   .home-page .home-hero {
     padding-top: 5.5rem;
     padding-bottom: 3.6rem;
+  }
+
+  .overview-grid {
+    gap: 1rem;
   }
 
   .signature-panel {

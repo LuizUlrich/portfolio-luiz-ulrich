@@ -6,9 +6,9 @@ document.addEventListener("DOMContentLoaded", () => {
       src: "/assets/audio/El Fortin Talent 2026 @ Ulrich [18.01.2026].mp3"
     },
     {
-      title: "Set Afro House",
+      title: "After Rebobina @ At home [03.08.2025]",
       artist: "Ulrich",
-      src: "/assets/audio/Afro House @ Ulrich [23.08.2025].mp3"
+      src: "/assets/audio/After Rebobina @ At home [03.08.2025].mp3"
     }
   ];
 

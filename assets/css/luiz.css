@@ -95,6 +95,12 @@
   margin-bottom: 0.95rem;
 }
 
+.timeline-item p,
+.project-card p,
+.project-points li {
+  line-height: 1.6;
+}
+
 .luiz-page .info-card,
 .luiz-page .hero-panel,
 .luiz-page .project-card {
@@ -115,5 +121,9 @@
   .timeline-item {
     grid-template-columns: 1fr;
     gap: 0.7rem;
+  }
+
+  .luiz-hero-photo {
+    max-height: 300px;
   }
 }

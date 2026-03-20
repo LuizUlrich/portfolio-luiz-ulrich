@@ -184,6 +184,10 @@ ul {
   padding: 5.4rem 0;
 }
 
+.section + .section {
+  scroll-margin-top: calc(var(--header-height) + 1rem);
+}
+
 .alt {
   background:
     linear-gradient(180deg, rgba(255, 255, 255, 0.014), rgba(255, 255, 255, 0.008)),
@@ -229,6 +233,10 @@ ul {
   font-size: 1.08rem;
 }
 
+.section-kicker + h2 {
+  max-width: 18ch;
+}
+
 .clean-list {
   list-style: none;
   padding-left: 0;
@@ -249,6 +257,20 @@ ul {
   background: rgba(6, 7, 11, 0.72);
   backdrop-filter: blur(18px);
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+  transition:
+    transform 0.32s ease,
+    background 0.28s ease,
+    box-shadow 0.28s ease,
+    border-color 0.28s ease;
+  will-change: transform;
+}
+
+.site-header.is-hidden {
+  transform: translateY(calc(-100% - 0.75rem));
+}
+
+.site-header.is-nav-open {
+  transform: translateY(0);
 }
 
 .glass {
@@ -320,6 +342,7 @@ ul {
 .menu a:hover {
   color: var(--text);
   background: rgba(255, 255, 255, 0.025);
+  transform: translateY(-1px);
 }
 
 .main-nav a.is-active,
@@ -340,6 +363,16 @@ ul {
   border-radius: 14px;
   background: rgba(255, 255, 255, 0.02);
   padding: 0;
+  transition:
+    background 0.25s ease,
+    border-color 0.25s ease,
+    transform 0.25s ease;
+}
+
+.menu-toggle:hover {
+  transform: translateY(-1px);
+  border-color: rgba(var(--accent-rgb), 0.16);
+  background: rgba(255, 255, 255, 0.04);
 }
 
 .menu-toggle span {
@@ -632,6 +665,15 @@ ul {
     font-size: 1rem;
   }
 
+  .hero-actions .btn,
+  .presskit-actions .btn {
+    width: 100%;
+  }
+
+  .section-kicker + h2 {
+    max-width: none;
+  }
+
   .main-nav,
   .menu {
     position: absolute;
@@ -671,6 +713,11 @@ ul {
 
   .global-player__controls {
     grid-column: 1 / -1;
+    justify-content: center;
+  }
+
+  .footer-nav a {
+    width: 100%;
     justify-content: center;
   }
 
