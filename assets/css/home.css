@@ -128,7 +128,13 @@
 }
 
 .hero-status-card p {
-  max-width: 68ch;
+  max-width: 76ch;
+  text-wrap: balance;
+  word-break: normal;
+  overflow-wrap: normal;
+  white-space: normal;
+  line-height: 1.62;
+  letter-spacing: -0.01em;
 }
 
 .dual-buttons {
