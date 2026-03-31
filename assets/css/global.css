@@ -545,7 +545,6 @@ ul {
   bottom: 1rem;
   width: min(92vw, 520px);
   z-index: 1300;
-  display: none;
   border: 1px solid rgba(255, 255, 255, 0.06);
   border-radius: 20px;
   background:
@@ -553,10 +552,16 @@ ul {
     rgba(7, 9, 14, 0.88);
   backdrop-filter: blur(18px);
   box-shadow: var(--shadow-lg);
+  opacity: 0;
+  pointer-events: none;
+  transform: translateX(calc(100% + 1rem));
+  transition: transform 0.42s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.28s ease;
 }
 
 .global-player.is-visible {
-  display: block;
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateX(0);
 }
 
 .global-player__inner {
@@ -649,14 +654,6 @@ ul {
   opacity: 1;
 }
 
-.player-hide-btn {
-  width: auto;
-  min-width: 74px;
-  padding: 0 0.75rem;
-  font-size: 0.72rem;
-  color: var(--text-soft);
-}
-
 .player-icon-btn--primary {
   width: 42px;
   height: 42px;
@@ -716,30 +713,58 @@ ul {
   cursor: pointer;
 }
 
-.global-player-shortcut {
+.player-edge-toggle {
   position: fixed;
-  right: 0.4rem;
-  bottom: 1.1rem;
+  right: 0;
+  bottom: 1rem;
   z-index: 1299;
+<<<<<<< ours
   width: 20px;
   height: 62px;
+  display: grid;
+=======
+  width: 24px;
+  height: var(--player-height);
   display: none;
+>>>>>>> theirs
   place-items: center;
   border: 1px solid rgba(var(--accent-rgb), 0.32);
   border-right: none;
-  border-radius: 14px 0 0 14px;
+  border-radius: 18px 0 0 18px;
   background: linear-gradient(180deg, rgba(196, 36, 52, 0.9), rgba(108, 14, 24, 0.95));
   box-shadow: 0 8px 22px rgba(0, 0, 0, 0.32);
   color: #fff;
+  transition: transform 0.42s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.28s ease;
 }
 
-.global-player-shortcut.is-visible {
-  display: grid;
+.player-edge-toggle img {
+  width: 12px;
+  height: 12px;
+  filter: brightness(0) invert(1);
 }
 
-.global-player-shortcut span {
-  font-size: 0.7rem;
-  transform: translateX(-1px);
+.player-edge-toggle--inside {
+  position: absolute;
+  right: 100%;
+  bottom: 0.75rem;
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.player-edge-toggle--inside img {
+  transform: rotate(180deg);
+}
+
+.player-edge-toggle--floating {
+  opacity: 0;
+  pointer-events: none;
+  transform: translateX(calc(100% + 0.4rem));
+}
+
+.player-edge-toggle--floating.is-visible {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateX(0);
 }
 
 @media (max-width: 1100px) {
@@ -823,6 +848,20 @@ ul {
     left: 0.6rem;
     width: auto;
     bottom: 0.6rem;
+  }
+
+<<<<<<< ours
+  .player-edge-toggle--inside {
+    bottom: 0.7rem;
+  }
+
+  .player-edge-toggle--floating {
+    right: 0;
+    bottom: 0.95rem;
+=======
+  .global-player-shortcut {
+    bottom: 0.6rem;
+>>>>>>> theirs
   }
 
   .global-player__main {

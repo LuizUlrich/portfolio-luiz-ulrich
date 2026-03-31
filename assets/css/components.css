@@ -292,8 +292,7 @@
 }
 
 .feature-card .btn,
-.set-card .play-track-btn,
-.project-card .project-points {
+.set-card .play-track-btn {
   margin-top: auto;
 }
 
@@ -305,7 +304,8 @@
   display: flex;
   align-items: center;
   gap: 0.75rem;
-  margin-top: 1.15rem;
+  margin-top: auto;
+  padding-top: 1.15rem;
   flex-wrap: wrap;
 }
 

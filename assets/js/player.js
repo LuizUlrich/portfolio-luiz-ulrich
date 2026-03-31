@@ -83,6 +83,10 @@ document.addEventListener("DOMContentLoaded", () => {
     wrapper.className = "global-player";
     wrapper.setAttribute("aria-label", "Player global de áudio");
     wrapper.innerHTML = `
+      <button class="player-edge-toggle player-edge-toggle--inside" type="button" data-action="hide" aria-label="Ocultar player">
+        <img src="${ICONS.play}" alt="" />
+      </button>
+
       <div class="global-player__inner">
         <div class="global-player__main">
           <div class="global-player__badge" aria-hidden="true">UL</div>
@@ -93,10 +97,6 @@ document.addEventListener("DOMContentLoaded", () => {
           </div>
 
           <div class="global-player__controls">
-            <button class="player-icon-btn player-hide-btn" type="button" data-action="hide" aria-label="Ocultar player">
-              <span>Ocultar</span>
-            </button>
-
             <button class="player-icon-btn" type="button" data-action="prev" aria-label="Set anterior">
               <img src="${ICONS.prev}" alt="" />
             </button>
@@ -148,10 +148,10 @@ document.addEventListener("DOMContentLoaded", () => {
     };
 
     const shortcut = document.createElement("button");
-    shortcut.className = "global-player-shortcut";
+    shortcut.className = "player-edge-toggle player-edge-toggle--floating";
     shortcut.type = "button";
     shortcut.setAttribute("aria-label", "Mostrar player");
-    shortcut.innerHTML = "<span aria-hidden='true'>▶</span>";
+    shortcut.innerHTML = `<img src="${ICONS.play}" alt="" />`;
     document.body.appendChild(shortcut);
 
     ui.shortcutButton = shortcut;
