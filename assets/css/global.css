@@ -966,14 +966,15 @@ ul {
   }
 
   .player-edge-toggle--floating {
-    right: 50%;
+    right: 0.6rem;
+    left: 0.6rem;
     bottom: 0.6rem;
-    width: 72px;
+    width: auto;
     height: 14px;
     border-radius: 20px 20px 0 0;
     border-left: 0;
     border-top: 1px solid rgba(255, 255, 255, 0.04);
-    transform: translate(50%, calc(100% + 0.35rem));
+    transform: translateY(calc(100% + 0.35rem));
   }
 
   .global-player__main {
@@ -996,7 +997,7 @@ ul {
   }
 
   .player-edge-toggle--floating.is-visible {
-    transform: translate(50%, 0);
+    transform: translateY(0);
   }
 
   .footer-nav a {
