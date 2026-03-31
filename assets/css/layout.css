@@ -25,6 +25,22 @@
   gap: 1.5rem;
 }
 
+
+.grid-2 > *,
+.grid-3 > *,
+.grid-4 > *,
+.split-content > *,
+.home-hero-grid > *,
+.home-section-grid > *,
+.skills-grid > *,
+.project-grid > *,
+.contact-grid > *,
+.approach-grid > *,
+.set-grid > *,
+.presskit-layout > *,
+.presskit-bio-grid > * {
+  min-width: 0;
+}
 .stack-sm > * + * {
   margin-top: 0.75rem;
 }

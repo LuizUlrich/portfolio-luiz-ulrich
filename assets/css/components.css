@@ -178,6 +178,8 @@
     border-color 0.25s ease,
     background 0.25s ease,
     box-shadow 0.25s ease;
+  text-align: center;
+  white-space: normal;
 }
 
 .btn:hover {
@@ -304,6 +306,7 @@
   align-items: center;
   gap: 0.75rem;
   margin-top: 1.15rem;
+  flex-wrap: wrap;
 }
 
 .project-card__cta,
