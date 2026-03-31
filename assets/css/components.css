@@ -479,7 +479,9 @@
 .hero-photo,
 .presskit-bio-photo {
   width: 100%;
-  height: 100%;
+  max-width: 100%;
+  height: auto;
+  display: block;
   object-fit: cover;
   border-radius: var(--radius);
   border: 1px solid rgba(255, 255, 255, 0.07);
@@ -488,7 +490,11 @@
 
 .hero-media,
 .presskit-bio-photo-wrap {
+  width: 100%;
+  max-width: 100%;
   min-height: 340px;
+  overflow: hidden;
+  border-radius: var(--radius);
 }
 
 .play-track-btn {

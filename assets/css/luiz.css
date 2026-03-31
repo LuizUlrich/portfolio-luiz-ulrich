@@ -22,10 +22,19 @@
 
 .luiz-hero-photo-wrap {
   display: block;
+  width: 100%;
+  max-width: 100%;
   margin-bottom: 1.15rem;
+  overflow: hidden;
+  border-radius: calc(var(--radius) - 0.2rem);
 }
 
 .luiz-hero-photo {
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+  display: block;
+  object-fit: cover;
   max-height: 360px;
 }
 

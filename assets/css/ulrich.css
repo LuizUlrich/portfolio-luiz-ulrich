@@ -16,8 +16,11 @@
 }
 
 .hero-media {
-  display: grid;
+  display: flex;
   align-items: stretch;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
 }
 
 .ulrich-visual-grid {
