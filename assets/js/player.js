@@ -34,7 +34,8 @@ document.addEventListener("DOMContentLoaded", () => {
     time: 0,
     volume: 0.85,
     playing: false,
-    hasInteracted: false
+    hasInteracted: false,
+    hidden: false
   };
 
   function loadState() {
@@ -61,7 +62,8 @@ document.addEventListener("DOMContentLoaded", () => {
       time: Number.isFinite(audio.currentTime) ? audio.currentTime : 0,
       volume: audio.volume,
       playing: !audio.paused,
-      hasInteracted: state.hasInteracted
+      hasInteracted: state.hasInteracted,
+      hidden: state.hidden
     };
 
     localStorage.setItem(STORAGE_KEY, JSON.stringify(payload));
@@ -91,6 +93,10 @@ document.addEventListener("DOMContentLoaded", () => {
           </div>
 
           <div class="global-player__controls">
+            <button class="player-icon-btn player-hide-btn" type="button" data-action="hide" aria-label="Ocultar player">
+              <span>Ocultar</span>
+            </button>
+
             <button class="player-icon-btn" type="button" data-action="prev" aria-label="Set anterior">
               <img src="${ICONS.prev}" alt="" />
             </button>
@@ -133,6 +139,7 @@ document.addEventListener("DOMContentLoaded", () => {
       artist: wrapper.querySelector(".global-player__artist"),
       playButton: wrapper.querySelector('[data-action="toggle"]'),
       playButtonIcon: wrapper.querySelector('[data-action="toggle"] img'),
+      hideButton: wrapper.querySelector('[data-action="hide"]'),
       prevButton: wrapper.querySelector('[data-action="prev"]'),
       nextButton: wrapper.querySelector('[data-action="next"]'),
       seek: wrapper.querySelector('[data-role="seek"]'),
@@ -140,9 +147,20 @@ document.addEventListener("DOMContentLoaded", () => {
       duration: wrapper.querySelector('[data-role="duration"]')
     };
 
+    const shortcut = document.createElement("button");
+    shortcut.className = "global-player-shortcut";
+    shortcut.type = "button";
+    shortcut.setAttribute("aria-label", "Mostrar player");
+    shortcut.innerHTML = "<span aria-hidden='true'>▶</span>";
+    document.body.appendChild(shortcut);
+
+    ui.shortcutButton = shortcut;
+
     ui.prevButton.addEventListener("click", () => changeTrack(-1, true));
     ui.nextButton.addEventListener("click", () => changeTrack(1, true));
     ui.playButton.addEventListener("click", togglePlayback);
+    ui.hideButton.addEventListener("click", hidePlayer);
+    ui.shortcutButton.addEventListener("click", showPlayer);
 
     ui.seek.addEventListener("input", () => {
       isSeeking = true;
@@ -156,6 +174,14 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     return ui;
+  }
+
+  function applyVisibilityState() {
+    if (!ui) return;
+
+    const canDisplay = state.hasInteracted;
+    ui.wrapper.classList.toggle("is-visible", canDisplay && !state.hidden);
+    ui.shortcutButton.classList.toggle("is-visible", canDisplay && state.hidden);
   }
 
   function updatePlayerUI() {
@@ -180,13 +206,17 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function showPlayer() {
-    const player = ensurePlayerUI();
-    player.wrapper.classList.add("is-visible");
+    ensurePlayerUI();
+    state.hidden = false;
+    applyVisibilityState();
+    saveState();
   }
 
   function hidePlayer() {
-    if (!ui) return;
-    ui.wrapper.classList.remove("is-visible");
+    ensurePlayerUI();
+    state.hidden = true;
+    applyVisibilityState();
+    saveState();
   }
 
   function setTrack(index, preserveTime = false) {
@@ -288,12 +318,13 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   ensurePlayerUI();
+  applyVisibilityState();
   setTrack(state.index, state.time > 0);
 
-  if (state.hasInteracted) {
+  if (state.hasInteracted && !state.hidden) {
     showPlayer();
   } else {
-    hidePlayer();
+    applyVisibilityState();
   }
 
   if (state.hasInteracted && state.playing) {
