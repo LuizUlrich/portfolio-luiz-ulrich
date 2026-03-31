@@ -95,6 +95,10 @@
   margin-bottom: 0.95rem;
 }
 
+.luiz-page .project-card .project-points {
+  margin-top: 1rem;
+}
+
 .timeline-item p,
 .project-card p,
 .project-points li {
