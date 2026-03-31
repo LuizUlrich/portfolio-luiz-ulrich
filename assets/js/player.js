@@ -81,7 +81,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const wrapper = document.createElement("section");
     wrapper.className = "global-player";
-    wrapper.setAttribute("aria-label", "Player global de áudio");
+    wrapper.setAttribute("aria-label", "Player global de audio");
     wrapper.innerHTML = `
       <button class="player-edge-toggle player-edge-toggle--inside" type="button" data-action="hide" aria-label="Ocultar player">
         <img src="${ICONS.play}" alt="" />
@@ -105,7 +105,7 @@ document.addEventListener("DOMContentLoaded", () => {
               <img src="${ICONS.play}" alt="" />
             </button>
 
-            <button class="player-icon-btn" type="button" data-action="next" aria-label="Próximo set">
+            <button class="player-icon-btn" type="button" data-action="next" aria-label="Proximo set">
               <img src="${ICONS.next}" alt="" />
             </button>
           </div>
@@ -180,8 +180,13 @@ document.addEventListener("DOMContentLoaded", () => {
     if (!ui) return;
 
     const canDisplay = state.hasInteracted;
-    ui.wrapper.classList.toggle("is-visible", canDisplay && !state.hidden);
-    ui.shortcutButton.classList.toggle("is-visible", canDisplay && state.hidden);
+    const isPlayerVisible = canDisplay && !state.hidden;
+    const isShortcutVisible = canDisplay && state.hidden;
+
+    ui.wrapper.classList.toggle("is-visible", isPlayerVisible);
+    ui.shortcutButton.classList.toggle("is-visible", isShortcutVisible);
+    ui.wrapper.setAttribute("aria-hidden", String(!isPlayerVisible));
+    ui.shortcutButton.setAttribute("aria-hidden", String(!isShortcutVisible));
   }
 
   function updatePlayerUI() {
@@ -247,7 +252,7 @@ document.addEventListener("DOMContentLoaded", () => {
       updatePlayerUI();
       saveState();
     } catch (error) {
-      console.warn("Não foi possível iniciar o áudio automaticamente:", error);
+      console.warn("Nao foi possivel iniciar o audio automaticamente:", error);
       updatePlayerUI();
     }
   }
