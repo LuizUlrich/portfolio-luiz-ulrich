@@ -45,6 +45,7 @@
   margin-top: 1rem;
   color: var(--muted);
   font-size: 0.99rem;
+  line-height: 1.72;
 }
 
 .hero-signals {
@@ -354,6 +355,11 @@
     linear-gradient(180deg, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0.008)),
     var(--surface);
   box-shadow: var(--shadow-soft);
+}
+
+.momentum-copy,
+.signature-panel__copy {
+  align-self: center;
 }
 
 .signature-panel__copy p + p {

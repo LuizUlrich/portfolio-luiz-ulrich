@@ -51,7 +51,7 @@
 .project-card,
 .set-card,
 .hero-panel {
-  padding: 1.55rem;
+  padding: 1.58rem;
 }
 
 .feature-card,
@@ -72,7 +72,8 @@
     transform 0.28s ease,
     border-color 0.28s ease,
     box-shadow 0.28s ease,
-    background 0.28s ease;
+    background 0.28s ease,
+    filter 0.28s ease;
 }
 
 .info-card:hover,
@@ -82,8 +83,9 @@
 .hero-panel:hover,
 .mini-card:hover {
   transform: translateY(-4px);
-  border-color: rgba(var(--accent-rgb), 0.14);
-  box-shadow: var(--shadow-md);
+  border-color: rgba(var(--accent-rgb), 0.16);
+  box-shadow: 0 22px 46px rgba(0, 0, 0, 0.3);
+  filter: saturate(1.04);
 }
 
 .info-card:hover::after,
@@ -117,6 +119,14 @@
 .project-card p + p,
 .set-card p + p {
   margin-top: 0.82rem;
+}
+
+.info-card p,
+.project-card p,
+.set-card p,
+.contact-btn__value,
+.signal-card span {
+  line-height: 1.68;
 }
 
 .feature-card--large {
@@ -178,13 +188,15 @@
     transform 0.25s ease,
     border-color 0.25s ease,
     background 0.25s ease,
-    box-shadow 0.25s ease;
+    box-shadow 0.25s ease,
+    filter 0.25s ease;
   text-align: center;
   white-space: normal;
 }
 
 .btn:hover {
   transform: translateY(-2px);
+  filter: brightness(1.03);
 }
 
 .btn:active {
@@ -230,6 +242,13 @@
   border-color: rgba(255, 255, 255, 0.1);
   background: rgba(255, 255, 255, 0.018);
   color: #fff;
+}
+
+.btn-secondary:hover {
+  border-color: rgba(var(--accent-rgb), 0.18);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.032), rgba(255, 255, 255, 0.015)),
+    rgba(255, 255, 255, 0.022);
 }
 
 .btn-secondary--luiz {
@@ -310,7 +329,7 @@
   align-items: center;
   gap: 0.75rem;
   margin-top: auto;
-  padding-top: 1.15rem;
+  padding-top: 1.2rem;
   flex-wrap: wrap;
 }
 
@@ -445,6 +464,7 @@
   font-size: 0.98rem;
   font-weight: 700;
   word-break: break-word;
+  text-wrap: balance;
 }
 
 .presskit-actions {
@@ -465,6 +485,7 @@
   background:
     linear-gradient(180deg, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0.008)),
     rgba(255, 255, 255, 0.012);
+  min-height: 100%;
 }
 
 .signal-card strong {
@@ -492,7 +513,7 @@
   object-fit: cover;
   border-radius: var(--radius);
   border: 1px solid rgba(255, 255, 255, 0.07);
-  box-shadow: var(--shadow-md);
+  box-shadow: 0 20px 46px rgba(0, 0, 0, 0.28);
 }
 
 .hero-media,
@@ -521,7 +542,7 @@
   .project-card,
   .set-card,
   .hero-panel {
-    padding: 1.25rem;
+    padding: 1.22rem;
   }
 
   .btn {

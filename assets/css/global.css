@@ -192,7 +192,7 @@ ul {
 
 .section {
   position: relative;
-  padding: 5.4rem 0;
+  padding: clamp(4.8rem, 7vw, 5.6rem) 0;
 }
 
 .section + .section {
@@ -231,6 +231,7 @@ ul {
   max-width: 72ch;
   margin-top: 1rem;
   font-size: 1.02rem;
+  line-height: 1.74;
 }
 
 .section-text--highlight {
@@ -242,6 +243,7 @@ ul {
   max-width: 68ch;
   color: var(--text-soft);
   font-size: 1.08rem;
+  line-height: 1.76;
 }
 
 .section-kicker + h2 {
@@ -264,10 +266,10 @@ ul {
   top: 0;
   z-index: 1200;
   min-height: var(--header-height);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-  background: rgba(6, 7, 11, 0.72);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  background: rgba(6, 7, 11, 0.76);
   backdrop-filter: blur(18px);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+  box-shadow: 0 12px 34px rgba(0, 0, 0, 0.14);
   transition:
     transform 0.32s ease,
     background 0.28s ease,
@@ -445,10 +447,11 @@ ul {
   flex-wrap: wrap;
   gap: 0.9rem;
   margin-top: 2rem;
+  align-items: center;
 }
 
 .page-footer {
-  padding: 2rem 0 2.6rem;
+  padding: 2.2rem 0 2.8rem;
   border-top: 1px solid var(--line);
   background:
     linear-gradient(180deg, rgba(255, 255, 255, 0.015), rgba(255, 255, 255, 0.006)),
@@ -471,6 +474,7 @@ ul {
   max-width: 52ch;
   color: var(--muted);
   font-size: 0.94rem;
+  line-height: 1.72;
 }
 
 .footer-nav {
@@ -567,13 +571,13 @@ ul {
   bottom: 1rem;
   width: min(92vw, 540px);
   z-index: 1300;
-  border: 1px solid rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.075);
   border-radius: 20px;
   background:
     linear-gradient(180deg, rgba(255, 255, 255, 0.016), rgba(255, 255, 255, 0.008)),
     rgba(7, 9, 14, 0.88);
   backdrop-filter: blur(18px);
-  box-shadow: var(--shadow-lg);
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.42);
   overflow: hidden;
   opacity: 0;
   pointer-events: none;
@@ -639,9 +643,10 @@ ul {
 }
 
 .global-player__artist {
-  color: var(--muted);
+  color: var(--text-soft);
   font-size: 0.84rem;
   margin-top: 0.02rem;
+  opacity: 0.82;
 }
 
 .global-player__controls {
@@ -892,7 +897,7 @@ ul {
 
 @media (max-width: 900px) {
   .section {
-    padding: 4.7rem 0;
+    padding: 4.4rem 0;
   }
 
   .hero,
@@ -923,7 +928,7 @@ ul {
   }
 
   .section {
-    padding: 4.2rem 0;
+    padding: 4rem 0;
   }
 
   .hero,
