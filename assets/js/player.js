@@ -13,11 +13,25 @@ document.addEventListener("DOMContentLoaded", () => {
   ];
 
   const STORAGE_KEY = "luiz-ulrich-player-state";
+  const createIconDataUri = (svg) => `data:image/svg+xml;utf8,${encodeURIComponent(svg)}`;
   const ICONS = {
     play: "/assets/icons/play.svg",
     pause: "/assets/icons/pause.svg",
     next: "/assets/icons/next.svg",
-    prev: "/assets/icons/prev.svg"
+    prev: "/assets/icons/prev.svg",
+    volume: createIconDataUri(`
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none">
+        <path d="M11 6.5 7.8 9H5.5C4.67 9 4 9.67 4 10.5v3c0 .83.67 1.5 1.5 1.5h2.3l3.2 2.5c.49.38 1.2.03 1.2-.59V7.09c0-.62-.71-.97-1.2-.59Z" fill="white"/>
+        <path d="M15.2 9.2a.9.9 0 0 1 1.27 0 4.9 4.9 0 0 1 0 6.93.9.9 0 1 1-1.27-1.27 3.1 3.1 0 0 0 0-4.39.9.9 0 0 1 0-1.27Z" fill="white"/>
+        <path d="M17.72 6.78a.9.9 0 0 1 1.27 0 8.3 8.3 0 0 1 0 11.74.9.9 0 0 1-1.27-1.27 6.5 6.5 0 0 0 0-9.2.9.9 0 0 1 0-1.27Z" fill="white"/>
+      </svg>
+    `),
+    mute: createIconDataUri(`
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none">
+        <path d="M11 6.5 7.8 9H5.5C4.67 9 4 9.67 4 10.5v3c0 .83.67 1.5 1.5 1.5h2.3l3.2 2.5c.49.38 1.2.03 1.2-.59V7.09c0-.62-.71-.97-1.2-.59Z" fill="white"/>
+        <path d="m16.2 10.47 3.33 3.33M19.53 10.47 16.2 13.8" stroke="white" stroke-width="1.8" stroke-linecap="round"/>
+      </svg>
+    `)
   };
 
   let audio = document.getElementById("globalAudio");
@@ -52,6 +66,7 @@ document.addEventListener("DOMContentLoaded", () => {
   let ui = null;
   let isSeeking = false;
   let lastSavedSecond = -1;
+  let lastVolumeBeforeMute = state.volume > 0 ? state.volume : defaultState.volume;
 
   audio.volume = state.volume;
   audio.src = TRACKS[state.index]?.src || TRACKS[0].src;
@@ -97,6 +112,23 @@ document.addEventListener("DOMContentLoaded", () => {
           </div>
 
           <div class="global-player__controls">
+            <div class="player-volume">
+              <button class="player-icon-btn" type="button" data-action="volume" aria-label="Silenciar">
+                <img src="${ICONS.volume}" alt="" />
+              </button>
+
+              <input
+                class="player-volume__range"
+                data-role="volume"
+                type="range"
+                min="0"
+                max="1"
+                step="0.01"
+                value="${state.volume}"
+                aria-label="Volume"
+              />
+            </div>
+
             <button class="player-icon-btn" type="button" data-action="prev" aria-label="Set anterior">
               <img src="${ICONS.prev}" alt="" />
             </button>
@@ -139,6 +171,9 @@ document.addEventListener("DOMContentLoaded", () => {
       artist: wrapper.querySelector(".global-player__artist"),
       playButton: wrapper.querySelector('[data-action="toggle"]'),
       playButtonIcon: wrapper.querySelector('[data-action="toggle"] img'),
+      volumeButton: wrapper.querySelector('[data-action="volume"]'),
+      volumeButtonIcon: wrapper.querySelector('[data-action="volume"] img'),
+      volumeRange: wrapper.querySelector('[data-role="volume"]'),
       hideButton: wrapper.querySelector('[data-action="hide"]'),
       prevButton: wrapper.querySelector('[data-action="prev"]'),
       nextButton: wrapper.querySelector('[data-action="next"]'),
@@ -159,8 +194,12 @@ document.addEventListener("DOMContentLoaded", () => {
     ui.prevButton.addEventListener("click", () => changeTrack(-1, true));
     ui.nextButton.addEventListener("click", () => changeTrack(1, true));
     ui.playButton.addEventListener("click", togglePlayback);
+    ui.volumeButton.addEventListener("click", toggleMute);
     ui.hideButton.addEventListener("click", hidePlayer);
     ui.shortcutButton.addEventListener("click", showPlayer);
+    ui.volumeRange.addEventListener("input", () => {
+      setVolume(Number(ui.volumeRange.value));
+    });
 
     ui.seek.addEventListener("input", () => {
       isSeeking = true;
@@ -197,8 +236,12 @@ document.addEventListener("DOMContentLoaded", () => {
     ui.artist.textContent = track.artist;
 
     const isPlaying = !audio.paused;
+    const isMuted = audio.volume <= 0.01;
     ui.playButton.setAttribute("aria-label", isPlaying ? "Pausar" : "Tocar");
     ui.playButtonIcon.src = isPlaying ? ICONS.pause : ICONS.play;
+    ui.volumeButton.setAttribute("aria-label", isMuted ? "Ativar som" : "Silenciar");
+    ui.volumeButtonIcon.src = isMuted ? ICONS.mute : ICONS.volume;
+    ui.volumeRange.value = String(audio.volume);
 
     ui.current.textContent = formatTime(audio.currentTime);
     ui.duration.textContent = formatTime(audio.duration);
@@ -222,6 +265,29 @@ document.addEventListener("DOMContentLoaded", () => {
     state.hidden = true;
     applyVisibilityState();
     saveState();
+  }
+
+  function setVolume(value) {
+    const normalizedVolume = Math.max(0, Math.min(1, value));
+
+    audio.volume = normalizedVolume;
+
+    if (normalizedVolume > 0.01) {
+      lastVolumeBeforeMute = normalizedVolume;
+    }
+
+    state.volume = normalizedVolume;
+    updatePlayerUI();
+    saveState();
+  }
+
+  function toggleMute() {
+    if (audio.volume <= 0.01) {
+      setVolume(lastVolumeBeforeMute || defaultState.volume);
+      return;
+    }
+
+    setVolume(0);
   }
 
   function setTrack(index, preserveTime = false) {
