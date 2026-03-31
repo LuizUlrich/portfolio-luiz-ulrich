@@ -66,6 +66,13 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape") {
+      closeMenu();
+      menuToggle.blur();
+    }
+  });
+
   window.addEventListener("resize", () => {
     if (window.innerWidth > 760) {
       closeMenu();

@@ -59,6 +59,7 @@
 .set-card {
   display: flex;
   flex-direction: column;
+  height: 100%;
 }
 
 .info-card,
@@ -184,6 +185,10 @@
 
 .btn:hover {
   transform: translateY(-2px);
+}
+
+.btn:active {
+  transform: translateY(0);
 }
 
 .btn::after {
@@ -425,6 +430,8 @@
   display: grid;
   gap: 0.16rem;
   padding: 1.08rem 1.1rem;
+  align-content: start;
+  min-height: 100%;
 }
 
 .contact-btn__label {
@@ -480,7 +487,7 @@
 .presskit-bio-photo {
   width: 100%;
   max-width: 100%;
-  height: auto;
+  height: 100%;
   display: block;
   object-fit: cover;
   border-radius: var(--radius);
@@ -495,6 +502,7 @@
   min-height: 340px;
   overflow: hidden;
   border-radius: var(--radius);
+  isolation: isolate;
 }
 
 .play-track-btn {

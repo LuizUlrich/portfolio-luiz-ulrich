@@ -21,6 +21,7 @@
   width: 100%;
   max-width: 100%;
   min-width: 0;
+  aspect-ratio: 4 / 4.2;
 }
 
 .ulrich-visual-grid {
@@ -34,10 +35,11 @@
 .ulrich-cover-card {
   padding: 0.4rem;
   overflow: hidden;
+  aspect-ratio: 4 / 4.1;
 }
 
 .ulrich-cover-photo {
-  max-height: 390px;
+  max-height: none;
 }
 
 .set-card {
@@ -102,10 +104,11 @@
 .presskit-card--media {
   padding: 0.4rem;
   overflow: hidden;
+  aspect-ratio: 4 / 4.8;
 }
 
 .presskit-photo {
-  max-height: 100%;
+  max-height: none;
 }
 
 .presskit-card--wide p + p {
@@ -132,6 +135,12 @@
   .presskit-grid,
   .presskit-points {
     grid-template-columns: 1fr;
+  }
+
+  .hero-media,
+  .ulrich-cover-card,
+  .presskit-card--media {
+    aspect-ratio: 1 / 0.96;
   }
 
   .ulrich-cover-photo {

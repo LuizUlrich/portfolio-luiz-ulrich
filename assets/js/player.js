@@ -56,7 +56,15 @@ document.addEventListener("DOMContentLoaded", () => {
     try {
       const saved = localStorage.getItem(STORAGE_KEY);
       if (!saved) return { ...defaultState };
-      return { ...defaultState, ...JSON.parse(saved) };
+      const parsed = { ...defaultState, ...JSON.parse(saved) };
+      parsed.index = Number.isInteger(parsed.index)
+        ? Math.max(0, Math.min(TRACKS.length - 1, parsed.index))
+        : defaultState.index;
+      parsed.volume = Number.isFinite(parsed.volume)
+        ? Math.max(0, Math.min(1, parsed.volume))
+        : defaultState.volume;
+      parsed.time = Number.isFinite(parsed.time) && parsed.time >= 0 ? parsed.time : 0;
+      return parsed;
     } catch {
       return { ...defaultState };
     }
@@ -81,7 +89,11 @@ document.addEventListener("DOMContentLoaded", () => {
       hidden: state.hidden
     };
 
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(payload));
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(payload));
+    } catch {
+      // Ignore storage failures to keep playback functional.
+    }
   }
 
   function formatTime(seconds) {
@@ -163,8 +175,6 @@ document.addEventListener("DOMContentLoaded", () => {
     `;
 
     document.body.appendChild(wrapper);
-    document.body.classList.add("has-player");
-
     ui = {
       wrapper,
       title: wrapper.querySelector(".global-player__title"),
@@ -222,6 +232,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const isPlayerVisible = canDisplay && !state.hidden;
     const isShortcutVisible = canDisplay && state.hidden;
 
+    document.body.classList.toggle("has-player", canDisplay);
     ui.wrapper.classList.toggle("is-visible", isPlayerVisible);
     ui.shortcutButton.classList.toggle("is-visible", isShortcutVisible);
     ui.wrapper.setAttribute("aria-hidden", String(!isPlayerVisible));
@@ -238,8 +249,10 @@ document.addEventListener("DOMContentLoaded", () => {
     const isPlaying = !audio.paused;
     const isMuted = audio.volume <= 0.01;
     ui.playButton.setAttribute("aria-label", isPlaying ? "Pausar" : "Tocar");
+    ui.playButton.setAttribute("aria-pressed", String(isPlaying));
     ui.playButtonIcon.src = isPlaying ? ICONS.pause : ICONS.play;
     ui.volumeButton.setAttribute("aria-label", isMuted ? "Ativar som" : "Silenciar");
+    ui.volumeButton.setAttribute("aria-pressed", String(isMuted));
     ui.volumeButtonIcon.src = isMuted ? ICONS.mute : ICONS.volume;
     ui.volumeRange.value = String(audio.volume);
 

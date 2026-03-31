@@ -51,6 +51,9 @@
 .contact-note a {
   color: #ffd3d9;
   font-weight: 600;
+  text-decoration: underline;
+  text-decoration-color: rgba(255, 211, 217, 0.45);
+  text-underline-offset: 0.18em;
 }
 
 .contact-dual-grid {
@@ -84,5 +87,12 @@
 
   .contact-note {
     font-size: 0.92rem;
+  }
+}
+
+@media (max-width: 760px) {
+  .contact-grid .contact-btn,
+  .contact-dual-grid .info-card {
+    min-height: unset;
   }
 }
