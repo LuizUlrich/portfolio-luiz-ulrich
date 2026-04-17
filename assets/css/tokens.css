@@ -1,0 +1,63 @@
+:root {
+  --bg: #06070b;
+  --bg-2: #0b0d14;
+  --bg-3: #10131b;
+
+  --surface: rgba(16, 19, 28, 0.82);
+  --surface-2: rgba(18, 22, 32, 0.88);
+  --surface-3: rgba(10, 13, 20, 0.94);
+
+  --text: #f5f7fb;
+  --text-soft: #c7d0de;
+  --muted: #98a2b3;
+  --muted-2: #7f8897;
+
+  --line: rgba(255, 255, 255, 0.07);
+  --line-strong: rgba(255, 255, 255, 0.13);
+
+  --brand-core: #aa1423;
+  --brand-core-soft: #f3a1ab;
+  --brand-luiz: #c42435;
+  --brand-luiz-soft: #f2a5ae;
+  --brand-ulrich: #e55c68;
+  --brand-ulrich-soft: #ffd0d6;
+
+  --shadow-soft: 0 14px 36px rgba(0, 0, 0, 0.22);
+  --shadow-md: 0 20px 52px rgba(0, 0, 0, 0.3);
+  --shadow-lg: 0 28px 72px rgba(0, 0, 0, 0.4);
+
+  --radius: 28px;
+  --radius-md: 22px;
+  --radius-sm: 16px;
+
+  --container: 1180px;
+  --header-height: 84px;
+  --player-height: 82px;
+
+  --accent: var(--brand-core);
+  --accent-soft: var(--brand-core-soft);
+  --accent-rgb: 170, 20, 35;
+}
+
+body[data-page="luiz"],
+.luiz-page {
+  --accent: var(--brand-luiz);
+  --accent-soft: var(--brand-luiz-soft);
+  --accent-rgb: 196, 36, 52;
+}
+
+body[data-page="ulrich"],
+body[data-page="presskit"],
+.ulrich-page,
+.presskit-page {
+  --accent: var(--brand-ulrich);
+  --accent-soft: var(--brand-ulrich-soft);
+  --accent-rgb: 229, 92, 104;
+}
+
+body[data-page="contato"],
+.contact-page {
+  --accent: var(--brand-core);
+  --accent-soft: var(--brand-core-soft);
+  --accent-rgb: 170, 20, 35;
+}

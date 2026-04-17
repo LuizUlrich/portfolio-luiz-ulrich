@@ -2,11 +2,136 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
-  <meta http-equiv="refresh" content="0; url=ulrich.html#press-kit" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Press Kit | Ulrich</title>
-  <link rel="canonical" href="/ulrich.html#press-kit" />
+  <meta
+    name="description"
+    content="Press kit do projeto Ulrich com acesso direto ao material integrado e contexto para referencias anteriores."
+  />
+  <link rel="canonical" href="/presskit.html" />
+  <link rel="icon" href="/assets/icons/favicon.ico" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;700&display=swap"
+  />
+  <link rel="stylesheet" href="/assets/css/tokens.css" />
+  <link rel="stylesheet" href="/assets/css/base.css" />
+  <link rel="stylesheet" href="/assets/css/layout.css" />
+  <link rel="stylesheet" href="/assets/css/components.css" />
+  <link rel="stylesheet" href="/assets/css/player.css" />
+  <link rel="stylesheet" href="/assets/css/presskit.css" />
 </head>
-<body>
-  <p>Redirecionando para <a href="ulrich.html#press-kit">Ulrich</a>.</p>
+<body class="presskit-page" data-page="presskit">
+  <header class="site-header glass">
+    <div class="container header-inner">
+      <a class="brand" href="index.html" aria-label="Ir para a pagina inicial">
+        <span class="brand-mark">LU</span>
+        <span class="brand-text">Luiz Ulrich</span>
+      </a>
+
+      <div class="header-actions">
+        <nav class="main-nav" id="mainNav" aria-label="Navegacao principal">
+          <div class="main-nav__surface">
+            <div class="main-nav__meta">
+              <span class="main-nav__eyebrow">Navegacao</span>
+              <span class="main-nav__context">Press kit</span>
+            </div>
+            <a href="index.html">Inicio</a>
+            <a href="luiz.html">Luiz</a>
+            <a href="ulrich.html">Ulrich</a>
+            <a href="contato.html">Contato</a>
+          </div>
+        </nav>
+
+        <button
+          class="menu-toggle"
+          id="menuToggle"
+          aria-label="Abrir menu"
+          aria-expanded="false"
+          aria-controls="mainNav"
+          type="button"
+        >
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+      </div>
+    </div>
+    <div class="header-backdrop" id="headerBackdrop" hidden></div>
+  </header>
+
+  <main>
+    <section class="hero page-hero section presskit-hero">
+      <div class="container hero-grid">
+        <div class="hero-copy reveal">
+          <span class="section-kicker">Press kit</span>
+          <h1>Rota legado com acesso direto ao press kit do Ulrich.</h1>
+          <p class="lead">
+            Esta pagina preserva acessos anteriores e leva, com clareza, ao material integrado do projeto Ulrich.
+          </p>
+          <div class="hero-actions">
+            <a class="btn btn-primary btn-primary--ulrich" href="ulrich.html#press-kit">Abrir press kit</a>
+            <a class="btn btn-secondary btn-secondary--ulrich" href="ulrich.html">Ir para Ulrich</a>
+          </div>
+        </div>
+
+        <aside class="hero-panel info-card reveal accent-panel">
+          <h2>Por que esta rota continua ativa</h2>
+          <p>
+            Ela existe para manter compatibilidade com links antigos sem perder consistencia visual nem contexto de navegacao.
+          </p>
+          <ul class="clean-list">
+            <li>Rota preservada por seguranca e compatibilidade.</li>
+            <li>Press kit centralizado dentro da pagina do projeto.</li>
+            <li>Navegacao alinhada ao restante da experiencia.</li>
+          </ul>
+        </aside>
+      </div>
+    </section>
+  </main>
+
+  <footer class="page-footer">
+    <div class="container footer-shell">
+      <div class="footer-top">
+        <div class="footer-brand-block">
+          <a class="footer-brand" href="index.html" aria-label="Ir para a pagina inicial">
+            <span class="brand-mark">LU</span>
+            <span class="footer-brand__text">Luiz Ulrich</span>
+          </a>
+          <span class="footer-context">Press kit</span>
+          <p>
+            Rota mantida para preservar referencias antigas enquanto o material do Ulrich permanece centralizado na pagina principal.
+          </p>
+        </div>
+        <div class="footer-nav-block">
+          <span class="footer-label">Explorar</span>
+          <nav class="footer-nav" aria-label="Navegacao do rodape">
+            <a href="index.html">Inicio</a>
+            <a href="luiz.html">Luiz</a>
+            <a href="ulrich.html">Ulrich</a>
+            <a href="contato.html">Contato</a>
+          </nav>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p class="footer-meta">Uma rota de compatibilidade com a mesma base visual e estrutural do restante do projeto.</p>
+        <div class="ulrich-signature">
+          <span class="ulrich-by">by</span>
+          <a href="https://www.luizulrich.com/" target="_blank" rel="noopener noreferrer" class="ulrich-link">
+            Ulrich
+            <span class="ulrich-underline"></span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="/assets/js/app.js" defer></script>
+  <script src="/assets/js/menu.js" defer></script>
+  <script src="/assets/js/reveal.js" defer></script>
+  <script src="/assets/js/player.js" defer></script>
+  <script src="/assets/js/analytics.js" defer></script>
 </body>
 </html>

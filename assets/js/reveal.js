@@ -1,30 +1,70 @@
 function initReveal() {
-  const revealElements = document.querySelectorAll(".reveal");
+  const revealElements = [...document.querySelectorAll(".reveal")];
 
-  if (!revealElements.length) return;
+  const markVisible = (element) => {
+    element.classList.add("is-visible");
+  };
 
-  if (!("IntersectionObserver" in window)) {
-    revealElements.forEach((element) => {
-      element.classList.add("is-visible");
-    });
+  const markReady = () => {
+    document.body.classList.add("is-page-ready");
+  };
+
+  const isMobile = window.innerWidth < 768;
+
+  const useFallback =
+    revealElements.length === 0 ||
+    window.matchMedia("(prefers-reduced-motion: reduce)").matches ||
+    !("IntersectionObserver" in window);
+
+  // Delay suave em cascata
+  revealElements.forEach((element, index) => {
+    const delay = Math.min(index % 4, 3) * 70;
+    element.style.setProperty("--reveal-delay", `${delay}ms`);
+  });
+
+  // 🚨 MOBILE FIX (crítico)
+  if (isMobile) {
+    revealElements.forEach(markVisible);
+    markReady();
     return;
   }
 
-  const observer = new IntersectionObserver(
-    (entries, obs) => {
-      entries.forEach((entry) => {
-        if (!entry.isIntersecting) return;
-        entry.target.classList.add("is-visible");
-        obs.unobserve(entry.target);
-      });
-    },
-    {
-      threshold: 0.12,
-      rootMargin: "0px 0px -20px 0px"
-    }
-  );
+  if (useFallback) {
+    revealElements.forEach(markVisible);
+  } else {
+    const observer = new IntersectionObserver(
+      (entries, currentObserver) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
 
-  revealElements.forEach((element) => observer.observe(element));
+          markVisible(entry.target);
+          currentObserver.unobserve(entry.target);
+        });
+      },
+      {
+        threshold: 0.1, // mais permissivo
+        rootMargin: "0px 0px -5% 0px" // menos agressivo
+      }
+    );
+
+    revealElements.forEach((element) => {
+      observer.observe(element);
+    });
+  }
+
+  // 🚨 GARANTE QUE ELEMENTOS INICIAIS APAREÇAM
+  requestAnimationFrame(() => {
+    revealElements.forEach((el) => {
+      const rect = el.getBoundingClientRect();
+      if (rect.top < window.innerHeight * 0.9) {
+        markVisible(el);
+      }
+    });
+  });
+
+  requestAnimationFrame(() => {
+    requestAnimationFrame(markReady);
+  });
 }
 
-window.initReveal = initReveal;
+window.site.onReady(initReveal);

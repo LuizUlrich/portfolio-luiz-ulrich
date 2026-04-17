@@ -30,6 +30,7 @@ let loveCounterTimeoutId = null;
 const HOLD_DELAY = 220;
 const TAP_MOVE_TOLERANCE = 14;
 const LOVE_COUNTER_DURATION = 1700;
+const LOVE_COUNTER_TARGET = 10005;
 
 function buildProgress() {
   progressBars.innerHTML = "";
@@ -220,7 +221,7 @@ function startLoveCounterIfNeeded() {
     }
 
     const progress = Math.min((now - counterStart) / LOVE_COUNTER_DURATION, 1);
-    const value = Math.round(progress * 100);
+    const value = Math.round(progress * LOVE_COUNTER_TARGET);
     loveNumber.textContent = String(value);
 
     if (progress < 1) {

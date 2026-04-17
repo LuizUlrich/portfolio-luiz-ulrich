@@ -26,12 +26,20 @@
   />
   <meta name="twitter:image" content="/assets/images/og-default.jpg" />
   <link rel="icon" href="/assets/icons/favicon.ico" />
-  <link rel="stylesheet" href="/assets/css/global.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;700&display=swap"
+  />
+  <link rel="stylesheet" href="/assets/css/tokens.css" />
+  <link rel="stylesheet" href="/assets/css/base.css" />
   <link rel="stylesheet" href="/assets/css/layout.css" />
   <link rel="stylesheet" href="/assets/css/components.css" />
+  <link rel="stylesheet" href="/assets/css/player.css" />
   <link rel="stylesheet" href="/assets/css/ulrich.css" />
 </head>
-<body class="ulrich-page">
+<body class="ulrich-page" data-page="ulrich" data-player-page="true">
   <header class="site-header glass">
     <div class="container header-inner">
       <a class="brand" href="index.html" aria-label="Ir para a página inicial">
@@ -39,25 +47,35 @@
         <span class="brand-text">Luiz Ulrich</span>
       </a>
 
-      <nav class="main-nav" id="mainNav" aria-label="Navegação principal">
-        <a href="luiz.html">Luiz</a>
-        <a href="ulrich.html" class="is-active">Ulrich</a>
-        <a href="contato.html">Contato</a>
-      </nav>
+      <div class="header-actions">
+        <nav class="main-nav" id="mainNav" aria-label="Navegação principal">
+          <div class="main-nav__surface">
+            <div class="main-nav__meta">
+              <span class="main-nav__eyebrow">Navegação</span>
+              <span class="main-nav__context">Projeto Ulrich</span>
+            </div>
+            <a href="index.html">Início</a>
+            <a href="luiz.html">Luiz</a>
+            <a href="ulrich.html">Ulrich</a>
+            <a href="contato.html">Contato</a>
+          </div>
+        </nav>
 
-      <button
-        class="menu-toggle"
-        id="menuToggle"
-        aria-label="Abrir menu"
-        aria-expanded="false"
-        aria-controls="mainNav"
-        type="button"
-      >
-        <span></span>
-        <span></span>
-        <span></span>
-      </button>
+        <button
+          class="menu-toggle"
+          id="menuToggle"
+          aria-label="Abrir menu"
+          aria-expanded="false"
+          aria-controls="mainNav"
+          type="button"
+        >
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+      </div>
     </div>
+    <div class="header-backdrop" id="headerBackdrop" hidden></div>
   </header>
 
   <main>
@@ -94,7 +112,7 @@
       </div>
     </section>
 
-    <section class="section" id="sets">
+    <section class="section ulrich-sets-section" id="sets">
       <div class="container reveal">
         <span class="section-kicker">Sets</span>
         <h2>Sets em destaque</h2>
@@ -151,7 +169,7 @@
       </div>
     </section>
 
-    <section class="section alt">
+    <section class="section alt ulrich-soundcloud-section">
       <div class="container reveal">
         <span class="section-kicker">SoundCloud</span>
         <h2>Uma extensão natural do universo Ulrich</h2>
@@ -187,7 +205,7 @@
       </div>
     </section>
 
-    <section class="section alt">
+    <section class="section alt ulrich-identity-section">
       <div class="container reveal">
         <span class="section-kicker">Identidade</span>
         <h2>O que define o projeto</h2>
@@ -217,7 +235,7 @@
       </div>
     </section>
 
-    <section class="section">
+    <section class="section ulrich-direction-section">
       <div class="container reveal">
         <span class="section-kicker">Direção artística</span>
         <h2>Como o projeto se posiciona</h2>
@@ -239,7 +257,7 @@
       </div>
     </section>
 
-    <section class="section alt" id="press-kit">
+    <section class="section alt ulrich-presskit-section" id="press-kit">
       <div class="container reveal">
         <span class="section-kicker">Apresentação do projeto</span>
         <h2>Press kit integrado ao universo Ulrich</h2>
@@ -287,7 +305,7 @@
       </div>
     </section>
 
-    <section class="section">
+    <section class="section ulrich-summary-section">
       <div class="container reveal">
         <span class="section-kicker">Para quem quer conhecer melhor</span>
         <h2>Resumo rápido para interesse e booking</h2>
@@ -333,26 +351,45 @@
   </main>
 
   <footer class="page-footer">
-    <div class="container footer-inner">
-      <div class="footer-copy">
-        <span class="section-kicker">Projeto Ulrich</span>
-        <p>
-          Sets, identidade sonora e apresentação do projeto reunidos em uma única página para descoberta e interesse.
-        </p>
+    <div class="container footer-shell">
+      <div class="footer-top">
+        <div class="footer-brand-block">
+          <a class="footer-brand" href="index.html" aria-label="Ir para a página inicial">
+            <span class="brand-mark">LU</span>
+            <span class="footer-brand__text">Luiz Ulrich</span>
+          </a>
+          <span class="footer-context">Projeto Ulrich</span>
+          <p>
+            Sets, identidade sonora e apresentação do projeto reunidos em uma única página para descoberta e interesse.
+          </p>
+        </div>
+        <div class="footer-nav-block">
+          <span class="footer-label">Explorar</span>
+          <nav class="footer-nav" aria-label="Navegação do rodapé">
+            <a href="index.html">Início</a>
+            <a href="luiz.html">Luiz</a>
+            <a href="ulrich.html">Ulrich</a>
+            <a href="contato.html">Contato</a>
+          </nav>
+        </div>
       </div>
-      <nav class="footer-nav" aria-label="Navegação do rodapé">
-        <a href="index.html">Início</a>
-        <a href="luiz.html">Luiz</a>
-        <a href="ulrich.html">Ulrich</a>
-        <a href="contato.html">Contato</a>
-      </nav>
+      <div class="footer-bottom">
+        <p class="footer-meta">Curadoria, presença e interesse profissional organizados em uma experiência mais forte.</p>
+        <div class="ulrich-signature">
+          <span class="ulrich-by">by</span>
+          <a href="https://www.luizulrich.com/" target="_blank" rel="noopener noreferrer" class="ulrich-link">
+            Ulrich
+            <span class="ulrich-underline"></span>
+          </a>
+        </div>
+      </div>
     </div>
   </footer>
 
+  <script src="/assets/js/app.js" defer></script>
   <script src="/assets/js/menu.js" defer></script>
   <script src="/assets/js/reveal.js" defer></script>
   <script src="/assets/js/player.js" defer></script>
   <script src="/assets/js/analytics.js" defer></script>
-  <script src="/assets/js/app.js" defer></script>
 </body>
 </html>

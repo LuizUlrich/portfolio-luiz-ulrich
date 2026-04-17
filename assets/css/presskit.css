@@ -1,51 +1,59 @@
 .presskit-page {
   background:
-    radial-gradient(circle at 84% 12%, rgba(229, 92, 104, 0.1), transparent 20%),
-    linear-gradient(180deg, #070608 0%, #12080d 52%, #0c090d 100%);
+    radial-gradient(circle at 84% 10%, rgba(229, 92, 104, 0.1), transparent 20%),
+    radial-gradient(circle at 12% 72%, rgba(229, 92, 104, 0.04), transparent 18%),
+    linear-gradient(180deg, #070608 0%, #10090d 54%, #0b090c 100%);
 }
 
 .presskit-hero {
   background:
-    radial-gradient(circle at 84% 10%, rgba(229, 92, 104, 0.14), transparent 22%),
-    linear-gradient(180deg, rgba(229, 92, 104, 0.03), transparent 36%);
+    radial-gradient(circle at 84% 10%, rgba(229, 92, 104, 0.12), transparent 24%),
+    linear-gradient(180deg, rgba(229, 92, 104, 0.03), transparent 40%);
 }
 
-.presskit-grid {
-  display: grid;
-  grid-template-columns: 1.25fr 0.75fr;
-  gap: 1rem;
-  margin-top: 1.5rem;
+.presskit-page .hero-grid {
+  align-items: stretch;
+  gap: clamp(1rem, 2.6vw, 1.8rem);
 }
 
-.presskit-card {
+.presskit-page .hero-copy,
+.presskit-page .hero-panel {
   min-height: 100%;
-  border-color: rgba(229, 92, 104, 0.1);
 }
 
-.presskit-card--wide p + p {
-  margin-top: 1rem;
+.presskit-page .hero-copy h1 {
+  max-width: 11ch;
+  text-shadow: 0 0 24px rgba(229, 92, 104, 0.07);
 }
 
-.presskit-points,
-.presskit-summary-grid {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 1rem;
-  margin-top: 1.5rem;
+.presskit-page .lead {
+  max-width: 58ch;
 }
 
-.presskit-summary-grid {
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+.presskit-page .hero-panel {
+  background:
+    radial-gradient(circle at top right, rgba(229, 92, 104, 0.1), transparent 34%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.022), rgba(255, 255, 255, 0.008)),
+    var(--surface-2);
 }
 
-.presskit-summary-grid .info-card p {
-  color: var(--text-soft);
+.presskit-page .hero-panel h2 {
+  position: relative;
+  margin-bottom: 0.95rem;
+  padding-bottom: 0.9rem;
 }
 
-@media (max-width: 980px) {
-  .presskit-grid,
-  .presskit-points,
-  .presskit-summary-grid {
-    grid-template-columns: 1fr;
+.presskit-page .hero-panel h2::after {
+  content: "";
+  display: block;
+  width: 64px;
+  height: 1px;
+  margin-top: 0.8rem;
+  background: linear-gradient(90deg, rgba(229, 92, 104, 0.78), rgba(229, 92, 104, 0.08));
+}
+
+@media (max-width: 760px) {
+  .presskit-page .hero-copy h1 {
+    max-width: none;
   }
 }

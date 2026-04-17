@@ -1,4 +1,4 @@
-document.addEventListener("DOMContentLoaded", () => {
+window.site.onReady(() => {
   const TRACKS = [
     {
       title: "El Fortin Talent 2026",
@@ -13,6 +13,20 @@ document.addEventListener("DOMContentLoaded", () => {
   ];
 
   const STORAGE_KEY = "luiz-ulrich-player-state";
+  const defaultState = {
+    index: 0,
+    time: 0,
+    volume: 0.85,
+    playing: false,
+    hasInteracted: false,
+    hidden: false
+  };
+
+  const storage = window.site?.storage || {
+    load: (_key, fallback) => fallback,
+    save: () => false
+  };
+
   const createIconDataUri = (svg) => `data:image/svg+xml;utf8,${encodeURIComponent(svg)}`;
   const ICONS = {
     play: "/assets/icons/play.svg",
@@ -34,77 +48,78 @@ document.addEventListener("DOMContentLoaded", () => {
     `)
   };
 
-  let audio = document.getElementById("globalAudio");
+  function sanitizeState(saved = {}) {
+    const parsed = { ...defaultState, ...(saved || {}) };
 
-  if (!audio) {
-    audio = document.createElement("audio");
-    audio.id = "globalAudio";
-    audio.preload = "metadata";
-    document.body.appendChild(audio);
+    parsed.index = Number.isInteger(parsed.index)
+      ? Math.max(0, Math.min(TRACKS.length - 1, parsed.index))
+      : defaultState.index;
+    parsed.volume = Number.isFinite(parsed.volume)
+      ? Math.max(0, Math.min(1, parsed.volume))
+      : defaultState.volume;
+    parsed.time = Number.isFinite(parsed.time) && parsed.time >= 0 ? parsed.time : 0;
+
+    return parsed;
   }
 
-  const defaultState = {
-    index: 0,
-    time: 0,
-    volume: 0.85,
-    playing: false,
-    hasInteracted: false,
-    hidden: false
+  const state = sanitizeState(storage.load(STORAGE_KEY, defaultState));
+  const hasTrackTriggers =
+    document.body?.dataset.playerPage === "true" ||
+    document.querySelector(".play-track-btn") !== null;
+  const shouldInitializePlayer = hasTrackTriggers || state.hasInteracted;
+
+  if (!shouldInitializePlayer) return;
+
+  const player = {
+    audio: null,
+    ui: null,
+    isSeeking: false,
+    lastSavedSecond: -1,
+    lastVolumeBeforeMute: state.volume > 0 ? state.volume : defaultState.volume,
+    audioEventsBound: false
   };
 
-  function loadState() {
-    try {
-      const saved = localStorage.getItem(STORAGE_KEY);
-      if (!saved) return { ...defaultState };
-      const parsed = { ...defaultState, ...JSON.parse(saved) };
-      parsed.index = Number.isInteger(parsed.index)
-        ? Math.max(0, Math.min(TRACKS.length - 1, parsed.index))
-        : defaultState.index;
-      parsed.volume = Number.isFinite(parsed.volume)
-        ? Math.max(0, Math.min(1, parsed.volume))
-        : defaultState.volume;
-      parsed.time = Number.isFinite(parsed.time) && parsed.time >= 0 ? parsed.time : 0;
-      return parsed;
-    } catch {
-      return { ...defaultState };
-    }
-  }
-
-  const state = loadState();
-  let ui = null;
-  let isSeeking = false;
-  let lastSavedSecond = -1;
-  let lastVolumeBeforeMute = state.volume > 0 ? state.volume : defaultState.volume;
-
-  audio.volume = state.volume;
-  audio.src = TRACKS[state.index]?.src || TRACKS[0].src;
-
   function saveState() {
-    const payload = {
+    const audio = player.audio;
+
+    storage.save(STORAGE_KEY, {
       index: state.index,
-      time: Number.isFinite(audio.currentTime) ? audio.currentTime : 0,
-      volume: audio.volume,
-      playing: !audio.paused,
+      time: audio && Number.isFinite(audio.currentTime) ? audio.currentTime : state.time,
+      volume: audio ? audio.volume : state.volume,
+      playing: audio ? !audio.paused : state.playing,
       hasInteracted: state.hasInteracted,
       hidden: state.hidden
-    };
-
-    try {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(payload));
-    } catch {
-      // Ignore storage failures to keep playback functional.
-    }
+    });
   }
 
   function formatTime(seconds) {
     if (!Number.isFinite(seconds)) return "0:00";
+
     const mins = Math.floor(seconds / 60);
     const secs = Math.floor(seconds % 60);
     return `${mins}:${String(secs).padStart(2, "0")}`;
   }
 
+  function ensureAudio() {
+    if (player.audio) return player.audio;
+
+    let audio = document.getElementById("globalAudio");
+
+    if (!audio) {
+      audio = document.createElement("audio");
+      audio.id = "globalAudio";
+      audio.preload = "metadata";
+      document.body.appendChild(audio);
+    }
+
+    audio.volume = state.volume;
+    player.audio = audio;
+    bindAudioEvents();
+    return audio;
+  }
+
   function ensurePlayerUI() {
-    if (ui) return ui;
+    if (player.ui) return player.ui;
 
     const wrapper = document.createElement("section");
     wrapper.className = "global-player";
@@ -175,7 +190,15 @@ document.addEventListener("DOMContentLoaded", () => {
     `;
 
     document.body.appendChild(wrapper);
-    ui = {
+
+    const shortcut = document.createElement("button");
+    shortcut.className = "player-edge-toggle player-edge-toggle--floating";
+    shortcut.type = "button";
+    shortcut.setAttribute("aria-label", "Mostrar player");
+    shortcut.innerHTML = `<img src="${ICONS.play}" alt="" />`;
+    document.body.appendChild(shortcut);
+
+    player.ui = {
       wrapper,
       title: wrapper.querySelector(".global-player__title"),
       artist: wrapper.querySelector(".global-player__artist"),
@@ -189,80 +212,54 @@ document.addEventListener("DOMContentLoaded", () => {
       nextButton: wrapper.querySelector('[data-action="next"]'),
       seek: wrapper.querySelector('[data-role="seek"]'),
       current: wrapper.querySelector('[data-role="current"]'),
-      duration: wrapper.querySelector('[data-role="duration"]')
+      duration: wrapper.querySelector('[data-role="duration"]'),
+      shortcutButton: shortcut
     };
 
-    const shortcut = document.createElement("button");
-    shortcut.className = "player-edge-toggle player-edge-toggle--floating";
-    shortcut.type = "button";
-    shortcut.setAttribute("aria-label", "Mostrar player");
-    shortcut.innerHTML = `<img src="${ICONS.play}" alt="" />`;
-    document.body.appendChild(shortcut);
-
-    ui.shortcutButton = shortcut;
-
-    ui.prevButton.addEventListener("click", () => changeTrack(-1, true));
-    ui.nextButton.addEventListener("click", () => changeTrack(1, true));
-    ui.playButton.addEventListener("click", togglePlayback);
-    ui.volumeButton.addEventListener("click", toggleMute);
-    ui.hideButton.addEventListener("click", hidePlayer);
-    ui.shortcutButton.addEventListener("click", showPlayer);
-    ui.volumeRange.addEventListener("input", () => {
-      setVolume(Number(ui.volumeRange.value));
-    });
-
-    ui.seek.addEventListener("input", () => {
-      isSeeking = true;
-      ui.current.textContent = formatTime(Number(ui.seek.value));
-    });
-
-    ui.seek.addEventListener("change", () => {
-      audio.currentTime = Number(ui.seek.value);
-      isSeeking = false;
-      saveState();
-    });
-
-    return ui;
+    bindUIEvents();
+    return player.ui;
   }
 
   function applyVisibilityState() {
-    if (!ui) return;
+    if (!player.ui) return;
 
     const canDisplay = state.hasInteracted;
     const isPlayerVisible = canDisplay && !state.hidden;
     const isShortcutVisible = canDisplay && state.hidden;
 
     document.body.classList.toggle("has-player", canDisplay);
-    ui.wrapper.classList.toggle("is-visible", isPlayerVisible);
-    ui.shortcutButton.classList.toggle("is-visible", isShortcutVisible);
-    ui.wrapper.setAttribute("aria-hidden", String(!isPlayerVisible));
-    ui.shortcutButton.setAttribute("aria-hidden", String(!isShortcutVisible));
+    player.ui.wrapper.classList.toggle("is-visible", isPlayerVisible);
+    player.ui.shortcutButton.classList.toggle("is-visible", isShortcutVisible);
+    player.ui.wrapper.setAttribute("aria-hidden", String(!isPlayerVisible));
+    player.ui.shortcutButton.setAttribute("aria-hidden", String(!isShortcutVisible));
   }
 
-  function updatePlayerUI() {
-    if (!ui) return;
+  function renderPlayer() {
+    if (!player.ui) return;
 
     const track = TRACKS[state.index] || TRACKS[0];
-    ui.title.textContent = track.title;
-    ui.artist.textContent = track.artist;
+    const audio = player.audio;
+    const isPlaying = audio ? !audio.paused : state.playing;
+    const volume = audio ? audio.volume : state.volume;
+    const isMuted = volume <= 0.01;
+    const currentTime = audio && Number.isFinite(audio.currentTime) ? audio.currentTime : state.time;
+    const duration = audio ? audio.duration : NaN;
 
-    const isPlaying = !audio.paused;
-    const isMuted = audio.volume <= 0.01;
-    ui.playButton.setAttribute("aria-label", isPlaying ? "Pausar" : "Tocar");
-    ui.playButton.setAttribute("aria-pressed", String(isPlaying));
-    ui.playButtonIcon.src = isPlaying ? ICONS.pause : ICONS.play;
-    ui.volumeButton.setAttribute("aria-label", isMuted ? "Ativar som" : "Silenciar");
-    ui.volumeButton.setAttribute("aria-pressed", String(isMuted));
-    ui.volumeButtonIcon.src = isMuted ? ICONS.mute : ICONS.volume;
-    ui.volumeRange.value = String(audio.volume);
+    player.ui.title.textContent = track.title;
+    player.ui.artist.textContent = track.artist;
+    player.ui.playButton.setAttribute("aria-label", isPlaying ? "Pausar" : "Tocar");
+    player.ui.playButton.setAttribute("aria-pressed", String(isPlaying));
+    player.ui.playButtonIcon.src = isPlaying ? ICONS.pause : ICONS.play;
+    player.ui.volumeButton.setAttribute("aria-label", isMuted ? "Ativar som" : "Silenciar");
+    player.ui.volumeButton.setAttribute("aria-pressed", String(isMuted));
+    player.ui.volumeButtonIcon.src = isMuted ? ICONS.mute : ICONS.volume;
+    player.ui.volumeRange.value = String(volume);
+    player.ui.current.textContent = formatTime(currentTime);
+    player.ui.duration.textContent = formatTime(duration);
+    player.ui.seek.max = Number.isFinite(duration) ? duration : 100;
 
-    ui.current.textContent = formatTime(audio.currentTime);
-    ui.duration.textContent = formatTime(audio.duration);
-
-    ui.seek.max = Number.isFinite(audio.duration) ? audio.duration : 100;
-
-    if (!isSeeking) {
-      ui.seek.value = Number.isFinite(audio.currentTime) ? audio.currentTime : 0;
+    if (!player.isSeeking) {
+      player.ui.seek.value = Number.isFinite(currentTime) ? currentTime : 0;
     }
   }
 
@@ -281,22 +278,25 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function setVolume(value) {
+    const audio = ensureAudio();
     const normalizedVolume = Math.max(0, Math.min(1, value));
 
     audio.volume = normalizedVolume;
 
     if (normalizedVolume > 0.01) {
-      lastVolumeBeforeMute = normalizedVolume;
+      player.lastVolumeBeforeMute = normalizedVolume;
     }
 
     state.volume = normalizedVolume;
-    updatePlayerUI();
+    renderPlayer();
     saveState();
   }
 
   function toggleMute() {
+    const audio = ensureAudio();
+
     if (audio.volume <= 0.01) {
-      setVolume(lastVolumeBeforeMute || defaultState.volume);
+      setVolume(player.lastVolumeBeforeMute || defaultState.volume);
       return;
     }
 
@@ -304,6 +304,8 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function setTrack(index, preserveTime = false) {
+    const audio = ensureAudio();
+
     state.index = ((index % TRACKS.length) + TRACKS.length) % TRACKS.length;
     const track = TRACKS[state.index];
     const nextTime = preserveTime ? state.time : 0;
@@ -315,35 +317,42 @@ document.addEventListener("DOMContentLoaded", () => {
       if (nextTime > 0 && Number.isFinite(audio.duration)) {
         audio.currentTime = Math.min(nextTime, Math.max(audio.duration - 1, 0));
       }
-      updatePlayerUI();
+
+      renderPlayer();
     };
 
     audio.addEventListener("loadedmetadata", applyTime, { once: true });
-    updatePlayerUI();
+    renderPlayer();
     saveState();
   }
 
   async function playCurrent() {
+    const audio = ensureAudio();
+
     try {
       await audio.play();
       state.hasInteracted = true;
+      state.playing = true;
       showPlayer();
-      updatePlayerUI();
+      renderPlayer();
       saveState();
     } catch (error) {
       console.warn("Nao foi possivel iniciar o audio automaticamente:", error);
-      updatePlayerUI();
+      renderPlayer();
     }
   }
 
   function pauseCurrent() {
-    audio.pause();
-    updatePlayerUI();
+    if (!player.audio) return;
+
+    player.audio.pause();
+    state.playing = false;
+    renderPlayer();
     saveState();
   }
 
   function togglePlayback() {
-    if (audio.paused) {
+    if (!player.audio || player.audio.paused) {
       playCurrent();
       return;
     }
@@ -360,48 +369,86 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  document.querySelectorAll(".play-track-btn").forEach((button) => {
-    button.addEventListener("click", () => {
-      const requestedIndex = Number(button.dataset.track || 0);
-      state.time = 0;
-      setTrack(requestedIndex, false);
-      playCurrent();
+  function bindUIEvents() {
+    const ui = player.ui;
+
+    ui.prevButton.addEventListener("click", () => changeTrack(-1, true));
+    ui.nextButton.addEventListener("click", () => changeTrack(1, true));
+    ui.playButton.addEventListener("click", togglePlayback);
+    ui.volumeButton.addEventListener("click", toggleMute);
+    ui.hideButton.addEventListener("click", hidePlayer);
+    ui.shortcutButton.addEventListener("click", showPlayer);
+    ui.volumeRange.addEventListener("input", () => {
+      setVolume(Number(ui.volumeRange.value));
     });
-  });
 
-  audio.addEventListener("loadedmetadata", () => {
-    if (state.time > 0 && !audio.currentTime) {
-      audio.currentTime = state.time;
-    }
-    updatePlayerUI();
-  });
+    ui.seek.addEventListener("input", () => {
+      player.isSeeking = true;
+      ui.current.textContent = formatTime(Number(ui.seek.value));
+    });
 
-  audio.addEventListener("timeupdate", () => {
-    updatePlayerUI();
-
-    const currentSecond = Math.floor(audio.currentTime || 0);
-    if (currentSecond !== lastSavedSecond) {
-      lastSavedSecond = currentSecond;
-      state.time = audio.currentTime || 0;
+    ui.seek.addEventListener("change", () => {
+      const audio = ensureAudio();
+      audio.currentTime = Number(ui.seek.value);
+      player.isSeeking = false;
       saveState();
-    }
-  });
+    });
+  }
 
-  audio.addEventListener("play", () => {
-    showPlayer();
-    updatePlayerUI();
-  });
+  function bindAudioEvents() {
+    if (player.audioEventsBound || !player.audio) return;
 
-  audio.addEventListener("pause", () => {
-    updatePlayerUI();
-    saveState();
-  });
+    player.audioEventsBound = true;
 
-  audio.addEventListener("ended", () => {
-    changeTrack(1, true);
-  });
+    player.audio.addEventListener("loadedmetadata", () => {
+      if (state.time > 0 && !player.audio.currentTime) {
+        player.audio.currentTime = state.time;
+      }
+
+      renderPlayer();
+    });
+
+    player.audio.addEventListener("timeupdate", () => {
+      renderPlayer();
+
+      const currentSecond = Math.floor(player.audio.currentTime || 0);
+      if (currentSecond !== player.lastSavedSecond) {
+        player.lastSavedSecond = currentSecond;
+        state.time = player.audio.currentTime || 0;
+        saveState();
+      }
+    });
+
+    player.audio.addEventListener("play", () => {
+      state.playing = true;
+      showPlayer();
+      renderPlayer();
+    });
+
+    player.audio.addEventListener("pause", () => {
+      state.playing = false;
+      renderPlayer();
+      saveState();
+    });
+
+    player.audio.addEventListener("ended", () => {
+      changeTrack(1, true);
+    });
+  }
+
+  function bindTrackTriggers() {
+    document.querySelectorAll(".play-track-btn").forEach((button) => {
+      button.addEventListener("click", () => {
+        const requestedIndex = Number(button.dataset.track || 0);
+        state.time = 0;
+        setTrack(requestedIndex, false);
+        playCurrent();
+      });
+    });
+  }
 
   ensurePlayerUI();
+  bindTrackTriggers();
   applyVisibilityState();
   setTrack(state.index, state.time > 0);
 
@@ -414,6 +461,6 @@ document.addEventListener("DOMContentLoaded", () => {
   if (state.hasInteracted && state.playing) {
     playCurrent();
   } else {
-    updatePlayerUI();
+    renderPlayer();
   }
 });

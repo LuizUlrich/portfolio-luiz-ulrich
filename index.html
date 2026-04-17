@@ -3,17 +3,15 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-  <title>Luiz Ulrich | Tecnologia, Dados, Projetos Digitais e Projeto Ulrich</title>
+  <title>Luiz Ulrich | Tecnologia, Projetos Digitais e Projeto Ulrich</title>
   <meta
     name="description"
-    content="Portfólio de Luiz Ulrich com foco em tecnologia, sistemas, banco de dados, projetos digitais e no universo artístico do projeto Ulrich."
+    content="Portfólio de Luiz Ulrich com foco em sistemas, dados, projetos digitais e no universo autoral do projeto Ulrich."
   />
-
-  <meta property="og:title" content="Luiz Ulrich | Tecnologia, Dados, Projetos Digitais e Projeto Ulrich" />
+  <meta property="og:title" content="Luiz Ulrich | Tecnologia, Projetos Digitais e Projeto Ulrich" />
   <meta
     property="og:description"
-    content="Carreira em tecnologia, banco de dados, projetos digitais e identidade artística reunidas em uma presença digital clara, madura e bem construída."
+    content="Tecnologia, projetos digitais e identidade autoral organizados em uma experiência mais clara, madura e premium."
   />
   <meta property="og:type" content="website" />
   <meta property="og:locale" content="pt_BR" />
@@ -21,20 +19,27 @@
   <meta property="og:image:width" content="1200" />
   <meta property="og:image:height" content="630" />
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="Luiz Ulrich | Tecnologia, Dados, Projetos Digitais e Projeto Ulrich" />
+  <meta name="twitter:title" content="Luiz Ulrich | Tecnologia, Projetos Digitais e Projeto Ulrich" />
   <meta
     name="twitter:description"
-    content="Carreira em tecnologia, banco de dados, projetos digitais e identidade artística reunidas em uma presença digital clara, madura e bem construída."
+    content="Tecnologia, projetos digitais e identidade autoral organizados em uma experiência mais clara, madura e premium."
   />
   <meta name="twitter:image" content="/assets/images/og-default.jpg" />
-
   <link rel="icon" type="image/x-icon" href="/assets/icons/favicon.ico" />
-  <link rel="stylesheet" href="/assets/css/global.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;700&display=swap"
+  />
+  <link rel="stylesheet" href="/assets/css/tokens.css" />
+  <link rel="stylesheet" href="/assets/css/base.css" />
   <link rel="stylesheet" href="/assets/css/layout.css" />
   <link rel="stylesheet" href="/assets/css/components.css" />
+  <link rel="stylesheet" href="/assets/css/player.css" />
   <link rel="stylesheet" href="/assets/css/home.css" />
 </head>
-<body class="home-page">
+<body class="home-page" data-page="home">
   <header class="site-header glass">
     <div class="container header-inner">
       <a class="brand" href="index.html" aria-label="Ir para a página inicial">
@@ -42,235 +47,312 @@
         <span class="brand-text">Luiz Ulrich</span>
       </a>
 
-      <nav class="main-nav" id="mainNav" aria-label="Navegação principal">
-        <a href="luiz.html">Luiz</a>
-        <a href="ulrich.html">Ulrich</a>
-        <a href="contato.html">Contato</a>
-      </nav>
+      <div class="header-actions">
+        <nav class="main-nav" id="mainNav" aria-label="Navegação principal">
+          <div class="main-nav__surface">
+            <div class="main-nav__meta">
+              <span class="main-nav__eyebrow">Navegação</span>
+              <span class="main-nav__context">Página inicial</span>
+            </div>
+            <a href="index.html">Início</a>
+            <a href="luiz.html">Luiz</a>
+            <a href="ulrich.html">Ulrich</a>
+            <a href="contato.html">Contato</a>
+          </div>
+        </nav>
 
-      <button
-        class="menu-toggle"
-        id="menuToggle"
-        aria-label="Abrir menu"
-        aria-expanded="false"
-        aria-controls="mainNav"
-        type="button"
-      >
-        <span></span>
-        <span></span>
-        <span></span>
-      </button>
+        <button
+          class="menu-toggle"
+          id="menuToggle"
+          aria-label="Abrir menu"
+          aria-expanded="false"
+          aria-controls="mainNav"
+          type="button"
+        >
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+      </div>
     </div>
+    <div class="header-backdrop" id="headerBackdrop" hidden></div>
   </header>
 
-  <main>
+  <main class="home-main">
     <section class="hero home-hero section">
       <div class="container home-hero-grid">
         <div class="hero-copy reveal">
-          <span class="section-kicker">Presença autoral</span>
-
-          <h1>Tecnologia, direção e identidade.</h1>
-
+          <span class="section-kicker">Assinatura pessoal</span>
+          <h1>Tecnologia com direção. Identidade com presença.</h1>
           <p class="lead">
-            Sou Luiz Ulrich. Meu trabalho hoje conecta tecnologia, sistemas, banco de dados,
-            projetos digitais e resolução de problemas a uma frente artística construída
-            com identidade, presença e direção sonora.
+            Sou Luiz Ulrich. Atuo em sistemas, dados e projetos digitais com foco em clareza,
+            estrutura e entrega. Em paralelo, desenvolvo o projeto artístico Ulrich como
+            extensão da mesma assinatura pessoal.
           </p>
-
-          <p class="hero-subtext">
-            Este site organiza essas duas frentes com clareza: o lado profissional,
-            voltado a sistemas, suporte, estrutura de informação, dados e entrega,
-            e o lado artístico, voltado a identidade, pista e descoberta do projeto Ulrich.
-          </p>
-
-          <div class="signal-grid hero-signals">
-            <article class="signal-card">
-              <strong>Tecnologia</strong>
-              <span>Suporte, sistemas, dados, processos e execução com direção prática.</span>
-            </article>
-            <article class="signal-card">
-              <strong>Ulrich</strong>
-              <span>Projeto com identidade, leitura de pista e construção de experiência.</span>
-            </article>
-            <article class="signal-card">
-              <strong>Contato</strong>
-              <span>Aberto para oportunidades, colaborações, projetos e bookings.</span>
-            </article>
+          <div class="hero-actions">
+            <a class="btn btn-primary btn-primary--luiz" href="luiz.html">Ver lado profissional</a>
+            <a class="btn btn-secondary btn-secondary--ulrich" href="ulrich.html">Explorar Ulrich</a>
+          </div>
+          <div class="hero-proof" aria-label="Áreas principais">
+            <span class="hero-proof__item">Sistemas e dados</span>
+            <span class="hero-proof__item">Projetos digitais</span>
+            <span class="hero-proof__item">Projeto autoral</span>
           </div>
         </div>
 
-        <aside class="hero-side reveal">
+        <aside class="home-hero-aside reveal">
           <figure class="info-card home-portrait-card">
             <img
               src="/assets/images/luiz-hero.webp"
               alt="Luiz Ulrich em retrato da página inicial"
-              class="hero-photo"
+              class="hero-photo home-portrait-image"
               loading="eager"
               decoding="async"
             />
           </figure>
+
+          <article class="info-card hero-presence-card">
+            <span class="hero-presence-card__eyebrow">Leitura rápida</span>
+            <h2>Dois mundos, uma assinatura.</h2>
+            <ul class="clean-list hero-presence-list">
+              <li>Luiz: estrutura, suporte, dados e execução digital.</li>
+              <li>Ulrich: identidade sonora, curadoria e experiência.</li>
+              <li>Disponível para projetos, colaborações e bookings.</li>
+            </ul>
+          </article>
         </aside>
+      </div>
+    </section>
 
-        <div class="hero-side-cards reveal">
-          <article class="info-card hero-spotlight hero-spotlight--luiz">
-            <div class="hero-spotlight__top">
-              <span class="hero-spotlight__tag">Profissional</span>
-              <h2>Tecnologia e sistemas</h2>
-            </div>
+    <section class="section home-split">
+      <div class="container">
+        <div class="section-heading reveal">
+          <span class="section-kicker">Split</span>
+          <h2>Escolha a entrada certa.</h2>
+          <p class="section-intro">
+            A home apresenta a assinatura. As páginas seguintes aprofundam cada frente com contexto próprio.
+          </p>
+        </div>
 
+        <div class="split-grid">
+          <article class="split-card split-card--luiz reveal">
+            <span class="split-card__label">Luiz</span>
+            <h3>Tecnologia, sistemas e projetos digitais.</h3>
             <p>
-              Suporte, sistemas, banco de dados, projetos digitais e publicação de sites
-              com foco em clareza, execução prática e melhoria contínua.
+              Para quem quer entender minha base técnica, minha forma de resolver problemas
+              e os trabalhos aplicados que já entreguei.
             </p>
-
-            <a class="text-link text-link--luiz" href="luiz.html">Ver trajetória profissional</a>
+            <a class="btn btn-primary btn-primary--luiz" href="luiz.html">Entrar no lado Luiz</a>
           </article>
 
-          <article class="info-card hero-spotlight hero-spotlight--ulrich">
-            <div class="hero-spotlight__top">
-              <span class="hero-spotlight__tag">Artístico</span>
-              <h2>Projeto Ulrich</h2>
-            </div>
-
+          <article class="split-card split-card--ulrich reveal">
+            <span class="split-card__label">Ulrich</span>
+            <h3>Projeto artístico, sets e identidade sonora.</h3>
             <p>
-              Um projeto guiado por feeling, construção de jornada e identidade musical
-              para criar presença real na pista.
+              Para quem chega pela música e quer acessar o universo do projeto,
+              os sets em destaque e o material de apresentação.
             </p>
-
-            <a class="text-link text-link--ulrich" href="ulrich.html">Entrar no universo Ulrich</a>
-          </article>
-
-          <article class="info-card hero-status-card">
-            <span class="hero-status-card__label">Posicionamento</span>
-            <p>
-              Um portfólio que une carreira em tecnologia, dados e presença artística
-              dentro de uma mesma assinatura pessoal.
-            </p>
+            <a class="btn btn-secondary btn-secondary--ulrich" href="ulrich.html">Entrar no universo Ulrich</a>
           </article>
         </div>
       </div>
     </section>
 
-    <section class="section alt home-overview">
+    <section class="section alt home-manifesto">
       <div class="container reveal">
-        <div class="overview-grid">
-          <article class="info-card feature-card feature-card--large feature-card--luiz">
-            <span class="section-kicker">Trajetória profissional</span>
-            <h2>Minha prioridade está em construir uma carreira sólida, técnica e aplicável.</h2>
-            <p>
-              Hoje minha base une suporte técnico, sistemas, processos, estruturação de dados
-              e desenvolvimento web aplicado. Gosto de entender problemas, estruturar soluções
-              e levar projetos do ajuste técnico à publicação com mais clareza, consistência
-              e senso de entrega.
+        <div class="manifesto-panel">
+          <div class="manifesto-copy">
+            <span class="section-kicker">Manifesto</span>
+            <h2>Eu trabalho para reduzir ruído e aumentar percepção de valor.</h2>
+            <p class="section-text">
+              Meu olhar combina pensamento de sistema, cuidado com experiência e senso de direção.
+              Gosto de organizar o que está confuso, dar forma ao que precisa de clareza e transformar
+              estrutura em presença.
             </p>
+          </div>
 
-            <ul class="feature-points">
-              <li>Suporte técnico e troubleshooting</li>
-              <li>Sistemas, implantação, SQL e estrutura de dados</li>
-              <li>Sites, deploy e estrutura digital</li>
-            </ul>
-
-            <a class="btn btn-primary btn-primary--luiz" href="luiz.html">Ver trajetória profissional</a>
-          </article>
-
-          <article class="info-card feature-card feature-card--ulrich">
-            <span class="section-kicker">Projeto artístico</span>
-            <h2>Ulrich</h2>
-            <p>
-              Uma extensão da minha identidade voltada à música eletrônica, leitura de
-              pista, construção de clima e presença.
-            </p>
-
-            <ul class="feature-points">
-              <li>Sets com direção e intenção</li>
-              <li>Feeling, energia e jornada</li>
-              <li>Projeto com assinatura própria</li>
-            </ul>
-
-            <a class="btn btn-secondary btn-secondary--ulrich" href="ulrich.html">Explorar projeto Ulrich</a>
-          </article>
-
-          <article class="info-card feature-card feature-card--contact">
-            <span class="section-kicker">Contato</span>
-            <h2>Oportunidades e conexões</h2>
-            <p>
-              Aberto a oportunidades profissionais, projetos digitais, banco de dados,
-              colaborações estratégicas e bookings ligados ao projeto Ulrich.
-            </p>
-
-            <a
-              class="btn btn-secondary"
-              href="contato.html"
-            >
-              Abrir contato
-            </a>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <section class="section home-signature">
-      <div class="container reveal">
-        <div class="momentum-panel">
-          <article class="info-card momentum-copy">
-            <span class="section-kicker">Momento atual</span>
-            <h2>Presença construída com consistência.</h2>
-            <p>
-              O site apresenta com mais clareza a conexão entre carreira, direção pessoal
-              e projeto artístico. A ideia é reduzir ruído e deixar claro, em poucos minutos,
-              quem eu sou, como penso e onde posso gerar valor.
-            </p>
-            <p>
-              Isso melhora tanto a leitura de alguém avaliando meu perfil profissional
-              quanto a de quem chega pelo universo do Ulrich.
-            </p>
-          </article>
-
-          <div class="momentum-metrics">
-            <article class="metric-card">
-              <strong>Lado profissional</strong>
-              <span>Base técnica em evolução com foco em clareza, suporte, dados e processos.</span>
+          <div class="manifesto-points">
+            <article class="manifesto-point">
+              <strong>Clareza</strong>
+              <span>Menos excesso, mais leitura rápida.</span>
             </article>
-            <article class="metric-card">
-              <strong>Lado artístico</strong>
-              <span>Projeto apresentado com mais contexto para interesse, curadoria e booking.</span>
+            <article class="manifesto-point">
+              <strong>Direção</strong>
+              <span>Cada elemento precisa ter função e intenção.</span>
             </article>
-            <article class="metric-card">
-              <strong>Posicionamento</strong>
-              <span>Assinatura pessoal mais forte, sem separar demais as duas frentes.</span>
-            </article>
-            <article class="metric-card">
+            <article class="manifesto-point">
               <strong>Experiência</strong>
-              <span>Navegação mais limpa, CTAs mais úteis e visual mais consistente.</span>
+              <span>Sistema e percepção de valor caminham juntos.</span>
             </article>
           </div>
         </div>
       </div>
     </section>
 
-    <section class="section home-signature">
-      <div class="container reveal">
-        <div class="signature-panel">
-          <div class="signature-panel__copy">
-            <span class="section-kicker">Assinatura</span>
-            <h2>Dois lados. Uma identidade.</h2>
+    <section class="section home-services">
+      <div class="container">
+        <div class="section-heading reveal">
+          <span class="section-kicker">Atuação</span>
+          <h2>Onde gero valor hoje.</h2>
+          <p class="section-intro">
+            Blocos objetivos, com foco no resultado percebido por quem contrata ou acompanha o projeto.
+          </p>
+        </div>
+
+        <div class="services-grid">
+          <article class="info-card service-card reveal">
+            <h3>Sistemas e suporte</h3>
+            <p>Diagnóstico, organização operacional e melhoria de rotina com mais estabilidade.</p>
+          </article>
+
+          <article class="info-card service-card reveal">
+            <h3>Dados e estrutura</h3>
+            <p>Leitura de fluxo, organização de informação e base mais confiável para crescer.</p>
+          </article>
+
+          <article class="info-card service-card reveal">
+            <h3>Projetos digitais</h3>
+            <p>Sites e presenças digitais com mais clareza, hierarquia e consistência visual.</p>
+          </article>
+
+          <article class="info-card service-card reveal">
+            <h3>Direção de experiência</h3>
+            <p>Menos ruído, melhor leitura e uma entrega que parece mais madura desde o primeiro contato.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section alt home-projects">
+      <div class="container">
+        <div class="section-heading reveal">
+          <span class="section-kicker">Projetos</span>
+          <h2>Trabalhos reais em destaque.</h2>
+          <p class="section-intro">
+            Seleção enxuta para mostrar execução, critério e impacto.
+          </p>
+        </div>
+
+        <div class="project-grid home-project-grid">
+          <article class="project-card reveal">
+            <div class="project-top">
+              <span class="project-label">Projeto real</span>
+              <h3>Site imobiliário</h3>
+            </div>
             <p>
-              Meu lado profissional é guiado por estrutura, análise e evolução técnica.
-              Meu lado artístico é guiado por sensibilidade, direção e presença.
+              Estruturei uma presença digital mais clara para catálogo, navegação e administração de imóveis.
             </p>
+            <ul class="project-points">
+              <li><strong>Foco:</strong> layout, dados e experiência de busca.</li>
+              <li><strong>Impacto:</strong> vitrine mais organizada e pronta para evolução.</li>
+            </ul>
+            <div class="project-card__actions">
+              <a
+                class="project-card__cta"
+                href="https://www.ericklautharte.com/"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Ver projeto do site imobiliário"
+              >
+                Ver projeto
+              </a>
+            </div>
+          </article>
+
+          <article class="project-card reveal">
+            <div class="project-top">
+              <span class="project-label">Projeto real</span>
+              <h3>Barbearia Bertotti</h3>
+            </div>
             <p>
-              Juntos, eles formam uma marca pessoal que valoriza construção de experiência,
-              clareza e autenticidade.
+              Desenvolvi uma presença digital mais forte para serviço, agenda e operação do negócio.
+            </p>
+            <ul class="project-points">
+              <li><strong>Foco:</strong> site institucional, agendamento e fluxo do cliente.</li>
+              <li><strong>Impacto:</strong> experiência mais clara para marca e atendimento.</li>
+            </ul>
+            <div class="project-card__actions">
+              <a
+                class="project-card__cta"
+                href="https://www.barbeariabertotti.com/"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Ver projeto Barbearia Bertotti"
+              >
+                Ver projeto
+              </a>
+            </div>
+          </article>
+
+          <article class="project-card reveal">
+            <div class="project-top">
+              <span class="project-label">Projeto autoral</span>
+              <h3>Portfólio Luiz Ulrich</h3>
+            </div>
+            <p>
+              Reestruturação da minha própria assinatura digital para unir tecnologia e projeto artístico com mais valor percebido.
+            </p>
+            <ul class="project-points">
+              <li><strong>Foco:</strong> narrativa, hierarquia, UX e sistema visual.</li>
+              <li><strong>Impacto:</strong> posicionamento mais claro em poucos segundos.</li>
+            </ul>
+            <div class="project-card__actions">
+              <span class="project-card__status">Em evolução contínua</span>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section home-differentials">
+      <div class="container">
+        <div class="section-heading reveal">
+          <span class="section-kicker">Diferenciais</span>
+          <h2>O que torna essa assinatura diferente.</h2>
+          <p class="section-intro">
+            Clareza de leitura, base técnica e sensibilidade de experiência na mesma construção.
+          </p>
+        </div>
+
+        <div class="differentials-grid">
+          <article class="info-card differential-card reveal">
+            <h3>Penso em sistema</h3>
+            <p>Procuro causa, estrutura e continuidade, não apenas correções superficiais.</p>
+          </article>
+
+          <article class="info-card differential-card reveal">
+            <h3>Cuido da percepção</h3>
+            <p>Valor percebido também vem de ritmo, hierarquia e acabamento.</p>
+          </article>
+
+          <article class="info-card differential-card reveal">
+            <h3>Uno técnica e identidade</h3>
+            <p>Meu lado profissional e meu lado autoral se fortalecem em vez de competir.</p>
+          </article>
+
+          <article class="info-card differential-card reveal">
+            <h3>Entrego com critério</h3>
+            <p>Prefiro menos ruído, mais controle e decisões que sustentem evolução de longo prazo.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section home-cta">
+      <div class="container reveal">
+        <div class="cta-panel">
+          <div class="cta-copy">
+            <span class="section-kicker">Próximo passo</span>
+            <h2>Se fizer sentido, a conversa começa aqui.</h2>
+            <p>
+              Aberto a oportunidades em tecnologia, projetos digitais, colaborações estratégicas
+              e bookings ligados ao universo Ulrich.
             </p>
           </div>
 
-          <div class="signature-panel__chips">
-            <span class="signature-chip signature-chip--luiz">Tecnologia</span>
-            <span class="signature-chip signature-chip--luiz">Sistemas</span>
-            <span class="signature-chip signature-chip--luiz">Dados</span>
-            <span class="signature-chip signature-chip--ulrich">Sets</span>
-            <span class="signature-chip signature-chip--ulrich">Identidade</span>
-            <span class="signature-chip signature-chip--ulrich">Experiência</span>
+          <div class="cta-actions">
+            <a class="btn btn-primary" href="contato.html">Abrir contato</a>
+            <a class="btn btn-secondary btn-secondary--luiz" href="luiz.html">Ver experiência</a>
           </div>
         </div>
       </div>
@@ -278,26 +360,45 @@
   </main>
 
   <footer class="page-footer">
-    <div class="container footer-inner">
-      <div class="footer-copy">
-        <span class="section-kicker">Luiz Ulrich</span>
-        <p>
-          Tecnologia, dados, direção pessoal e projeto artístico organizados em uma presença digital mais clara.
-        </p>
+    <div class="container footer-shell">
+      <div class="footer-top">
+        <div class="footer-brand-block">
+          <a class="footer-brand" href="index.html" aria-label="Ir para a página inicial">
+            <span class="brand-mark">LU</span>
+            <span class="footer-brand__text">Luiz Ulrich</span>
+          </a>
+          <span class="footer-context">Assinatura pessoal</span>
+          <p>
+            Tecnologia, dados, direção pessoal e projeto artístico organizados em uma presença digital mais clara.
+          </p>
+        </div>
+        <div class="footer-nav-block">
+          <span class="footer-label">Explorar</span>
+          <nav class="footer-nav" aria-label="Navegação do rodapé">
+            <a href="index.html">Início</a>
+            <a href="luiz.html">Luiz</a>
+            <a href="ulrich.html">Ulrich</a>
+            <a href="contato.html">Contato</a>
+          </nav>
+        </div>
       </div>
-      <nav class="footer-nav" aria-label="Navegação do rodapé">
-        <a href="index.html">Início</a>
-        <a href="luiz.html">Luiz</a>
-        <a href="ulrich.html">Ulrich</a>
-        <a href="contato.html">Contato</a>
-      </nav>
+      <div class="footer-bottom">
+        <p class="footer-meta">Uma presença digital autoral pensada para clareza, descoberta e confiança.</p>
+        <div class="ulrich-signature">
+          <span class="ulrich-by">by</span>
+          <a href="https://www.luizulrich.com/" target="_blank" rel="noopener noreferrer" class="ulrich-link">
+            Ulrich
+            <span class="ulrich-underline"></span>
+          </a>
+        </div>
+      </div>
     </div>
   </footer>
 
+  <script src="/assets/js/app.js" defer></script>
   <script src="/assets/js/menu.js" defer></script>
   <script src="/assets/js/reveal.js" defer></script>
   <script src="/assets/js/player.js" defer></script>
   <script src="/assets/js/analytics.js" defer></script>
-  <script src="/assets/js/app.js" defer></script>
 </body>
 </html>
