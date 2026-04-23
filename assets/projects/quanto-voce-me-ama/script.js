@@ -6,100 +6,140 @@ const heartsLayer = document.getElementById("heartsLayer");
 const replayHeartsButton = document.getElementById("replayHearts");
 const closeOverlayButton = document.getElementById("closeOverlay");
 
-const occupiedSpots = [];
+const allButtons = [...wrongButtons, correctButton];
 let areaRect = null;
 let isCoarsePointer = window.matchMedia("(pointer: coarse)").matches;
 
-function clamp(value, min, max) {
-  return Math.min(Math.max(value, min), max);
+function refreshAreaRect() {
+  areaRect = gameArea.getBoundingClientRect();
+}
+
+function randomBetween(min, max) {
+  return Math.random() * (max - min) + min;
 }
 
 function distance(x1, y1, x2, y2) {
   return Math.hypot(x2 - x1, y2 - y1);
 }
 
-function refreshAreaRect() {
-  areaRect = gameArea.getBoundingClientRect();
+function getLocalRect(button) {
+  const rect = button.getBoundingClientRect();
+  return {
+    x: rect.left - areaRect.left,
+    y: rect.top - areaRect.top,
+    width: rect.width,
+    height: rect.height,
+    centerX: rect.left - areaRect.left + rect.width / 2,
+    centerY: rect.top - areaRect.top + rect.height / 2,
+  };
 }
 
-function pickRandomPosition(button, tries = 40) {
-  const buttonRect = button.getBoundingClientRect();
-  const width = buttonRect.width;
-  const height = buttonRect.height;
+function overlaps(candidate, other, gap = 14) {
+  return !(
+    candidate.x + candidate.width + gap < other.x ||
+    candidate.x > other.x + other.width + gap ||
+    candidate.y + candidate.height + gap < other.y ||
+    candidate.y > other.y + other.height + gap
+  );
+}
 
-  const padding = 8;
+function pickPosition(button, pointer = null) {
+  refreshAreaRect();
+
+  const rect = button.getBoundingClientRect();
+  const width = rect.width;
+  const height = rect.height;
+  const padding = 10;
+
   const minX = padding;
   const minY = padding;
   const maxX = Math.max(minX, areaRect.width - width - padding);
   const maxY = Math.max(minY, areaRect.height - height - padding);
 
-  let bestPosition = { x: minX, y: minY, score: -Infinity };
+  const otherRects = allButtons
+    .filter((item) => item !== button)
+    .map((item) => getLocalRect(item));
 
-  for (let i = 0; i < tries; i += 1) {
-    const x = Math.random() * (maxX - minX) + minX;
-    const y = Math.random() * (maxY - minY) + minY;
+  const validPositions = [];
+  const pointerRadius = isCoarsePointer ? 90 : 115;
 
-    const score = occupiedSpots.reduce((acc, spot) => {
-      const d = distance(x, y, spot.x, spot.y);
-      return acc + d;
-    }, 0);
+  for (let i = 0; i < 90; i += 1) {
+    const x = randomBetween(minX, maxX);
+    const y = randomBetween(minY, maxY);
+    const candidate = {
+      x,
+      y,
+      width,
+      height,
+      centerX: x + width / 2,
+      centerY: y + height / 2,
+    };
 
-    if (score > bestPosition.score) {
-      bestPosition = { x, y, score };
+    const intersects = otherRects.some((other) => overlaps(candidate, other));
+    if (intersects) continue;
+
+    if (pointer) {
+      const pointerDistance = distance(candidate.centerX, candidate.centerY, pointer.x, pointer.y);
+      if (pointerDistance < pointerRadius) continue;
     }
+
+    validPositions.push(candidate);
   }
 
-  return bestPosition;
+  if (validPositions.length > 0) {
+    return validPositions[Math.floor(Math.random() * validPositions.length)];
+  }
+
+  return {
+    x: randomBetween(minX, maxX),
+    y: randomBetween(minY, maxY),
+    width,
+    height,
+  };
 }
 
-function moveWrongButton(button) {
-  refreshAreaRect();
+function applyPosition(button, position) {
+  button.style.left = `${position.x}px`;
+  button.style.top = `${position.y}px`;
+}
 
-  const newPosition = pickRandomPosition(button);
-  button.style.left = `${newPosition.x}px`;
-  button.style.top = `${newPosition.y}px`;
+function moveWrongButton(button, pointer = null) {
+  const now = Date.now();
+  const nextAllowed = Number(button.dataset.nextMoveAt || 0);
+  if (now < nextAllowed) return;
+
+  const position = pickPosition(button, pointer);
+  applyPosition(button, position);
 
   button.classList.remove("is-moving");
   void button.offsetWidth;
   button.classList.add("is-moving");
 
-  occupiedSpots.push({ x: newPosition.x, y: newPosition.y });
-  if (occupiedSpots.length > 30) {
-    occupiedSpots.shift();
-  }
+  button.dataset.nextMoveAt = String(now + 140);
 }
 
 function placeButtonsInitially() {
   refreshAreaRect();
-  occupiedSpots.length = 0;
 
-  const centerX = areaRect.width / 2;
-  const correctWidth = correctButton.offsetWidth;
-  const correctHeight = correctButton.offsetHeight;
-  const correctX = clamp(centerX - correctWidth / 2, 10, areaRect.width - correctWidth - 10);
-  const correctY = areaRect.height - correctHeight - 18;
-
-  correctButton.style.left = `${correctX}px`;
-  correctButton.style.top = `${correctY}px`;
-
-  occupiedSpots.push({ x: correctX, y: correctY });
-
-  wrongButtons.forEach((button) => moveWrongButton(button));
+  const randomized = [...allButtons].sort(() => Math.random() - 0.5);
+  randomized.forEach((button) => {
+    const position = pickPosition(button);
+    applyPosition(button, position);
+  });
 }
 
 function handleMouseProximity(event) {
   if (isCoarsePointer) return;
 
-  const pointerX = event.clientX;
-  const pointerY = event.clientY;
+  const pointerX = event.clientX - areaRect.left;
+  const pointerY = event.clientY - areaRect.top;
 
   wrongButtons.forEach((button) => {
-    const rect = button.getBoundingClientRect();
-    const nearX = pointerX > rect.left - 55 && pointerX < rect.right + 55;
-    const nearY = pointerY > rect.top - 45 && pointerY < rect.bottom + 45;
+    const rect = getLocalRect(button);
+    const near = distance(rect.centerX, rect.centerY, pointerX, pointerY) < 95;
 
-    if (nearX && nearY) {
-      moveWrongButton(button);
+    if (near) {
+      moveWrongButton(button, { x: pointerX, y: pointerY });
     }
   });
 }
