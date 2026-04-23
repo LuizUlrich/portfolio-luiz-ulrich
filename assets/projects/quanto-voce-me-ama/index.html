@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Quanto você me ama? 💖</title>
+    <meta
+      name="description"
+      content="Uma mini experiência romântica e divertida com corações animados e resposta certa escondida."
+    />
+    <link rel="stylesheet" href="/assets/projects/quanto-voce-me-ama/style.css" />
+  </head>
+  <body>
+    <main class="love-game" aria-labelledby="game-title">
+      <section class="love-card">
+        <p class="kicker">Mini experiência</p>
+        <h1 id="game-title">Quanto você me ama? 💖</h1>
+        <p class="subtitle">Dica: uma única opção representa esse amor com precisão matemática.</p>
+
+        <div class="game-area" id="gameArea" aria-label="Área interativa com opções de resposta">
+          <button type="button" class="answer-btn wrong" data-answer="10">10</button>
+          <button type="button" class="answer-btn wrong" data-answer="100">100</button>
+          <button type="button" class="answer-btn wrong" data-answer="999">999</button>
+          <button type="button" class="answer-btn wrong" data-answer="5000">5000</button>
+          <button type="button" class="answer-btn wrong" data-answer="10000">10000</button>
+          <button type="button" class="answer-btn wrong" data-answer="muito">muito</button>
+          <button type="button" class="answer-btn wrong" data-answer="infinito menos 1">infinito menos 1</button>
+          <button type="button" class="answer-btn wrong" data-answer="bastante">bastante</button>
+          <button type="button" class="answer-btn wrong" data-answer="demais">demais</button>
+          <button
+            type="button"
+            class="answer-btn correct"
+            id="correctAnswer"
+            data-answer="10005"
+            aria-label="Resposta correta: 10005"
+          >
+            10005
+          </button>
+        </div>
+      </section>
+    </main>
+
+    <section class="success-overlay" id="successOverlay" aria-hidden="true">
+      <div class="overlay-glow" aria-hidden="true"></div>
+      <div class="success-modal" role="dialog" aria-modal="true" aria-labelledby="successTitle">
+        <p class="modal-kicker">Acerto perfeito</p>
+        <h2 id="successTitle">Eu sabia 💘</h2>
+        <p>Você acertou o tamanho do amor!</p>
+        <div class="modal-actions">
+          <button type="button" class="modal-btn" id="replayHearts">Explodir mais corações</button>
+          <button type="button" class="modal-btn modal-btn--ghost" id="closeOverlay">Fechar</button>
+        </div>
+      </div>
+      <div class="hearts-layer" id="heartsLayer" aria-hidden="true"></div>
+    </section>
+
+    <script src="/assets/projects/quanto-voce-me-ama/script.js"></script>
+  </body>
+</html>
