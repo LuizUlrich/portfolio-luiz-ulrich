@@ -100,20 +100,36 @@ async function onCreate(event) {
 }
 
 async function onStatusChange(id) {
-  const nextStatus = prompt("Informe o novo status: novo, em andamento ou concluído", "novo");
-  if (!nextStatus) return;
+  const currentStatus = processes.find((process) => process.id === id)?.status || "novo";
 
-  const normalized = nextStatus.trim().toLowerCase();
-  const allowed = ["novo", "em andamento", "concluído"];
+  const selectedStatus = prompt(
+    "Escolha o novo status:\n\n1 - novo\n2 - em andamento\n3 - concluído",
+    currentStatus
+  );
 
-  if (!allowed.includes(normalized)) {
-    setFeedback("error", "Status inválido. Use: novo, em andamento ou concluído.");
+  if (!selectedStatus) return;
+
+  const normalizedInput = selectedStatus.trim().toLowerCase();
+
+  const statusMap = {
+    "1": "novo",
+    "2": "em andamento",
+    "3": "concluído",
+    "novo": "novo",
+    "em andamento": "em andamento",
+    "concluído": "concluído"
+  };
+
+  const normalizedStatus = statusMap[normalizedInput];
+
+  if (!normalizedStatus) {
+    setFeedback("error", "Status inválido. Escolha 1, 2 ou 3.");
     return;
   }
 
   try {
     setFeedback("loading", "Atualizando status...");
-    await updateProcess(id, { status: normalized });
+    await updateProcess(id, { status: normalizedStatus });
     setFeedback("success", "Status atualizado com sucesso.");
     await load();
   } catch (error) {
