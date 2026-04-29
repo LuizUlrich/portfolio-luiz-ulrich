@@ -1,0 +1,99 @@
+:root {
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: Inter, system-ui, -apple-system, Segoe UI, sans-serif;
+  background: #0a0f1d;
+  color: #eef2ff;
+  min-height: 100dvh;
+  padding: 16px;
+}
+
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 18px;
+}
+
+h1 { margin: 0; font-size: 1.6rem; }
+
+.btn {
+  border: 0;
+  border-radius: 12px;
+  padding: 12px 14px;
+  font-size: 0.95rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.btn-primary { background: #4f46e5; color: #fff; }
+
+.feedback {
+  min-height: 22px;
+  margin: 0 0 14px;
+  font-weight: 600;
+}
+.feedback.loading { color: #93c5fd; }
+.feedback.success { color: #86efac; }
+.feedback.error { color: #fca5a5; }
+
+.process-list { display: grid; gap: 12px; }
+
+.card {
+  background: #11182d;
+  border: 1px solid #27304b;
+  border-radius: 14px;
+  padding: 14px;
+}
+
+.card h3 { margin: 0 0 8px; font-size: 1.1rem; }
+.card p { margin: 0 0 10px; color: #cbd5e1; line-height: 1.35; }
+.meta { margin-bottom: 10px; color: #a5b4fc; font-size: .85rem; }
+.card-actions { display: flex; gap: 8px; }
+.card-actions .btn { flex: 1; }
+
+.modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(2, 6, 23, .75);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 14px;
+}
+
+.modal.open { display: flex; }
+
+.modal-content {
+  width: 100%;
+  max-width: 500px;
+  background: #11182d;
+  border: 1px solid #27304b;
+  border-radius: 14px;
+  padding: 16px;
+}
+
+label { display: block; margin: 10px 0 6px; font-weight: 600; }
+input, textarea {
+  width: 100%;
+  border: 1px solid #334155;
+  border-radius: 10px;
+  padding: 12px;
+  font: inherit;
+  color: #fff;
+  background: #0f172a;
+}
+textarea { min-height: 110px; resize: vertical; }
+.modal-actions { display: flex; gap: 10px; margin-top: 14px; }
+.modal-actions .btn { flex: 1; }
+
+@media (min-width: 768px) {
+  body { padding: 24px; }
+  .process-list { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
