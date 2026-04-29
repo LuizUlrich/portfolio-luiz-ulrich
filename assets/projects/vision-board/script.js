@@ -1,30 +1,60 @@
-const board = document.getElementById("board");
+const board = document.getElementById("board"); 
 const modal = document.getElementById("modal");
 const openModal = document.getElementById("openModal");
 const saveBtn = document.getElementById("save");
 
-let goals = JSON.parse(localStorage.getItem("goals")) || [];
+let goals = [];
+let isLoading = false;
+let errorMessage = "";
+
+/* ================= MODAL ================= */
 
 openModal.onclick = () => {
   modal.classList.add("active");
   modal.setAttribute("aria-hidden", "false");
 };
 
-modal.onclick = (e) => {
-  if (e.target === modal) {
-    modal.classList.remove("active");
-    modal.setAttribute("aria-hidden", "true");
-  }
+modal.onclick = (event) => {
+  if (event.target === modal) closeModal();
 };
+
+function closeModal() {
+  modal.classList.remove("active");
+  modal.setAttribute("aria-hidden", "true");
+}
+
+/* ================= LOAD ================= */
+
+async function loadGoals() {
+  isLoading = true;
+  errorMessage = "";
+  render();
+
+  const { data, error } = await VisionBoardService.getGoals();
+
+  isLoading = false;
+
+  if (error) {
+    errorMessage = error;
+    goals = [];
+  } else {
+    goals = data || [];
+  }
+
+  render();
+}
+
+/* ================= CREATE ================= */
 
 saveBtn.onclick = async () => {
   const titleInput = document.getElementById("title");
   const descriptionInput = document.getElementById("description");
+  const categoryInput = document.getElementById("category");
   const imageInput = document.getElementById("image");
 
   const title = titleInput.value.trim();
   const description = descriptionInput.value.trim();
-  const category = document.getElementById("category").value;
+  const category = categoryInput.value;
   const file = imageInput.files[0];
 
   if (!title) {
@@ -32,51 +62,73 @@ saveBtn.onclick = async () => {
     return;
   }
 
-  let image = "";
+  let imageUrl = "";
 
   if (file) {
-    image = await toBase64(file);
+    try {
+      imageUrl = await toBase64(file);
+    } catch (error) {
+      console.error("[VisionBoard] Erro ao processar imagem:", error);
+      alert("Erro ao processar imagem.");
+      return;
+    }
   }
 
-  const goal = {
-    id: Date.now(),
+  saveBtn.disabled = true;
+  saveBtn.textContent = "Salvando...";
+
+  const { success, error } = await VisionBoardService.createGoal({
     title,
     description,
     category,
-    image
-  };
+    image_url: imageUrl
+  });
 
-  goals.unshift(goal);
-  localStorage.setItem("goals", JSON.stringify(goals));
+  saveBtn.disabled = false;
+  saveBtn.textContent = "Salvar";
+
+  if (!success) {
+    alert(error || "Erro ao salvar meta.");
+    return;
+  }
 
   titleInput.value = "";
   descriptionInput.value = "";
   imageInput.value = "";
 
-  modal.classList.remove("active");
-  modal.setAttribute("aria-hidden", "true");
-  render();
+  closeModal();
+  await loadGoals();
 };
+
+/* ================= DELETE ================= */
+
+async function removeGoal(id) {
+  if (!confirm("Deseja excluir essa meta?")) return;
+
+  const { success, error } = await VisionBoardService.deleteGoal(id);
+
+  if (!success) {
+    alert(error || "Erro ao excluir.");
+    return;
+  }
+
+  goals = goals.filter((g) => g.id !== id);
+  render();
+}
+
+/* ================= HELPERS ================= */
 
 function toBase64(file) {
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
-    reader.readAsDataURL(file);
     reader.onload = () => resolve(reader.result);
-    reader.onerror = (error) => reject(error);
+    reader.onerror = reject;
+    reader.readAsDataURL(file);
   });
 }
 
-function removeGoal(id) {
-  if (!confirm("Deseja excluir essa meta?")) return;
-
-  goals = goals.filter((g) => g.id !== id);
-  localStorage.setItem("goals", JSON.stringify(goals));
-  render();
-}
-
-function escapeHTML(value) {
-  return value
+function escapeHTML(value = "") {
+  return String(value)
     .replaceAll("&", "&amp;")
     .replaceAll("<", "&lt;")
     .replaceAll(">", "&gt;")
@@ -84,29 +136,58 @@ function escapeHTML(value) {
     .replaceAll("'", "&#039;");
 }
 
+/* ================= RENDER ================= */
+
 function render() {
-  if (goals.length === 0) {
-    board.innerHTML = `<div class="empty">Nenhuma meta ainda.<br>Crie sua primeira ✨</div>`;
+  if (isLoading) {
+    board.innerHTML = `<div class="empty">Carregando metas...</div>`;
+    return;
+  }
+
+  if (errorMessage) {
+    board.innerHTML = `
+      <div class="empty">
+        ${escapeHTML(errorMessage)}<br>
+        Tente novamente
+      </div>
+    `;
+    return;
+  }
+
+  if (!goals.length) {
+    board.innerHTML = `
+      <div class="empty">
+        Nenhuma meta ainda.<br>Crie sua primeira ✨
+      </div>
+    `;
     return;
   }
 
   board.innerHTML = goals
-    .map(
-      (g) => `
-    <div class="card">
-      ${g.image ? `<img src="${g.image}" alt="Imagem da meta ${escapeHTML(g.title)}">` : ""}
-      <div class="card-content">
-        <span class="badge">${escapeHTML(g.category)}</span>
-        <h3>${escapeHTML(g.title)}</h3>
-        <p>${escapeHTML(g.description)}</p>
-        <button class="delete-btn" onclick="removeGoal(${g.id})">Excluir</button>
-      </div>
-    </div>
-  `
-    )
+    .map((goal) => {
+      const image = goal.image_url
+        ? `<img src="${goal.image_url}" alt="Meta ${escapeHTML(goal.title)}">`
+        : "";
+
+      return `
+        <div class="card">
+          ${image}
+          <div class="card-content">
+            <span class="badge">${escapeHTML(goal.category || "Pessoal")}</span>
+            <h3>${escapeHTML(goal.title)}</h3>
+            <p>${escapeHTML(goal.description || "")}</p>
+            <button class="delete-btn" onclick="removeGoal('${goal.id}')">
+              Excluir
+            </button>
+          </div>
+        </div>
+      `;
+    })
     .join("");
 }
 
+/* ================= INIT ================= */
+
 window.removeGoal = removeGoal;
 
-render();
+document.addEventListener("DOMContentLoaded", loadGoals);
