@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <base href="/assets/projects/sgpd-prototipo/">
+  <title>SGPD - Protótipo</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="topbar">
+    <h1>SGPD</h1>
+    <button id="openModalBtn" class="btn btn-primary" type="button">+ Novo Processo</button>
+  </header>
+
+  <main>
+    <p id="feedback" class="feedback" role="status" aria-live="polite"></p>
+    <section id="processList" class="process-list" aria-label="Lista de processos"></section>
+  </main>
+
+  <div id="processModal" class="modal" aria-hidden="true">
+    <div class="modal-content" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+      <h2 id="modalTitle">Novo processo</h2>
+      <form id="processForm">
+        <label for="title">Título</label>
+        <input id="title" name="title" type="text" maxlength="120" required>
+
+        <label for="description">Descrição</label>
+        <textarea id="description" name="description" maxlength="500" required></textarea>
+
+        <div class="modal-actions">
+          <button id="cancelModalBtn" class="btn" type="button">Cancelar</button>
+          <button id="saveProcessBtn" class="btn btn-primary" type="submit">Salvar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="/assets/js/supabase/config.js"></script>
+  <script src="/assets/js/supabase/client.js"></script>
+  <script type="module" src="script.js"></script>
+</body>
+</html>
