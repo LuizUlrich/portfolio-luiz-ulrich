@@ -1,0 +1,44 @@
+:root {
+  --idx-bg: #050507;
+  --idx-bg-soft: #0a0b10;
+  --idx-surface: rgba(14, 14, 19, 0.78);
+  --idx-surface-2: rgba(18, 18, 24, 0.94);
+  --idx-border: rgba(255, 255, 255, 0.09);
+  --idx-border-soft: rgba(255, 255, 255, 0.06);
+  --idx-text: #f4f4f8;
+  --idx-muted: #a9a9b5;
+  --idx-red: #f03b4f;
+  --idx-red-strong: #ff4b61;
+  --idx-shadow-soft: 0 16px 40px rgba(0, 0, 0, 0.24);
+  --idx-shadow-md: 0 20px 52px rgba(0, 0, 0, 0.34);
+  --idx-radius-card: 24px;
+  --idx-radius-pill: 999px;
+  --idx-max: 1100px;
+  --idx-section-y: clamp(5.4rem, 8.5vw, 8rem);
+}
+
+.home-page * { min-width: 0; }
+.home-page .container { width: min(100% - 2.5rem, var(--idx-max)); }
+.home-page .section { padding-block: var(--idx-section-y); }
+
+.home-page .card,
+.home-page .stats-grid article,
+.home-page .dj-block {
+  background: linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.008));
+  border: 1px solid var(--idx-border-soft);
+  box-shadow: var(--idx-shadow-soft);
+}
+
+.home-page .card:hover,
+.home-page .stats-grid article:hover {
+  border-color: var(--idx-border);
+  transform: translateY(-2px);
+  transition: transform .28s ease, border-color .28s ease, box-shadow .28s ease;
+  box-shadow: var(--idx-shadow-md);
+}
+
+.home-page .eyebrow {
+  font-weight: 600;
+  letter-spacing: .24em;
+  color: var(--idx-red-strong);
+}
