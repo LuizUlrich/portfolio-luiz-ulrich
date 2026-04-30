@@ -1,0 +1,1 @@
+.s-processo{background:linear-gradient(180deg,rgba(255,255,255,.008),rgba(255,255,255,.02))}.process-steps{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:.66rem;list-style:none;margin-top:1.05rem}.process-steps li{border:1px solid var(--line);padding:.86rem;border-radius:12px;text-align:center;background:rgba(255,255,255,.018);font-weight:500}
