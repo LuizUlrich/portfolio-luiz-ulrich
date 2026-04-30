@@ -1,37 +1,66 @@
-import { qsa } from "../core/dom.js";
-import { impact } from "../core/impact.js";
+import { qsa } from '../core/dom.js';
+import { impact } from '../core/impact.js';
+
+let initialized = false;
 
 export function initTracklistReveal() {
+  if (initialized) return () => {};
+
   const tracks = qsa('.tracklist article');
-  if (!tracks.length) return;
+  if (!tracks.length) return () => {};
 
-  tracks.forEach((track) => {
+  initialized = true;
+
+  const cleanups = [];
+
+  tracks.forEach((track, idx) => {
     const detail = track.querySelector('.track-detail');
-    if (!detail) return;
+    const summary = track.querySelector('.track-summary');
+    if (!detail || !summary) return;
 
+    const control = document.createElement('button');
+    control.type = 'button';
+    control.className = 'track-toggle';
+    control.setAttribute('aria-expanded', 'false');
+    const detailId = detail.id || `track-detail-${idx + 1}`;
+    detail.id = detailId;
+    control.setAttribute('aria-controls', detailId);
+    control.textContent = 'Expandir detalhes';
+
+    summary.insertAdjacentElement('afterend', control);
     track.classList.add('track');
-
-    track.querySelectorAll('a').forEach((link) => {
-      link.addEventListener('click', (event) => {
-        event.stopPropagation();
-      });
-    });
 
     const toggle = () => {
       const open = track.classList.toggle('is-open');
-      track.setAttribute('aria-expanded', String(open));
-      impact(track);
+      control.setAttribute('aria-expanded', String(open));
+      control.textContent = open ? 'Ocultar detalhes' : 'Expandir detalhes';
+      impact(control);
     };
 
-    track.setAttribute('tabindex', '0');
-    track.setAttribute('aria-expanded', 'false');
+    const onControlClick = (event) => {
+      event.stopPropagation();
+      toggle();
+    };
 
-    track.addEventListener('click', toggle);
-    track.addEventListener('keydown', (event) => {
-      if (event.key === 'Enter' || event.key === ' ') {
-        event.preventDefault();
-        toggle();
-      }
+    const onTrackClick = (event) => {
+      const withinLink = event.target.closest('a');
+      const withinControl = event.target.closest('.track-toggle');
+      if (withinLink || withinControl) return;
+      toggle();
+    };
+
+    control.addEventListener('click', onControlClick);
+    track.addEventListener('click', onTrackClick);
+
+    cleanups.push(() => {
+      control.removeEventListener('click', onControlClick);
+      track.removeEventListener('click', onTrackClick);
+      control.remove();
     });
   });
+
+  return () => {
+    cleanups.forEach((fn) => fn());
+    initialized = false;
+  };
 }

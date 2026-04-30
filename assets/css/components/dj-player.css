@@ -1,0 +1,97 @@
+.dj-player {
+  margin-top: 2rem;
+  padding: 1.5rem;
+  border-radius: var(--radius);
+  border: 1px solid var(--line);
+  background: linear-gradient(180deg, rgba(255, 0, 0, 0.05), transparent);
+  backdrop-filter: blur(12px);
+  box-shadow: 0 12px 34px rgba(0, 0, 0, 0.35);
+  position: relative;
+}
+
+.dj-player::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(120deg, rgba(255, 255, 255, 0.03), transparent 35%);
+  pointer-events: none;
+}
+
+.dj-player-label {
+  letter-spacing: .2em;
+  font-size: .72rem;
+  color: var(--accent-amber);
+  margin-bottom: .4rem;
+}
+
+.dj-current-track {
+  font-family: "JetBrains Mono", "Fira Code", monospace;
+  font-size: .9rem;
+  color: var(--text);
+  margin-bottom: .9rem;
+  padding: .55rem .7rem;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: rgba(10, 10, 15, 0.72);
+}
+
+.dj-status {
+  font-size: .82rem;
+  color: var(--muted);
+  margin-bottom: .8rem;
+}
+
+.dj-status[data-state='playing'] { color: #f3d9dd; }
+.dj-status[data-state='paused'] { color: var(--accent-amber); }
+.dj-status[data-state='error'] { color: #ff7b88; }
+
+.dj-controls {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+.dj-controls button {
+  padding: .6rem 1.2rem;
+  border-radius: 999px;
+  background: linear-gradient(135deg, var(--accent-red), var(--accent-wine));
+  border: none;
+  color: white;
+  cursor: pointer;
+  transition: box-shadow .25s ease, transform .25s ease;
+}
+
+.dj-controls button:hover,
+.dj-controls button:focus-visible {
+  box-shadow: 0 0 22px var(--glow-red);
+  transform: translateY(-1px);
+}
+
+.dj-controls input {
+  flex: 1;
+  accent-color: var(--accent-amber);
+}
+
+.dj-links {
+  display: flex;
+  gap: .8rem;
+  margin-top: 1rem;
+  flex-wrap: wrap;
+}
+
+.dj-links a {
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: .5rem .9rem;
+}
+
+@media (max-width: 760px) {
+  .dj-controls {
+    flex-wrap: wrap;
+  }
+
+  .dj-controls button,
+  .dj-controls input {
+    width: 100%;
+  }
+}

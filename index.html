@@ -7,6 +7,15 @@
   <meta name="description" content="Ulrich.dev: sistemas digitais com clareza, precisão e ritmo — fullstack, UX/IHC, automação e performance." />
   <link rel="canonical" href="https://luizulrich.com/" />
   <meta name="theme-color" content="#050505" />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Ulrich.dev — Systems in Rhythm" />
+  <meta property="og:description" content="Sistemas digitais com clareza, precisão e ritmo." />
+  <meta property="og:url" content="https://luizulrich.com/" />
+  <meta property="og:image" content="https://luizulrich.com/assets/images/og-default.jpg" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Ulrich.dev — Systems in Rhythm" />
+  <meta name="twitter:description" content="Sistemas digitais com clareza, precisão e ritmo." />
+  <meta name="twitter:image" content="https://luizulrich.com/assets/images/og-default.jpg" />
   <link rel="icon" type="image/x-icon" href="/assets/icons/favicon.ico" />
 
   <link rel="stylesheet" href="/assets/css/base/reset.css" />
@@ -16,7 +25,9 @@
   <link rel="stylesheet" href="/assets/css/components/display-panel.css" />
   <link rel="stylesheet" href="/assets/css/components/jog-wheel.css" />
   <link rel="stylesheet" href="/assets/css/components/waveform.css" />
+  <link rel="stylesheet" href="/assets/css/components/dj-player.css" />
   <link rel="stylesheet" href="/assets/css/sections/deck.css" />
+  <link rel="stylesheet" href="/assets/css/sections/hero-bg.css" />
   <link rel="stylesheet" href="/assets/css/sections/hot-cues.css" />
   <link rel="stylesheet" href="/assets/css/sections/manifesto.css" />
   <link rel="stylesheet" href="/assets/css/sections/tracklist.css" />
@@ -47,6 +58,9 @@
 
   <main id="conteudo">
     <section id="hero" class="section s-deck" aria-labelledby="hero-title">
+      <div class="hero-bg">
+        <img src="/assets/images/cdj.svg" alt="" />
+      </div>
       <div class="container deck-grid">
         <div>
           <p class="kicker">ULRICH.DEV — SYSTEMS IN RHYTHM</p>
@@ -59,6 +73,20 @@
           <div class="display-panel" aria-label="Painel técnico">
             <span>MODE: BUILD</span><span>STACK: FULL</span><span>STATUS: AVAILABLE</span>
           </div>
+          <section class="dj-player" aria-label="Player de sets">
+            <p class="dj-player-label">SET PLAYER</p>
+            <p class="dj-current-track" id="djCurrentTrack">Afro House @ Ulrich — 23.08.2025</p>
+            <p class="dj-status" id="djStatus" data-state="idle">Pronto para tocar</p>
+            <div class="dj-controls">
+              <button id="djPlay" type="button">Play</button>
+              <button id="djNext" type="button">Próximo Set</button>
+              <input id="djVolume" type="range" min="0" max="1" step="0.01" value="0.7" />
+            </div>
+            <div class="dj-links">
+              <a href="https://soundcloud.com/luizulrich" target="_blank" rel="noopener noreferrer">SoundCloud</a>
+              <a href="mailto:luizfelipeulrich@gmail.com">Email</a>
+            </div>
+          </section>
         </div>
         <div class="cdj-stage" aria-hidden="true">
           <div class="jog-wheel"></div>
@@ -125,5 +153,19 @@
   </main>
 
   <script type="module" src="/assets/js/home.js"></script>
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Person",
+      "name": "Luiz Ulrich",
+      "url": "https://luizulrich.com/",
+      "jobTitle": "Desenvolvedor Fullstack",
+      "sameAs": [
+        "https://soundcloud.com/luizulrich",
+        "https://linkedin.com/in/luizulrich",
+        "https://github.com/LuizUlrich"
+      ]
+    }
+  </script>
 </body>
 </html>
