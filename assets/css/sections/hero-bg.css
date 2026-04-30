@@ -1,33 +1,5 @@
-.hero-bg {
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-  overflow: hidden;
-  pointer-events: none;
-  background: radial-gradient(circle at 72% 56%, rgba(122, 15, 31, 0.28), transparent 56%);
-}
-
-.hero-bg::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(100deg, rgba(5, 5, 7, 0.96) 24%, rgba(5, 5, 7, 0.66) 58%, rgba(74, 13, 24, 0.4));
-}
-
-.hero-bg img {
-  position: absolute;
-  right: -3%;
-  top: 50%;
-  transform: translateY(-50%) scale(1.04);
-  opacity: 0.24;
-  filter: blur(1.2px) saturate(0) contrast(1.2) brightness(0.5) sepia(0.35) hue-rotate(-14deg);
-  mix-blend-mode: lighten;
-}
-
-@media (max-width: 768px) {
-  .hero-bg img {
-    opacity: 0.14;
-    right: -56%;
-    transform: translateY(-50%) scale(1.24);
-  }
-}
+.hero-bg { position:absolute; inset:0; z-index:0; overflow:hidden; pointer-events:none; background:radial-gradient(circle at 74% 46%, rgba(127,13,27,.22), transparent 58%); }
+.hero-bg::before { content:''; position:absolute; right:13%; top:18%; width:280px; aspect-ratio:1; border:1px solid rgba(255,255,255,.08); border-radius:50%; box-shadow:0 0 0 32px rgba(225,29,72,.03),0 0 60px rgba(225,29,72,.15); opacity:.75; }
+.hero-bg::after { content:''; position:absolute; inset:0; background:linear-gradient(100deg, rgba(3,3,5,.96) 26%, rgba(3,3,5,.78) 62%, rgba(10,5,7,.5)); }
+.hero-bg img { position:absolute; right:4%; top:52%; transform:translateY(-50%) scale(1.02); opacity:.18; filter:blur(.8px) saturate(0) contrast(1.15) brightness(.48); mix-blend-mode:screen; }
+@media (max-width:768px){ .hero-bg::before{right:-12%; top:20%; width:220px;} .hero-bg img{opacity:.1; right:-52%; transform:translateY(-50%) scale(1.22);} }
