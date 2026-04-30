@@ -75,16 +75,30 @@
           </div>
           <section class="dj-player" aria-label="Player de sets">
             <p class="dj-player-label">SET PLAYER</p>
-            <p class="dj-current-track" id="djCurrentTrack">Afro House @ Ulrich — 23.08.2025</p>
+            <p class="dj-current-track" id="djCurrentTrack">Carregando set...</p>
             <p class="dj-status" id="djStatus" data-state="idle">Pronto para tocar</p>
-            <div class="dj-controls">
-              <button id="djPlay" type="button">Play</button>
-              <button id="djNext" type="button">Próximo Set</button>
-              <input id="djVolume" type="range" min="0" max="1" step="0.01" value="0.7" />
+            <div class="dj-main-controls">
+              <button id="djPlay" type="button" aria-label="Tocar ou pausar set" aria-pressed="false">Play</button>
+              <button id="djNext" type="button" aria-label="Próximo set">Próximo</button>
+              <label class="dj-select-wrap" for="djSetSelect">
+                <span>Set</span>
+                <select id="djSetSelect" aria-label="Selecionar set"></select>
+              </label>
             </div>
-            <div class="dj-links">
-              <a href="https://soundcloud.com/luizulrich" target="_blank" rel="noopener noreferrer">SoundCloud</a>
-              <a href="mailto:luizfelipeulrich@gmail.com">Email</a>
+            <div class="dj-timeline">
+              <span id="djCurrentTime" aria-live="off">00:00</span>
+              <input id="djSeek" type="range" min="0" max="100" step="0.1" value="0" aria-label="Linha do tempo do set" />
+              <span id="djDuration">--:--</span>
+            </div>
+            <div class="dj-bottom">
+              <label class="dj-volume" for="djVolume" aria-label="Controle de volume">
+                <span aria-hidden="true">🔊</span>
+                <input id="djVolume" type="range" min="0" max="1" step="0.01" value="0.7" />
+              </label>
+              <div class="dj-links">
+                <a id="djExternalLink" href="https://soundcloud.com/luizulrich" target="_blank" rel="noopener noreferrer">Ouvir no SoundCloud</a>
+                <a href="mailto:luizfelipeulrich@gmail.com">Email</a>
+              </div>
             </div>
           </section>
         </div>
@@ -106,11 +120,11 @@
       <div class="container">
         <h2 id="tracklist-title">Tracklist / Cases</h2>
         <ol class="tracklist">
-          <li><article><p class="track-id">Track 01</p><h3>Erick Imóveis</h3><div><span class="track-summary">Plataforma imobiliária • Web App</span><div class="track-detail"><p>Problema: navegação e busca de imóveis.</p><p>Resultado: catálogo com experiência fluida.</p><p><a href="https://erickimoveis.com.br" target="_blank" rel="noopener noreferrer">Abrir projeto</a></p></div></div></article></li>
-          <li><article><p class="track-id">Track 02</p><h3>Barbearia Bertotti</h3><div><span class="track-summary">Site institucional • Frontend + operação</span><div class="track-detail"><p>Problema: presença e captação.</p><p>Resultado: operação digital direta.</p><p><a href="#contato">Projeto em produção</a></p></div></div></article></li>
-          <li><article><p class="track-id">Track 03</p><h3>João Estúdio Gastronômico</h3><div><span class="track-summary">Presença premium • Branding + Web</span><div class="track-detail"><p>Problema: posicionamento digital.</p><p>Resultado: narrativa de alto valor.</p><p><a href="https://joaoestudiogastronomico.com.br" target="_blank" rel="noopener noreferrer">Abrir projeto</a></p></div></div></article></li>
-          <li><article><p class="track-id">Track 04</p><h3>Vision Board</h3><div><span class="track-summary">Projeto interativo • HTML/CSS/JS</span><div class="track-detail"><p>Problema: organização visual de metas.</p><p>Resultado: uso simples e mobile-first.</p><p><a href="/assets/projects/vision-board/">Abrir projeto</a></p></div></div></article></li>
-          <li><article><p class="track-id">Track 05</p><h3>DJ Analyzer</h3><div><span class="track-summary">Experimento interativo • Frontend criativo</span><div class="track-detail"><p>Problema: explorar narrativa audiovisual.</p><p>Resultado: laboratório de interface e timing.</p><p><a href="/assets/projects/spotifywrapped/">Abrir projeto</a></p></div></div></article></li>
+          <li><article><p class="track-id">Track 01</p><h3>Erick Imóveis</h3><div><span class="track-summary">Plataforma imobiliária • Web App</span><div class="track-detail"><p>Problema: navegação e busca de imóveis.</p><p>Resultado: catálogo com experiência fluida.</p><p><a href="https://ericklautharte.com.br/" target="_blank" rel="noopener noreferrer">Abrir projeto</a></p></div></div></article></li>
+          <li><article><p class="track-id">Track 02</p><h3>Barbearia Bertotti</h3><div><span class="track-summary">Site institucional • Frontend + operação</span><div class="track-detail"><p>Problema: presença e captação.</p><p>Resultado: operação digital direta.</p><p><a href="https://www.barbeariabertotti.com/" target="_blank" rel="noopener noreferrer">Abrir projeto</a></p></div></div></article></li>
+          <li><article><p class="track-id">Track 03</p><h3>João Estúdio Gastronômico</h3><div><span class="track-summary">Presença premium • Branding + Web</span><div class="track-detail"><p>Problema: posicionamento digital.</p><p>Resultado: narrativa de alto valor.</p><p><a href="https://joao-estudio-gastronomico.vercel.app/contato.html" target="_blank" rel="noopener noreferrer">Abrir projeto</a></p></div></div></article></li>
+          <li><article><p class="track-id">Track 04</p><h3>Vision Board <span class="private-badge">Projeto privado</span></h3><div><span class="track-summary">Ferramenta interna • protótipo visual</span><div class="track-detail"><p>Problema: organização visual de metas.</p><p>Resultado: estrutura privada focada em produtividade.</p></div></div></article></li>
+          <li><article><p class="track-id">Track 05</p><h3>Spotify Wrapped <span class="private-badge">Projeto privado</span></h3><div><span class="track-summary">Experimento audiovisual • uso restrito</span><div class="track-detail"><p>Problema: explorar narrativa audiovisual.</p><p>Resultado: laboratório privado de interface e timing.</p></div></div></article></li>
           <li><article><p class="track-id">Track 06</p><h3>SGPD — Protótipo</h3><div><span class="track-summary">Projeto acadêmico • Prototipagem de sistemas</span><div class="track-detail"><p>Problema: estruturação de solução.</p><p>Resultado: referência de processo.</p><p><a href="/assets/projects/sgpd-prototipo/">Acessar referência</a></p></div></div></article></li>
         </ol>
       </div>
