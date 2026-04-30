@@ -20,7 +20,7 @@ export function initTracklistReveal() {
 
     const control = document.createElement('button');
     control.type = 'button';
-    control.className = 'track-toggle';
+    control.className = 'track-toggle btn-expand';
     control.setAttribute('aria-expanded', 'false');
     const detailId = detail.id || `track-detail-${idx + 1}`;
     detail.id = detailId;
