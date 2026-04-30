@@ -1,0 +1,2 @@
+.waveform-shell{--wave-amp:1;--wave-x:0px;--wave-op:.78;margin-top:2rem;height:64px;display:flex;align-items:center;overflow:hidden}
+.waveform-line{width:130%;height:2px;background:linear-gradient(90deg,transparent,var(--accent-amber),var(--accent-purple),transparent);opacity:var(--wave-op);transform:translateX(var(--wave-x)) scaleY(var(--wave-amp));transform-origin:center;will-change:transform,opacity}

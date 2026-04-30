@@ -3,77 +3,127 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Luiz Ulrich — Tecnologia, Sistemas e Experiências Digitais</title>
-  <meta name="description" content="Portfólio de Luiz Ulrich, profissional de tecnologia, suporte computacional, sistemas, desenvolvimento web e DJ eletrônico. Projetos digitais com foco em performance, UX e resultado." />
+  <title>Ulrich.dev — Systems in Rhythm</title>
+  <meta name="description" content="Ulrich.dev: sistemas digitais com clareza, precisão e ritmo — fullstack, UX/IHC, automação e performance." />
   <link rel="canonical" href="https://luizulrich.com/" />
-  <meta name="theme-color" content="#0b0b0f" />
-
-  <meta property="og:type" content="website" />
-  <meta property="og:locale" content="pt_BR" />
-  <meta property="og:title" content="Luiz Ulrich — Tecnologia, Sistemas e Experiências Digitais" />
-  <meta property="og:description" content="Portfólio de Luiz Ulrich com projetos, sistemas, automação, experiência digital e lado DJ." />
-  <meta property="og:url" content="https://luizulrich.com/" />
-  <meta property="og:image" content="https://luizulrich.com/assets/images/og-default.jpg" />
-
-  <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="Luiz Ulrich — Tecnologia, Sistemas e Experiências Digitais" />
-  <meta name="twitter:description" content="Projetos digitais com foco em resultado: sistemas, web, automação e experiências sonoras." />
-  <meta name="twitter:image" content="https://luizulrich.com/assets/images/og-default.jpg" />
-
+  <meta name="theme-color" content="#050505" />
   <link rel="icon" type="image/x-icon" href="/assets/icons/favicon.ico" />
-  <link rel="stylesheet" href="/assets/css/global.css" />
-  <link rel="stylesheet" href="/assets/css/layout.css" />
-  <link rel="stylesheet" href="/assets/css/components.css" />
-  <link rel="stylesheet" href="/assets/css/index.css" />
-  <link rel="stylesheet" href="/assets/css/home.css" />
+
+  <link rel="stylesheet" href="/assets/css/base/reset.css" />
+  <link rel="stylesheet" href="/assets/css/base/tokens.css" />
+  <link rel="stylesheet" href="/assets/css/base/typography.css" />
+  <link rel="stylesheet" href="/assets/css/base/utilities.css" />
+  <link rel="stylesheet" href="/assets/css/components/display-panel.css" />
+  <link rel="stylesheet" href="/assets/css/components/jog-wheel.css" />
+  <link rel="stylesheet" href="/assets/css/components/waveform.css" />
+  <link rel="stylesheet" href="/assets/css/sections/deck.css" />
+  <link rel="stylesheet" href="/assets/css/sections/hot-cues.css" />
+  <link rel="stylesheet" href="/assets/css/sections/manifesto.css" />
+  <link rel="stylesheet" href="/assets/css/sections/tracklist.css" />
+  <link rel="stylesheet" href="/assets/css/sections/mixer.css" />
+  <link rel="stylesheet" href="/assets/css/sections/processo.css" />
+  <link rel="stylesheet" href="/assets/css/sections/cta-final.css" />
+  <link rel="stylesheet" href="/assets/css/pages/home-ulrich.css" />
 </head>
-<body class="home-page">
-  <header class="site-header glass">
+<body class="ulrich-home">
+  <a class="skip-link" href="#conteudo">Pular para conteúdo</a>
+
+  <header class="site-header" id="topo">
     <div class="container header-inner">
-      <a class="brand" href="#inicio" aria-label="Ir para o início">
-        <span class="brand-dot" aria-hidden="true"></span>
-        <span class="brand-text">Luiz Ulrich</span>
-      </a>
-      <nav class="main-nav" id="mainNav" aria-label="Navegação principal">
-        <a href="#inicio">Início</a><a href="#projetos">Projetos</a><a href="#tecnologia">Tecnologia</a><a href="#dj-ulrich">DJ Ulrich</a><a href="#contato">Contato</a>
+      <a class="brand" href="#hero" aria-label="Ir para início">Ulrich.dev</a>
+      <button class="menu-toggle" type="button" id="menuToggle" aria-expanded="false" aria-controls="hotCuesNav" aria-label="Abrir navegação">
+        <span></span><span></span><span></span>
+      </button>
+      <nav id="hotCuesNav" class="hot-cues-nav" aria-label="Hot Cues">
+        <a href="#manifesto" data-cue="sobre">Sobre</a>
+        <a href="#tracklist" data-cue="cases">Cases</a>
+        <a href="#mixer" data-cue="stack">Stack</a>
+        <a href="#processo" data-cue="processo">Processo</a>
+        <a href="#contato" data-cue="contato">Contato</a>
       </nav>
-      <a class="btn btn-header" href="#contato">Entrar em contato</a>
-      <button class="menu-toggle" id="menuToggle" type="button" aria-label="Abrir menu" aria-expanded="false" aria-controls="mainNav"><span></span><span></span><span></span></button>
     </div>
+      <div class="set-progress" aria-hidden="true"><span id="setProgressBar"></span></div>
   </header>
 
-  <main>
-    <section id="inicio" class="section hero">
+  <main id="conteudo">
+    <section id="hero" class="section s-deck" aria-labelledby="hero-title">
+      <div class="container deck-grid">
+        <div>
+          <p class="kicker">ULRICH.DEV — SYSTEMS IN RHYTHM</p>
+          <h1 id="hero-title">Construo sistemas digitais com clareza, precisão e ritmo.</h1>
+          <p class="lead">Do diagnóstico ao deploy: fullstack, suporte, automação e UX aplicados para reduzir fricção e acelerar resultado.</p>
+          <div class="cta-row">
+            <a class="btn btn-primary" href="#tracklist">Ver cases</a>
+            <a class="btn btn-secondary" href="https://wa.me/5551999307763" target="_blank" rel="noopener noreferrer">Falar no WhatsApp</a>
+          </div>
+          <div class="display-panel" aria-label="Painel técnico">
+            <span>MODE: BUILD</span><span>STACK: FULL</span><span>STATUS: AVAILABLE</span>
+          </div>
+        </div>
+        <div class="cdj-stage" aria-hidden="true">
+          <div class="jog-wheel"></div>
+        </div>
+      </div>
+      <div class="waveform-shell" aria-hidden="true"><div class="waveform-line"></div></div>
+    </section>
+
+    <section id="manifesto" class="section s-manifesto" aria-labelledby="manifesto-title">
       <div class="container">
-        <p class="badge">Disponível para novos projetos</p>
-        <h1>Luiz Ulrich<br>Tecnologia, sistemas e experiências digitais com <span>foco em resultado</span>.</h1>
-        <p class="lead">Atuo na interseção entre suporte computacional, desenvolvimento web, automação e música eletrônica, criando soluções digitais claras, eficientes e pensadas para pessoas reais.</p>
-        <div class="hero-cta"><a class="btn btn-primary" href="#projetos">Ver projetos</a><a class="btn btn-secondary" href="#contato">Entrar em contato</a><a class="btn btn-ghost" href="#dj-ulrich">Conhecer lado DJ</a></div>
-        <div class="stats-grid"><article><strong>5+</strong><span>Projetos entregues</span></article><article><strong>100%</strong><span>Mobile-first</span></article><article><strong>2 mundos</strong><span>Tech & Música</span></article><article><strong>∞</strong><span>Curiosidade</span></article></div>
+        <h2 id="manifesto-title">Tecnologia e música seguem a mesma lógica: estrutura, controle e progressão.</h2>
+        <p>Eu projeto experiências como quem monta um set: cada decisão técnica tem função, cada interface tem ritmo, cada entrega precisa performar no mundo real.</p>
       </div>
     </section>
 
-    <section class="section" id="pilares">
+    <section id="tracklist" class="section s-tracklist" aria-labelledby="tracklist-title">
       <div class="container">
-        <p class="eyebrow">O QUE FAÇO</p><h2>Pilares da minha atuação</h2><p class="section-intro">Tecnologia aplicada com clareza. Cada pilar resolve um problema concreto.</p>
-        <div class="cards-grid pillars"><article class="card"><h3>Sistemas e suporte</h3><p>Diagnóstico, implantação e estabilidade para times e operações.</p></article><article class="card"><h3>Desenvolvimento web</h3><p>Sites e sistemas modernos, performáticos e bem estruturados.</p></article><article class="card"><h3>Automação e processos</h3><p>Reduzo retrabalho com automações práticas e mensuráveis.</p></article><article class="card"><h3>Experiência digital</h3><p>Interfaces claras, acessíveis e centradas em uso real.</p></article><article class="card"><h3>Música & controle de pista</h3><p>Leitura, energia e construção de jornada — também em código.</p></article></div>
+        <h2 id="tracklist-title">Tracklist / Cases</h2>
+        <ol class="tracklist">
+          <li><article><p class="track-id">Track 01</p><h3>Erick Imóveis</h3><div><span class="track-summary">Plataforma imobiliária • Web App</span><div class="track-detail"><p>Problema: navegação e busca de imóveis.</p><p>Resultado: catálogo com experiência fluida.</p><p><a href="https://erickimoveis.com.br" target="_blank" rel="noopener noreferrer">Abrir projeto</a></p></div></div></article></li>
+          <li><article><p class="track-id">Track 02</p><h3>Barbearia Bertotti</h3><div><span class="track-summary">Site institucional • Frontend + operação</span><div class="track-detail"><p>Problema: presença e captação.</p><p>Resultado: operação digital direta.</p><p><a href="#contato">Projeto em produção</a></p></div></div></article></li>
+          <li><article><p class="track-id">Track 03</p><h3>João Estúdio Gastronômico</h3><div><span class="track-summary">Presença premium • Branding + Web</span><div class="track-detail"><p>Problema: posicionamento digital.</p><p>Resultado: narrativa de alto valor.</p><p><a href="https://joaoestudiogastronomico.com.br" target="_blank" rel="noopener noreferrer">Abrir projeto</a></p></div></div></article></li>
+          <li><article><p class="track-id">Track 04</p><h3>Vision Board</h3><div><span class="track-summary">Projeto interativo • HTML/CSS/JS</span><div class="track-detail"><p>Problema: organização visual de metas.</p><p>Resultado: uso simples e mobile-first.</p><p><a href="/assets/projects/vision-board/">Abrir projeto</a></p></div></div></article></li>
+          <li><article><p class="track-id">Track 05</p><h3>DJ Analyzer</h3><div><span class="track-summary">Experimento interativo • Frontend criativo</span><div class="track-detail"><p>Problema: explorar narrativa audiovisual.</p><p>Resultado: laboratório de interface e timing.</p><p><a href="/assets/projects/spotifywrapped/">Abrir projeto</a></p></div></div></article></li>
+          <li><article><p class="track-id">Track 06</p><h3>SGPD — Protótipo</h3><div><span class="track-summary">Projeto acadêmico • Prototipagem de sistemas</span><div class="track-detail"><p>Problema: estruturação de solução.</p><p>Resultado: referência de processo.</p><p><a href="/assets/projects/sgpd-prototipo/">Acessar referência</a></p></div></div></article></li>
+        </ol>
       </div>
     </section>
 
-    <section id="projetos" class="section">
-      <div class="container"><p class="eyebrow">PORTFÓLIO</p><h2>Projetos selecionados</h2><p class="section-intro">Sites, sistemas e experimentos pensados para entregar resultado real.</p>
-      <div class="cards-grid projects"><article class="card"><h3>Erick Imóveis</h3><p>Sistema/site imobiliário com foco em catálogo, busca e experiência fluida em qualquer dispositivo.</p><a href="https://erickimoveis.com.br" target="_blank" rel="noopener noreferrer">Abrir projeto</a></article><article class="card"><h3>João Estúdio Gastronômico</h3><p>Presença digital premium para um estúdio gastronômico — identidade, narrativa e conversão.</p><a href="https://joaoestudiogastronomico.com.br" target="_blank" rel="noopener noreferrer">Abrir projeto</a></article><article class="card"><h3>Barbearia Bertotti</h3><p>Sistema/site para barbearia com agendamento e presença digital simples e direta.</p><a href="#contato">Projeto em produção</a></article><article class="card"><h3>Vision Board</h3><p>Projeto interativo para organizar metas, imagens e objetivos pessoais. Mobile-first.</p><a href="/assets/projects/vision-board/">Abrir projeto</a></article><article class="card"><h3>Projetos interativos</h3><p>Coletânea de experimentos web criativos: microinterações, animações e estudos de UI.</p><a href="/assets/projects/spotifywrapped/">Abrir projeto</a></article><article class="card"><h3>SGPD — Protótipo</h3><p>Projeto acadêmico de prototipagem e sistemas. Listado como referência, sem alterações.</p><a href="/assets/projects/sgpd-prototipo/">Referência acadêmica</a></article></div>
+    <section id="mixer" class="section s-mixer" aria-labelledby="mixer-title">
+      <div class="container">
+        <h2 id="mixer-title">Mixer / Stack Técnico</h2>
+        <ul class="mixer-grid">
+          <li><strong>Frontend</strong><span>Interfaces performáticas e acessíveis.</span></li>
+          <li><strong>Backend / Sistemas</strong><span>Integração, estabilidade e operação.</span></li>
+          <li><strong>UX / IHC</strong><span>Fluxos claros orientados a tarefa.</span></li>
+          <li><strong>Automação</strong><span>Menos retrabalho, mais escala.</span></li>
+          <li><strong>Banco de Dados</strong><span>Modelagem e consistência de dados.</span></li>
+          <li><strong>Deploy / Cloud</strong><span>Entrega contínua e monitoramento.</span></li>
+        </ul>
       </div>
     </section>
 
-    <section id="tecnologia" class="section"><div class="container timeline-wrap"><div><p class="eyebrow">TECNOLOGIA</p><h2>Como eu trabalho</h2><p class="section-intro">Tecnologia útil é aquela que reduz fricção. Atuo combinando suporte, desenvolvimento e automação para entregar soluções claras, rápidas e centradas no problema certo.</p></div><ol class="timeline"><li><h3>01 — Diagnóstico de problemas</h3><p>Entendo o contexto antes de propor solução. Sem achismo.</p></li><li><h3>02 — Organização de processos</h3><p>Mapeio o fluxo, removo atrito e padronizo o que escala.</p></li><li><h3>03 — Suporte e implantação</h3><p>Acompanho do setup à operação, com clareza técnica.</p></li><li><h3>04 — Sites e sistemas</h3><p>Construo interfaces sólidas, performáticas e fáceis de manter.</p></li><li><h3>05 — Eficiência e resultado</h3><p>O entregável precisa funcionar — para quem usa e para o negócio.</p></li></ol></div></section>
+    <section id="processo" class="section s-processo" aria-labelledby="processo-title">
+      <div class="container">
+        <h2 id="processo-title">Processo</h2>
+        <ol class="process-steps">
+          <li>Diagnosticar</li><li>Estruturar</li><li>Construir</li><li>Testar</li><li>Publicar</li><li>Melhorar</li>
+        </ol>
+      </div>
+    </section>
 
-    <section id="dj-ulrich" class="section"><div class="container dj-block"><div><p class="eyebrow">DJ ULRICH</p><h2>Estrutura, fluidez e progressão — também na pista.</h2><p>Como DJ, Ulrich trabalha com leitura de pista, controle de energia e construção de experiências sonoras. A mesma lógica aplicada em sistemas aparece na música: estrutura, fluidez, progressão e entrega de experiência.</p><div class="hero-cta"><a class="btn btn-primary" href="https://soundcloud.com/luizulrich" target="_blank" rel="noopener noreferrer">Ouvir no SoundCloud</a><a class="btn btn-secondary" href="#contato">Booking & contato</a></div></div><div class="disc" aria-hidden="true"></div></div></section>
-
-    <section id="contato" class="section"><div class="container"><p class="eyebrow">CONTATO</p><h2>Vamos construir algo <span>eficiente?</span></h2><p class="section-intro">Entre em contato para projetos, sistemas, sites, automações ou parcerias. Resposta direta, sem rodeios.</p><div class="cards-grid contact-grid"><a class="card contact-card" href="https://wa.me/5551999307763" target="_blank" rel="noopener noreferrer"><h3>WhatsApp</h3><p>Conversar agora</p></a><a class="card contact-card" href="mailto:contato@luizulrich.com"><h3>E-mail</h3><p>contato@luizulrich.com</p></a><a class="card contact-card" href="https://linkedin.com/in/luizulrich" target="_blank" rel="noopener noreferrer"><h3>LinkedIn</h3><p>/in/luizulrich</p></a><a class="card contact-card" href="https://github.com/LuizUlrich" target="_blank" rel="noopener noreferrer"><h3>GitHub</h3><p>@LuizUlrich</p></a><a class="card contact-card" href="https://soundcloud.com/luizulrich" target="_blank" rel="noopener noreferrer"><h3>SoundCloud</h3><p>/luizulrich</p></a></div></div></section>
+    <section id="contato" class="section s-cta" aria-labelledby="contato-title">
+      <div class="container">
+        <h2 id="contato-title">Se você precisa de sistema que funcione de verdade, vamos conversar.</h2>
+        <div class="cta-links">
+          <a href="https://github.com/LuizUlrich" target="_blank" rel="noopener noreferrer">GitHub</a>
+          <a href="https://linkedin.com/in/luizulrich" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+          <a class="cta-primary" href="https://wa.me/5551999307763" target="_blank" rel="noopener noreferrer">WhatsApp</a>
+          <a href="mailto:contato@luizulrich.com">contato@luizulrich.com</a>
+        </div>
+      </div>
+    </section>
   </main>
 
-  <footer class="page-footer"><div class="container footer-grid"><div><a class="brand footer-brand" href="#inicio"><span class="brand-dot"></span><span>Luiz Ulrich</span></a><p>Tecnologia & Música. Soluções digitais com foco em resultado, e experiências sonoras com foco em quem dança.</p></div><div><h3>Navegar</h3><a href="#inicio">Início</a><a href="#projetos">Projetos</a><a href="#tecnologia">Tecnologia</a><a href="#dj-ulrich">DJ Ulrich</a><a href="#contato">Contato</a></div><div><h3>Conectar</h3><a href="https://github.com/LuizUlrich" target="_blank" rel="noopener noreferrer">GitHub</a><a href="https://linkedin.com/in/luizulrich" target="_blank" rel="noopener noreferrer">LinkedIn</a><a href="https://soundcloud.com/luizulrich" target="_blank" rel="noopener noreferrer">SoundCloud</a><a href="mailto:contato@luizulrich.com">E-mail</a></div></div><div class="container footer-bottom"><p>© 2026 Luiz Ulrich. Todos os direitos reservados.</p><a href="https://luizulrich.com">by <span>Ulrich</span></a></div></footer>
-  <script src="/assets/js/menu.js" defer></script>
+  <script type="module" src="/assets/js/home.js"></script>
 </body>
 </html>
