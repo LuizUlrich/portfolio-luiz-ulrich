@@ -1,0 +1,33 @@
+.hero-bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+  background: radial-gradient(circle at 72% 56%, rgba(122, 15, 31, 0.28), transparent 56%);
+}
+
+.hero-bg::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(100deg, rgba(5, 5, 7, 0.96) 24%, rgba(5, 5, 7, 0.66) 58%, rgba(74, 13, 24, 0.4));
+}
+
+.hero-bg img {
+  position: absolute;
+  right: -3%;
+  top: 50%;
+  transform: translateY(-50%) scale(1.04);
+  opacity: 0.24;
+  filter: blur(1.2px) saturate(0) contrast(1.2) brightness(0.5) sepia(0.35) hue-rotate(-14deg);
+  mix-blend-mode: lighten;
+}
+
+@media (max-width: 768px) {
+  .hero-bg img {
+    opacity: 0.14;
+    right: -56%;
+    transform: translateY(-50%) scale(1.24);
+  }
+}

@@ -1,13 +1,21 @@
-import { qsa } from "../core/dom.js";
-import { prefersReducedMotion } from "../core/motion.js";
+import { qsa } from '../core/dom.js';
+import { prefersReducedMotion } from '../core/motion.js';
+
+let initialized = false;
 
 export function initSectionObserver() {
+  if (initialized) return () => {};
+
   const sections = qsa('.section');
-  if (!sections.length) return;
+  if (!sections.length) return () => {};
+
+  initialized = true;
 
   if (prefersReducedMotion) {
     sections.forEach((section) => section.classList.add('is-visible'));
-    return;
+    return () => {
+      initialized = false;
+    };
   }
 
   const observer = new IntersectionObserver((entries) => {
@@ -19,4 +27,9 @@ export function initSectionObserver() {
   }, { threshold: 0.2 });
 
   sections.forEach((section) => observer.observe(section));
+
+  return () => {
+    observer.disconnect();
+    initialized = false;
+  };
 }
