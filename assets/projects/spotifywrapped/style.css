@@ -43,10 +43,9 @@ body{
   justify-content:center;
   opacity:0;
   visibility:hidden;
-  transform:scale(1.02);
+  transform:none;
   transition:
     opacity .75s ease,
-    transform .75s ease,
     visibility .75s ease;
   overflow:hidden;
 }
@@ -54,7 +53,6 @@ body{
 .screen.active{
   opacity:1;
   visibility:visible;
-  transform:scale(1);
   z-index:2;
 }
 

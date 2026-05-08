@@ -101,7 +101,8 @@ function fadeAudioTo(targetVolume = 0.45, duration = 4000) {
 
   function step(now) {
     const progress = Math.min((now - startTimeFade) / duration, 1);
-    bgMusic.volume = startVolume + (targetVolume - startVolume) * progress;
+    const nextVolume = startVolume + (targetVolume - startVolume) * progress;
+    bgMusic.volume = Math.max(0, Math.min(1, nextVolume));
 
     if (progress < 1) {
       fadeFrameId = requestAnimationFrame(step);
