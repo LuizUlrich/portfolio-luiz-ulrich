@@ -108,8 +108,8 @@ body.has-player {
 }
 
 .player-volume .player-icon-btn {
-  width: 34px;
-  height: 34px;
+  width: 44px;
+  height: 44px;
 }
 
 .player-volume__range {
@@ -156,8 +156,8 @@ body.has-player {
 .player-icon-btn {
   display: inline-grid;
   place-items: center;
-  width: 36px;
-  height: 36px;
+  width: 44px;
+  height: 44px;
   border: 1px solid rgba(255, 255, 255, 0.16);
   border-radius: 999px;
   background:
@@ -187,8 +187,8 @@ body.has-player {
 }
 
 .player-icon-btn--primary {
-  width: 42px;
-  height: 42px;
+  width: 48px;
+  height: 48px;
   border: none;
   background: linear-gradient(135deg, var(--accent), var(--accent-soft));
   box-shadow: 0 8px 22px rgba(var(--accent-rgb), 0.24);
@@ -248,7 +248,7 @@ body.has-player {
   display: grid;
   place-items: center;
   z-index: 1299;
-  width: 18px;
+  width: 44px;
   border: 0;
   background:
     linear-gradient(180deg, rgba(var(--accent-rgb), 0.16), rgba(var(--accent-rgb), 0.08)),
@@ -323,7 +323,7 @@ body.has-player {
 
 @media (max-width: 760px) {
   body.has-player {
-    padding-bottom: calc(var(--player-height) + 1rem);
+    padding-bottom: calc(17.5rem + env(safe-area-inset-bottom, 0px));
   }
 
   .global-player {
@@ -339,7 +339,7 @@ body.has-player {
   }
 
   .global-player__inner {
-    padding-top: 1.25rem;
+    padding-top: 2.8rem;
     padding-left: 0.9rem;
   }
 
@@ -349,7 +349,7 @@ body.has-player {
     left: 0;
     bottom: auto;
     width: auto;
-    height: 18px;
+    min-height: 44px;
     border-radius: 20px 20px 0 0;
   }
 
@@ -358,7 +358,7 @@ body.has-player {
     left: 0.6rem;
     bottom: 0.6rem;
     width: auto;
-    height: 18px;
+    min-height: 44px;
     border-radius: 20px 20px 0 0;
     border-left: 0;
     border-top: 1px solid rgba(255, 255, 255, 0.04);

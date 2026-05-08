@@ -97,6 +97,9 @@
 }
 
 .contact-note a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
   color: #ffd3d9;
   font-weight: 600;
   text-decoration: underline;

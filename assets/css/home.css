@@ -38,10 +38,10 @@
 }
 
 .home-page .hero-copy h1 {
-  max-width: 9ch;
+  max-width: 11.5ch;
   margin-bottom: 1.2rem;
-  font-size: clamp(3.2rem, 14vw, 6.2rem);
-  line-height: 0.94;
+  font-size: clamp(3rem, 11vw, 5.5rem);
+  line-height: 0.98;
 }
 
 .home-page .lead {
@@ -62,7 +62,7 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-height: 42px;
+  min-height: 44px;
   padding: 0.76rem 0.95rem;
   border-radius: 999px;
   border: 1px solid rgba(255, 255, 255, 0.08);
@@ -392,6 +392,14 @@
 
   .home-page .cta-actions {
     justify-content: flex-end;
+  }
+}
+
+@media (max-width: 919px) {
+  .home-page .hero-copy h1 {
+    max-width: 12ch;
+    font-size: clamp(2.75rem, 9vw, 4.9rem);
+    line-height: 1;
   }
 }
 

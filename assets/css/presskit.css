@@ -22,7 +22,9 @@
 }
 
 .presskit-page .hero-copy h1 {
-  max-width: 11ch;
+  max-width: 24ch;
+  font-size: clamp(2.5rem, 5vw, 4.2rem);
+  line-height: 1.04;
   text-shadow: 0 0 24px rgba(229, 92, 104, 0.07);
 }
 

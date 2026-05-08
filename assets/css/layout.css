@@ -563,12 +563,23 @@
   }
 
   .header-inner {
+    flex-wrap: nowrap;
     gap: 0.75rem;
     padding-block: 0.65rem;
   }
 
   .brand {
     gap: 0.72rem;
+    min-height: 44px;
+  }
+
+  .brand-text {
+    white-space: nowrap;
+  }
+
+  .header-actions {
+    flex: 0 0 auto;
+    min-width: auto;
   }
 
   .main-nav {
@@ -660,6 +671,10 @@
   .footer-nav {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .footer-brand {
+    min-height: 44px;
   }
 
   .footer-nav a {

@@ -318,7 +318,7 @@
   align-items: center;
   gap: 0.42rem;
   width: fit-content;
-  min-height: 42px;
+  min-height: 44px;
   padding: 0.72rem 1rem;
   border: 1px solid rgba(var(--accent-rgb), 0.16);
   border-radius: 999px;
