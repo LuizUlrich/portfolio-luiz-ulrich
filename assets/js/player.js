@@ -66,7 +66,8 @@ window.site.onReady(() => {
   const hasTrackTriggers =
     document.body?.dataset.playerPage === "true" ||
     document.querySelector(".play-track-btn") !== null;
-  const shouldInitializePlayer = hasTrackTriggers || state.hasInteracted;
+  const trackButtons = document.querySelectorAll(".play-track-btn");
+  const shouldInitializePlayer = hasTrackTriggers && trackButtons.length > 0;
 
   if (!shouldInitializePlayer) return;
 
@@ -326,7 +327,7 @@ window.site.onReady(() => {
     saveState();
   }
 
-  async function playCurrent() {
+  async function playCurrent({ warnOnError = true } = {}) {
     const audio = ensureAudio();
 
     try {
@@ -337,7 +338,9 @@ window.site.onReady(() => {
       renderPlayer();
       saveState();
     } catch (error) {
-      console.warn("Nao foi possivel iniciar o audio automaticamente:", error);
+      if (warnOnError) {
+        console.warn("Nao foi possivel iniciar o audio automaticamente:", error);
+      }
       renderPlayer();
     }
   }
@@ -437,7 +440,7 @@ window.site.onReady(() => {
   }
 
   function bindTrackTriggers() {
-    document.querySelectorAll(".play-track-btn").forEach((button) => {
+    trackButtons.forEach((button) => {
       button.addEventListener("click", () => {
         const requestedIndex = Number(button.dataset.track || 0);
         state.time = 0;
@@ -459,7 +462,7 @@ window.site.onReady(() => {
   }
 
   if (state.hasInteracted && state.playing) {
-    playCurrent();
+    playCurrent({ warnOnError: false });
   } else {
     renderPlayer();
   }

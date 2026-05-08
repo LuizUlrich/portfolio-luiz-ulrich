@@ -5,9 +5,7 @@ window.site.onReady(() => {
   if (!outboundLinks.length && !trackButtons.length) return;
 
   const analytics = window.siteAnalytics || {
-    track(eventName, payload) {
-      console.log(`[analytics] ${eventName}`, payload);
-    }
+    track() {}
   };
 
   window.siteAnalytics = analytics;
