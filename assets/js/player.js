@@ -1,4 +1,10 @@
 document.addEventListener("DOMContentLoaded", () => {
+  const trackButtons = document.querySelectorAll(".play-track-btn");
+
+  if (trackButtons.length === 0) {
+    return;
+  }
+
   const TRACKS = [
     {
       title: "El Fortin Talent 2026",
@@ -323,7 +329,7 @@ document.addEventListener("DOMContentLoaded", () => {
     saveState();
   }
 
-  async function playCurrent() {
+  async function playCurrent({ warnOnError = false } = {}) {
     try {
       await audio.play();
       state.hasInteracted = true;
@@ -331,7 +337,9 @@ document.addEventListener("DOMContentLoaded", () => {
       updatePlayerUI();
       saveState();
     } catch (error) {
-      console.warn("Nao foi possivel iniciar o audio automaticamente:", error);
+      if (warnOnError) {
+        console.warn("Nao foi possivel iniciar o audio:", error);
+      }
       updatePlayerUI();
     }
   }
@@ -344,7 +352,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function togglePlayback() {
     if (audio.paused) {
-      playCurrent();
+      playCurrent({ warnOnError: true });
       return;
     }
 
@@ -356,16 +364,16 @@ document.addEventListener("DOMContentLoaded", () => {
     setTrack(state.index + direction, false);
 
     if (autoplay) {
-      playCurrent();
+      playCurrent({ warnOnError: true });
     }
   }
 
-  document.querySelectorAll(".play-track-btn").forEach((button) => {
+  trackButtons.forEach((button) => {
     button.addEventListener("click", () => {
       const requestedIndex = Number(button.dataset.track || 0);
       state.time = 0;
       setTrack(requestedIndex, false);
-      playCurrent();
+      playCurrent({ warnOnError: true });
     });
   });
 
