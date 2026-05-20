@@ -30,6 +30,7 @@ let loveCounterTimeoutId = null;
 const HOLD_DELAY = 220;
 const TAP_MOVE_TOLERANCE = 14;
 const LOVE_COUNTER_DURATION = 1700;
+const LOVE_COUNTER_TARGET = 10005;
 
 function buildProgress() {
   progressBars.innerHTML = "";
@@ -100,7 +101,8 @@ function fadeAudioTo(targetVolume = 0.45, duration = 4000) {
 
   function step(now) {
     const progress = Math.min((now - startTimeFade) / duration, 1);
-    bgMusic.volume = startVolume + (targetVolume - startVolume) * progress;
+    const nextVolume = startVolume + (targetVolume - startVolume) * progress;
+    bgMusic.volume = Math.max(0, Math.min(1, nextVolume));
 
     if (progress < 1) {
       fadeFrameId = requestAnimationFrame(step);
@@ -120,7 +122,6 @@ async function startMusicWithFade(targetVolume = 0.45, duration = 5000) {
     await bgMusic.play();
     fadeAudioTo(targetVolume, duration);
     musicStarted = true;
-    console.log("Música iniciada com fade in.");
   } catch (error) {
     console.error("Não foi possível tocar a música:", error);
   }
@@ -220,7 +221,7 @@ function startLoveCounterIfNeeded() {
     }
 
     const progress = Math.min((now - counterStart) / LOVE_COUNTER_DURATION, 1);
-    const value = Math.round(progress * 100);
+    const value = Math.round(progress * LOVE_COUNTER_TARGET);
     loveNumber.textContent = String(value);
 
     if (progress < 1) {
@@ -457,7 +458,7 @@ document.addEventListener("keydown", () => {
 }, { once: true });
 
 function isInteractiveTarget(target) {
-  return !!target?.closest("button, a, input, textarea, select, label");
+  return typeof target?.closest === "function" && !!target.closest("button, a, input, textarea, select, label");
 }
 
 function shouldUsePointerStoryControls() {
@@ -554,10 +555,6 @@ document.addEventListener("pointercancel", (e) => {
   holdTriggered = false;
   activePointerId = null;
 }, { passive: true });
-
-window.addEventListener("load", () => {
-  console.log("Página carregada.");
-});
 
 screens.forEach((screen, i) => {
   screen.classList.toggle("active", i === 0);
