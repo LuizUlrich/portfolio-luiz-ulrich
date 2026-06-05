@@ -120,7 +120,7 @@
 .approach-grid,
 .set-grid {
   display: grid;
-  gap: 1.2rem;
+  gap: 1.25rem;
   align-items: stretch;
   grid-auto-rows: 1fr;
 }
