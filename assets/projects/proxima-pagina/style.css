@@ -1,0 +1,530 @@
+/* ============================================
+   NOSSA PRÓXIMA PÁGINA — Livro Interativo
+   ============================================ */
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --ink: #141210;
+  --ink-deep: #0d0b09;
+  --paper: #f0ebe0;
+  --paper-page: #f7f1e4;
+  --paper-shadow: #e8dfcb;
+  --gold: #c9a96e;
+  --gold-light: #e8d5a3;
+  --gold-dim: rgba(201,169,110,0.18);
+  --cream: #f7f2e8;
+  --muted: #8a7c68;
+  --body-text: #4a4136;
+  --title-ink: #2a2118;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  background:
+    radial-gradient(ellipse 120% 100% at 50% 50%, #211a12 0%, var(--ink) 45%, var(--ink-deep) 100%);
+  color: var(--paper);
+  font-family: 'Crimson Pro', Georgia, serif;
+  font-weight: 300;
+  min-height: 100vh;
+  min-height: 100svh;
+  overflow: hidden;
+}
+
+/* grain overlay */
+body::before {
+  content: '';
+  position: fixed; inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+  pointer-events: none; z-index: 9999; opacity: 0.5;
+}
+
+/* ============================================
+   LOADER
+   ============================================ */
+#loader {
+  position: fixed; inset: 0;
+  background: var(--ink);
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  z-index: 1000;
+  transition: opacity 0.8s ease, visibility 0.8s ease;
+}
+#loader.hidden { opacity: 0; visibility: hidden; }
+.loader-text {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 0.7rem; letter-spacing: 0.5em;
+  text-transform: uppercase; color: var(--gold);
+  opacity: 0.8;
+}
+.loader-ornament {
+  color: var(--gold); font-size: 1.2rem;
+  letter-spacing: 0.6em; margin-top: 1rem;
+  animation: pulse 1.8s ease-in-out infinite;
+}
+@keyframes pulse { 0%,100%{opacity:0.3} 50%{opacity:0.9} }
+
+/* ============================================
+   BOOK CONTAINER
+   ============================================ */
+#book-wrap {
+  position: fixed; inset: 0;
+  display: flex;
+  align-items: center; justify-content: center;
+  padding: 2vh 2vw;
+  perspective: 2600px;
+}
+
+#book {
+  width: 100%;
+  max-width: 1100px;
+  height: 92vh; height: 92svh;
+  max-height: 760px;
+  position: relative;
+  display: flex;
+  border-radius: 4px;
+}
+
+/* capa/final ocupam o livro inteiro, na moldura — sem a linha central */
+#book.full .page-side { display: none; }
+#book.full .page-full { display: block; }
+#book.full::after { display: none; }
+
+/* lombada central (apenas spread) */
+#book::after {
+  content: '';
+  position: absolute;
+  left: 50%; top: 0; bottom: 0;
+  width: 2px;
+  transform: translateX(-50%);
+  background: linear-gradient(to bottom,
+    transparent, rgba(0,0,0,0.45) 12%, rgba(0,0,0,0.45) 88%, transparent);
+  z-index: 50;
+  pointer-events: none;
+}
+
+/* ============================================
+   PÁGINAS (folha de papel)
+   ============================================ */
+.page-side {
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(to var(--grad-dir, right),
+    var(--paper-page), var(--paper-shadow));
+  position: relative;
+  overflow: hidden;
+}
+.page-side.left  { --grad-dir: left;  border-radius: 4px 0 0 4px; box-shadow: inset -18px 0 30px -20px rgba(0,0,0,0.5); }
+.page-side.right { --grad-dir: right; border-radius: 0 4px 4px 0; box-shadow: inset 18px 0 30px -20px rgba(0,0,0,0.5); }
+
+/* container da capa/final (preenche o livro) */
+.page-full { display: none; width: 100%; height: 100%; position: relative; border-radius: 4px; overflow: hidden; }
+
+.page-content {
+  position: absolute; inset: 0;
+  padding: clamp(2.6rem, 6vh, 4.4rem) clamp(1.8rem, 4vw, 3.5rem);
+  display: flex; flex-direction: column;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+.page-content.active { opacity: 1; }
+
+/* texto de papel (textura) */
+.page-side::before {
+  content: '';
+  position: absolute; inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='p'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.012' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23p)' opacity='0.06'/%3E%3C/svg%3E");
+  pointer-events: none; mix-blend-mode: multiply; opacity: 0.5;
+}
+
+/* ornamento de cabeçalho (fundo da folha) */
+.page-ornament {
+  position: absolute;
+  top: clamp(1rem, 3vh, 2rem);
+  left: 50%; transform: translateX(-50%);
+  width: clamp(86px, 15%, 132px);
+  color: var(--gold);
+  opacity: 0.42;
+  z-index: 3;
+  pointer-events: none;
+}
+.ornament-svg { width: 100%; height: auto; display: block; stroke: currentColor; stroke-width: 1; fill: none; }
+
+/* número de página */
+.page-no {
+  position: absolute;
+  bottom: clamp(0.8rem, 2.2vh, 1.4rem);
+  left: 50%; transform: translateX(-50%);
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 0.74rem; letter-spacing: 0.18em;
+  color: var(--muted);
+  z-index: 3;
+}
+
+/* ============================================
+   CONTEÚDO DE CAPÍTULO
+   ============================================ */
+.chapter-icon {
+  font-size: clamp(1.5rem, 3.5vh, 2rem);
+  margin-bottom: clamp(0.6rem, 1.5vh, 1rem);
+  display: block;
+  filter: saturate(0.65) brightness(0.9);
+}
+.chapter-meta {
+  display: flex; align-items: center;
+  gap: 0.9rem; margin-bottom: clamp(0.7rem, 1.5vh, 1.1rem);
+}
+.chapter-num {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 0.66rem; letter-spacing: 0.42em;
+  text-transform: uppercase; color: #a8823f;
+  white-space: nowrap; font-weight: 600;
+}
+.chapter-line {
+  flex: 1; height: 2px;
+  background: linear-gradient(to right, rgba(168,130,63,0.65), rgba(168,130,63,0.12));
+  border-radius: 2px;
+}
+.chapter-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(1.6rem, 4.2vh, 2.6rem);
+  font-weight: 500; line-height: 1.12;
+  margin-bottom: clamp(1rem, 2.5vh, 1.6rem);
+  color: var(--title-ink);
+}
+.chapter-title em { font-style: italic; color: #936f33; font-weight: 600; }
+
+.chapter-body {
+  color: var(--body-text);
+  font-size: clamp(0.92rem, 1.95vh, 1.08rem);
+  line-height: 1.75;
+  text-align: justify;
+  text-justify: inter-word;
+  hyphens: auto;
+}
+.chapter-body p + p { margin-top: 0.7rem; }
+.chapter-body strong { color: var(--title-ink); font-weight: 600; }
+
+/* mídia (foto/vídeo) dentro da página */
+.page-media {
+  margin-top: clamp(0.8rem, 2vh, 1.3rem);
+  border: 1px solid var(--gold-dim);
+  padding: 5px;
+  background: #0a0806;
+  max-height: 38vh;
+  overflow: hidden;
+}
+.page-media img {
+  width: 100%; display: block;
+  max-height: 36vh; object-fit: cover;
+}
+/* vídeo retrato: mostra inteiro, sem cortar */
+.page-media.video {
+  display: flex; align-items: center; justify-content: center;
+  max-height: 46vh;
+}
+.page-media.video video {
+  max-height: 44vh; width: auto; max-width: 100%;
+  display: block; object-fit: contain;
+}
+.media-caption {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: clamp(0.72rem, 1.5vh, 0.85rem);
+  color: var(--muted);
+  text-align: center;
+  margin-top: 0.5rem;
+}
+
+/* ============================================
+   FOLHA DEDICADA AO VÍDEO (retrato, lado a lado com o texto)
+   ============================================ */
+.videoplate {
+  align-items: center;
+  text-align: center;
+}
+.plate-eyebrow {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 0.66rem; letter-spacing: 0.42em;
+  text-transform: uppercase; color: #a8823f;
+  font-weight: 600;
+  margin-bottom: clamp(0.8rem, 2vh, 1.4rem);
+}
+.video-stage {
+  height: clamp(40vh, 60vh, 66vh);
+  max-width: 100%;
+  border: 1px solid var(--gold-dim);
+  padding: 6px;
+  background: #0a0806;
+  display: flex; align-items: center; justify-content: center;
+}
+.video-stage video {
+  height: 100%; width: auto; max-width: 100%;
+  display: block; object-fit: contain;
+}
+
+/* ============================================
+   CAPA (full-bleed)
+   ============================================ */
+.full-content {
+  position: relative; z-index: 2;
+  width: 100%; max-width: 620px;
+  padding: clamp(2rem, 5vh, 4rem);
+  margin: 0 auto;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  text-align: center;
+}
+.cover-page {
+  width: 100%; height: 100%;
+  display: flex; align-items: center; justify-content: center;
+  position: relative;
+  background: linear-gradient(135deg, #1a1410, #251c12);
+  color: var(--paper);
+}
+.cover-bg {
+  position: absolute; inset: 0;
+  background-size: cover; background-position: center 25%;
+  opacity: 0.28;
+  filter: grayscale(30%) sepia(18%);
+  mask-image: radial-gradient(ellipse 70% 80% at 50% 42%, black 18%, transparent 78%);
+  -webkit-mask-image: radial-gradient(ellipse 70% 80% at 50% 42%, black 18%, transparent 78%);
+}
+.cover-eyebrow {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(0.68rem, 1.4vh, 0.82rem); letter-spacing: 0.4em;
+  text-transform: uppercase; color: var(--gold);
+}
+.cover-ornament {
+  color: var(--gold); margin: 1rem 0;
+  font-size: 0.95rem; letter-spacing: 0.6em;
+}
+.cover-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(2.8rem, 11vh, 6rem);
+  font-weight: 300; line-height: 1.0;
+  color: var(--cream);
+}
+.cover-title em { font-style: italic; color: var(--gold-light); display: block; }
+.cover-rule {
+  width: 1px; height: clamp(40px, 7vh, 64px);
+  background: linear-gradient(to bottom, var(--gold), transparent);
+  margin: clamp(1rem, 2.5vh, 1.8rem) auto;
+}
+.cover-subtitle {
+  font-size: clamp(0.95rem, 2.2vh, 1.2rem);
+  color: var(--muted); line-height: 1.6;
+  max-width: 340px;
+}
+
+/* ============================================
+   MENSAGEM FINAL (full-bleed)
+   ============================================ */
+.final-page {
+  width: 100%; height: 100%;
+  background: linear-gradient(135deg, #1a1410, #241a10);
+  color: var(--cream);
+  display: flex; align-items: center; justify-content: center;
+  text-align: center;
+}
+.final-page .full-content {
+  padding-top: clamp(1.2rem, 3vh, 2.4rem);
+  padding-bottom: clamp(1.2rem, 3vh, 2.4rem);
+}
+.final-label {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(0.6rem, 1.2vh, 0.74rem); letter-spacing: 0.5em;
+  text-transform: uppercase; color: var(--gold);
+  margin-bottom: clamp(1rem, 2.2vh, 1.5rem);
+}
+.final-message {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(1.05rem, 2.7vh, 1.55rem);
+  font-weight: 300; font-style: italic;
+  line-height: 1.5; max-width: 480px;
+  margin: 0 auto;
+}
+.final-rule {
+  width: 34px; height: 1px;
+  background: var(--gold); margin: clamp(1rem, 2.2vh, 1.5rem) auto;
+  opacity: 0.5;
+}
+.final-signature {
+  font-size: clamp(0.78rem, 1.8vh, 0.95rem);
+  color: var(--gold); letter-spacing: 0.12em;
+  line-height: 1.6;
+}
+.final-ornament {
+  margin-top: clamp(1.1rem, 2.4vh, 1.7rem); font-size: 1rem;
+  letter-spacing: 1em; color: var(--gold); opacity: 0.3;
+}
+
+/* ============================================
+   PÁGINA DO CORAÇÃO
+   ============================================ */
+.heart-page { align-items: center; text-align: center; }
+.heart-label {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 0.66rem; letter-spacing: 0.42em;
+  text-transform: uppercase; color: #a8823f;
+  font-weight: 600;
+  margin-bottom: 1.2rem;
+}
+.heart-phone {
+  border: 1px solid var(--gold-dim);
+  padding: 5px; background: #0e0c0a;
+  display: inline-block;
+  max-height: 46vh;
+}
+.heart-phone img { max-height: 44vh; width: auto; display: block; }
+.heart-caption {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: clamp(0.82rem, 1.8vh, 0.95rem);
+  color: var(--muted);
+  margin-top: 1.1rem; line-height: 1.5;
+}
+
+/* ============================================
+   PÁGINA DE FOTO
+   ============================================ */
+.photo-page { align-items: center; text-align: center; }
+.photo-frame {
+  border: 1px solid var(--gold-dim);
+  padding: 7px; background: #0e0c0a;
+  max-height: 64vh;
+}
+.photo-frame img {
+  max-height: 62vh; width: auto; max-width: 100%; display: block;
+  filter: sepia(8%) contrast(1.03);
+}
+.photo-page .media-caption { margin-top: 0.9rem; }
+
+/* ============================================
+   ANIMAÇÃO DE TRANSIÇÃO (slide)
+   ============================================ */
+.slide-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 100;
+  pointer-events: none;
+  display: flex;
+  align-items: center; justify-content: center;
+  padding: 2vh 2vw;
+  will-change: transform, opacity;
+}
+.slide-inner {
+  display: flex;
+  width: 100%; max-width: 1100px;
+  height: 92vh; height: 92svh;
+  max-height: 760px;
+  box-shadow: 0 0 40px rgba(0,0,0,0.5);
+}
+.slide-inner.full > .cover-page,
+.slide-inner.full > .final-page { border-radius: 4px; overflow: hidden; }
+.slide-inner .page-side { box-shadow: none; }
+
+.slide-overlay.forward  { transform: translateX(12%); opacity: 0; transition: transform 0.6s cubic-bezier(0.4,0.1,0.2,1), opacity 0.5s ease; }
+.slide-overlay.backward { transform: translateX(-12%); opacity: 0; transition: transform 0.6s cubic-bezier(0.4,0.1,0.2,1), opacity 0.5s ease; }
+.slide-overlay.forward.animate,
+.slide-overlay.backward.animate { transform: translateX(0); opacity: 1; }
+
+/* ============================================
+   NAVEGAÇÃO
+   ============================================ */
+.nav-zone {
+  position: absolute;
+  top: 0; bottom: 0;
+  width: 18%;
+  z-index: 200;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+}
+.nav-zone.prev { left: 0; justify-content: flex-start; padding-left: 1rem; }
+.nav-zone.next { right: 0; justify-content: flex-end; padding-right: 1rem; }
+.nav-arrow {
+  color: var(--gold);
+  font-size: 1.8rem;
+  opacity: 0;
+  transition: opacity 0.3s, transform 0.3s;
+  font-family: serif;
+  user-select: none;
+}
+.nav-zone:hover .nav-arrow { opacity: 0.55; }
+.nav-zone.prev:hover .nav-arrow { transform: translateX(-3px); }
+.nav-zone.next:hover .nav-arrow { transform: translateX(3px); }
+.nav-zone.disabled { cursor: default; pointer-events: none; }
+.nav-zone.disabled .nav-arrow { opacity: 0 !important; }
+
+/* indicador de página */
+#page-indicator {
+  position: absolute;
+  bottom: 1rem; left: 50%;
+  transform: translateX(-50%);
+  display: flex; gap: 0.5rem;
+  z-index: 300;
+  max-width: 80vw; flex-wrap: wrap; justify-content: center;
+}
+.dot {
+  width: 5px; height: 5px;
+  border-radius: 50%;
+  background: var(--gold);
+  opacity: 0.25;
+  transition: opacity 0.3s, transform 0.3s;
+}
+.dot.active { opacity: 0.9; transform: scale(1.4); }
+
+/* progress hint */
+#hint {
+  position: fixed;
+  bottom: 1.2rem; left: 50%;
+  transform: translateX(-50%);
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 0.62rem; letter-spacing: 0.3em;
+  text-transform: uppercase; color: var(--muted);
+  z-index: 500; opacity: 0;
+  transition: opacity 0.6s;
+  text-align: center;
+}
+#hint.show { opacity: 0.6; }
+
+/* ============================================
+   MOBILE — UMA PÁGINA
+   ============================================ */
+@media (max-width: 768px) {
+  #book-wrap { padding: 0; }
+  #book {
+    height: 100%;
+    max-height: none;
+    border-radius: 0;
+  }
+  #book::after { display: none; } /* sem lombada */
+
+  .page-side.left { display: none; }
+  .page-side.right {
+    width: 100%;
+    border-radius: 0;
+    box-shadow: none;
+  }
+  .page-side.right.left-active { display: block; }
+
+  .slide-inner { max-height: none; height: 100%; padding: 0; }
+  .slide-overlay { padding: 0; }
+
+  .nav-zone { width: 22%; }
+  .page-media.video { max-height: 52vh; }
+  .page-media.video video { max-height: 50vh; }
+  .video-stage { height: 54vh; }
+
+  #page-indicator { bottom: 0.6rem; }
+  #hint { bottom: 0.4rem; }
+}
+
+/* reduced motion: neutraliza o slide */
+@media (prefers-reduced-motion: reduce) {
+  .slide-overlay { transition: none !important; }
+  * { animation-duration: 0.01ms !important; }
+}
