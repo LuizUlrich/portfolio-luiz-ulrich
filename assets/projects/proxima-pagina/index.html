@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Nossa Próxima Página</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400;1,600&family=Crimson+Pro:ital,wght@0,300;0,400;1,300;1,400&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="./style.css" />
+</head>
+<body>
+
+  <!-- LOADER -->
+  <div id="loader">
+    <p class="loader-text">Nossa Próxima Página</p>
+    <div class="loader-ornament">✦ &nbsp; ✦ &nbsp; ✦</div>
+  </div>
+
+  <!-- LIVRO -->
+  <div id="book-wrap">
+    <div id="book">
+      <div class="page-side left"></div>
+      <div class="page-side right"></div>
+      <div class="page-full"></div>
+
+      <!-- zonas de navegação -->
+      <div class="nav-zone prev"><span class="nav-arrow">‹</span></div>
+      <div class="nav-zone next"><span class="nav-arrow">›</span></div>
+    </div>
+
+    <!-- indicador de páginas -->
+    <div id="page-indicator"></div>
+  </div>
+
+  <!-- hint -->
+  <div id="hint"></div>
+
+  <script src="./script.js"></script>
+</body>
+</html>
