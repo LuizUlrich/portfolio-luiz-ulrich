@@ -40,15 +40,7 @@
       media: { type: 'video', src: './assets/moto.mp4', caption: 'A chuva, a moto e nós dois.' }
     },
 
-    // 3 — Pausa coração
-    {
-      type: 'heart',
-      label: 'Um detalhe',
-      img: './assets/foto-contato.jpeg',
-      caption: 'Nenhum gesto grande.<br>Só um coraçãozinho no meu nome.<br>Um gesto que achei fofo (e quase obriguei ksksksksk).'
-    },
-
-    // 4 — Cap III borboleta
+    // 3 — Cap III borboleta (+ vídeo nos-encontramos)
     {
       type: 'chapter', icon: '🦋', num: 'Capítulo III',
       title: 'Nada disso foi <em>por acaso</em>',
@@ -57,7 +49,16 @@
         'Cada decisão torta, cada plano que não deu certo, cada momento em que a vida foi diferente do que a gente esperava. Tudo aquilo foi preparando o terreno, sem que a gente soubesse, pra esse encontro acontecer.',
         'Eu vim pra Blumenau com medo. Vim com meu irmão, a Sheila em cima da camionete, e uma aposta no que podia ser. Deixei o medo de lado, fui atrás de uma oportunidade, a Leads me aceitou. E no fim parei aqui.',
         '<strong>O universo levou o tempo que precisava. Mas acertou.</strong>'
-      ]
+      ],
+      media: { type: 'video', src: './assets/nos-encontramos.mp4', caption: 'O encontro que o tempo armou.' }
+    },
+
+    // 4 — Pausa coração (contato) — junto ao Capítulo IV
+    {
+      type: 'heart',
+      label: 'Um detalhe',
+      img: './assets/foto-contato.jpeg',
+      caption: 'Nenhum gesto grande.<br>Só um coraçãozinho no meu nome.<br>Um gesto que achei fofo (e quase obriguei ksksksksk).'
     },
 
     // 5 — Cap IV lar
@@ -82,7 +83,8 @@
         'O beijinho que vem puxado, aquela respirada de ar até a boca do outro encontrar. Ninguém mais faz isso. É nosso.',
         'Meu lanchinho que você faz. O carinho quando sente que preciso. Os jogos, as séries, os filmes que a gente vê juntos.',
         '<strong>São as coisas pequenas. São as que mais ficam.</strong>'
-      ]
+      ],
+      media: { type: 'video', src: './assets/fazendo-lanchinho.mp4', caption: 'Meu lanchinho. Feito por você.' }
     },
 
     // 7 — Cap VI mais linda
@@ -94,7 +96,8 @@
         'Eu te observo. O jeito que você ri, o que faz quando está animada, como você é quando está sendo você mesma sem perceber que estou olhando.',
         'Você não precisa me pedir nada. Mas se pedir o mundo, eu vou atrás. E mesmo quando não pede, eu apareço com rosas e girassóis, ou qualquer flor que encontro no caminho, porque você merece sem precisar de motivo.',
         '<strong>Faço tudo por você. Não por obrigação. Por escolha.</strong>'
-      ]
+      ],
+      media: { type: 'image', src: './assets/foto-porao.jpeg', caption: 'A mais linda. Sem nem tentar.' }
     },
 
     // 8 — Cap VII conversas
@@ -188,16 +191,10 @@
       ]
     },
 
-    // 16 — Foto começo
-    {
-      type: 'photo',
-      img: './assets/onde-comecou.jpeg',
-      caption: 'A primeira. Onde tudo começou.'
-    },
-
-    // 17 — MENSAGEM FINAL
+    // 16 — MENSAGEM FINAL
     {
       type: 'final',
+      bg: './assets/onde-comecou.jpeg',
       label: 'Para você',
       message: 'Antes eu tinha planos. Superficiais, sem muito rumo, coisas que eu queria, mas sem saber bem por quê.<br><br>Hoje tenho planos concretos. E a melhor motivação do mundo: te fazer feliz.<br><br>Dentre todos os lugares que podemos ir, de uma coisa eu tenho certeza.<br><br>Eu quero estar com você.',
       signature: 'Você é meu mundo ❤️<br>Te amo, Jessica Soares Freire'
@@ -261,12 +258,15 @@
     }
 
     // folha dedicada ao vídeo (desktop): só o vídeo em retrato + legenda
-    if (page.type === 'videoplate') {
+    if (page.type === 'mediaplate') {
+      const stage = page.mediaType === 'video'
+        ? `<div class="media-stage"><video src="${page.src}" ${vatt}></video></div>`
+        : `<div class="media-stage"><img src="${page.src}" alt=""></div>`;
       return `
         ${pageChrome(no)}
-        <div class="page-content active videoplate">
+        <div class="page-content active mediaplate">
           <span class="plate-eyebrow">${page.num}</span>
-          <div class="video-stage"><video src="${page.src}" ${vatt}></video></div>
+          ${stage}
           <p class="media-caption">${page.caption}</p>
         </div>`;
     }
@@ -311,6 +311,7 @@
     if (page.type === 'final') {
       return `
         <div class="final-page">
+          ${page.bg ? `<div class="final-bg" style="background-image:url('${page.bg}')"></div>` : ''}
           <div class="full-content">
             <p class="final-label">${page.label}</p>
             <p class="final-message">${page.message}</p>
@@ -320,11 +321,23 @@
           </div>
         </div>`;
     }
+    if (page.type === 'photo') {
+      return `
+        <div class="photo-full">
+          <div class="photo-full-frame"><img src="${page.img}" alt=""></div>
+          <p class="photo-full-caption">${page.caption}</p>
+        </div>`;
+    }
     return '';
   }
 
+  // páginas que ocupam a "tela" inteira (capa, foto de destaque, final)
+  function isFullType(p) {
+    return p.type === 'cover' || p.type === 'final' || p.type === 'photo';
+  }
+
   // ---- MONTAGEM DAS UNIDADES (desktop) ----
-  // Cada unidade é uma "tela": full-bleed (capa/final) OU spread de 2 folhas.
+  // Cada unidade é uma "tela": full-bleed (capa/foto/final) OU spread de 2 folhas.
   function buildUnits() {
     const units = [];
     let pending = null;
@@ -337,14 +350,14 @@
     };
 
     PAGES.forEach((p) => {
-      if (p.type === 'cover' || p.type === 'final') {
+      if (isFullType(p)) {
         flushPending();
         units.push({ type: 'full', page: p });
-      } else if (p.type === 'chapter' && p.media && p.media.type === 'video') {
-        // capítulo com vídeo ocupa um spread inteiro: texto | vídeo
+      } else if (p.type === 'chapter' && p.media) {
+        // capítulo com mídia (vídeo OU foto) ocupa um spread inteiro: texto | mídia
         flushPending();
-        const plate = { type: 'videoplate', num: p.num, src: p.media.src, caption: p.media.caption };
-        units.push({ type: 'spread', left: p, right: plate, videoChapter: true });
+        const plate = { type: 'mediaplate', num: p.num, mediaType: p.media.type, src: p.media.src, caption: p.media.caption };
+        units.push({ type: 'spread', left: p, right: plate, mediaChapter: true });
       } else {
         pair(p);
       }
@@ -367,7 +380,7 @@
   const mobileNo = new Map();
   (function () {
     let n = 0;
-    PAGES.forEach(pg => { if (pg.type !== 'cover' && pg.type !== 'final') mobileNo.set(pg, ++n); });
+    PAGES.forEach(pg => { if (!isFullType(pg)) mobileNo.set(pg, ++n); });
   })();
   function pageNoFor(pg) { return (isMobile ? mobileNo : desktopNo).get(pg) || 0; }
 
@@ -395,7 +408,7 @@
     return {
       full: false,
       html:
-        `<div class="page-side left">${renderPage(unit.left, { noMedia: unit.videoChapter, pageNo: pageNoFor(unit.left), freeze: true })}</div>` +
+        `<div class="page-side left">${renderPage(unit.left, { noMedia: unit.mediaChapter, pageNo: pageNoFor(unit.left), freeze: true })}</div>` +
         `<div class="page-side right">${renderPage(unit.right, { pageNo: pageNoFor(unit.right), freeze: true })}</div>`
     };
   }
@@ -404,7 +417,7 @@
   function draw() {
     if (isMobile) {
       const page = PAGES[index];
-      const isFull = page.type === 'cover' || page.type === 'final';
+      const isFull = isFullType(page);
       bookEl.classList.toggle('full', isFull);
       if (isFull) {
         fullEl.innerHTML = renderFull(page);
@@ -421,7 +434,7 @@
         fullEl.innerHTML = renderFull(unit.page);
         leftEl.innerHTML = ''; rightEl.innerHTML = '';
       } else {
-        leftEl.innerHTML = renderPage(unit.left, { noMedia: unit.videoChapter, pageNo: pageNoFor(unit.left) });
+        leftEl.innerHTML = renderPage(unit.left, { noMedia: unit.mediaChapter, pageNo: pageNoFor(unit.left) });
         rightEl.innerHTML = renderPage(unit.right, { pageNo: pageNoFor(unit.right) });
         fullEl.innerHTML = '';
       }
@@ -477,7 +490,7 @@
     let inner;
     if (isMobile) {
       const page = PAGES[next];
-      if (page.type === 'cover' || page.type === 'final') {
+      if (isFullType(page)) {
         inner = { full: true, html: renderFull(page) };
       } else {
         inner = { full: false, html: `<div class="page-side right left-active">${renderPage(page, { pageNo: pageNoFor(page), freeze: true })}</div>` };
