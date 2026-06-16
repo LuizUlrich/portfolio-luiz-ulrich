@@ -1,15 +1,16 @@
 .s-deck {
   position: relative;
-  padding-block: clamp(5.2rem, 8vw, 7.2rem) clamp(3.5rem, 6vw, 5.2rem);
+  padding-block: clamp(6rem, 10vw, 9rem) clamp(4rem, 7vw, 6rem);
   background:
-    radial-gradient(circle at 16% 0, var(--glow-soft), transparent 34%),
-    linear-gradient(180deg, #06060a, var(--bg) 72%);
+    radial-gradient(circle at 16% 0, var(--glow-soft), transparent 38%),
+    radial-gradient(circle at 85% 20%, rgba(127, 13, 27, 0.12), transparent 36%),
+    linear-gradient(180deg, #04040a, var(--bg) 72%);
 }
 
 .deck-grid {
   display: grid;
-  grid-template-columns: 1.2fr 0.8fr;
-  gap: 2.2rem;
+  grid-template-columns: 1.25fr 0.75fr;
+  gap: 2.4rem;
   align-items: center;
   position: relative;
   z-index: 1;
@@ -18,24 +19,27 @@
 .cta-row {
   display: flex;
   gap: 0.75rem;
-  margin-top: 1.6rem;
+  margin-top: 2rem;
   flex-wrap: wrap;
 }
 
 .s-deck h1 {
-  max-width: 12ch;
+  max-width: 13ch;
   text-wrap: balance;
-  margin-top: 0.8rem;
+  margin-top: 0.9rem;
+  font-size: clamp(2.8rem, 7vw, 5.6rem);
+  letter-spacing: -0.05em;
+  line-height: 0.97;
 }
 
 .lead {
-  margin-top: 1rem;
+  margin-top: 1.1rem;
   max-width: 58ch;
 }
 
 .cdj-stage {
   position: relative;
-  min-height: 340px;
+  min-height: 360px;
   display: grid;
   place-items: center;
 }
@@ -44,16 +48,16 @@
   content: '';
   position: absolute;
   inset: 6% 5%;
-  border-radius: 30px;
-  border: 1px solid var(--line);
+  border-radius: 32px;
+  border: 1px solid rgba(225, 29, 72, 0.12);
   background:
-    radial-gradient(circle at 35% 35%, rgba(225, 29, 72, 0.18), transparent 52%),
-    radial-gradient(circle at 75% 68%, rgba(127, 13, 27, 0.36), transparent 55%),
-    rgba(7, 7, 10, 0.55);
-  box-shadow: 0 22px 60px rgba(0, 0, 0, 0.5);
+    radial-gradient(circle at 35% 35%, rgba(225, 29, 72, 0.22), transparent 52%),
+    radial-gradient(circle at 75% 68%, rgba(127, 13, 27, 0.42), transparent 55%),
+    rgba(6, 6, 10, 0.65);
+  box-shadow: 0 28px 70px rgba(0, 0, 0, 0.6), 0 0 60px rgba(225, 29, 72, 0.08);
 }
 
 .s-deck .btn:hover,
 .s-deck .btn:focus-visible {
-  box-shadow: 0 0 18px var(--glow-red);
+  box-shadow: 0 0 28px var(--glow-red), 0 12px 30px rgba(0,0,0,0.3);
 }

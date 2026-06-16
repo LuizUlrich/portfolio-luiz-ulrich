@@ -1,1 +1,21 @@
-.s-manifesto{background:linear-gradient(180deg,rgba(255,255,255,.015),rgba(255,255,255,.005));border-top:1px solid rgba(255,255,255,.06);border-bottom:1px solid rgba(255,255,255,.05)}.s-manifesto p{margin-top:1rem;color:var(--muted)}
+.s-manifesto {
+  background:
+    radial-gradient(ellipse at 80% 50%, rgba(225, 29, 72, 0.05), transparent 50%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.018), rgba(255, 255, 255, 0.006));
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  padding-block: clamp(5rem, 8vw, 8rem);
+}
+
+.s-manifesto h2 {
+  max-width: 20ch;
+  font-size: clamp(1.8rem, 4.5vw, 3.4rem);
+}
+
+.s-manifesto p {
+  margin-top: 1.2rem;
+  max-width: 62ch;
+  font-size: 1.05rem;
+  line-height: 1.78;
+  color: var(--muted);
+}
