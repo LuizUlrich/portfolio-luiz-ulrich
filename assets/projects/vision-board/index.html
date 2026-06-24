@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <base href="/assets/projects/vision-board/">
+  <title>Vision Board</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <h1>Vision Board</h1>
+  </header>
+
+  <main id="board"></main>
+
+  <button class="fab" id="openModal" aria-label="Adicionar meta">+</button>
+
+  <div class="modal" id="modal" aria-hidden="true">
+    <div class="modal-content" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+      <h2 id="modalTitle">Nova meta</h2>
+      <input type="text" id="title" placeholder="Título da meta" maxlength="80">
+      <textarea id="description" placeholder="Descrição" maxlength="300"></textarea>
+
+      <select id="category">
+        <option>Carreira</option>
+        <option>Dinheiro</option>
+        <option>Saúde</option>
+        <option>Relacionamento</option>
+        <option>Viagem</option>
+        <option>Pessoal</option>
+      </select>
+
+      <input type="file" id="image" accept="image/*">
+
+      <button id="save">Salvar</button>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="/assets/js/supabase/config.js"></script>
+  <script src="/assets/js/supabase/client.js"></script>
+  <script src="/assets/js/supabase/visionBoardService.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>

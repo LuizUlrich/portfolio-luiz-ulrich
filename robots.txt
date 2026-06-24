@@ -1,4 +1,7 @@
 User-agent: *
 Allow: /
+Disallow: /assets/projects/vision-board/
+Disallow: /assets/projects/sgpd-prototipo/
+Disallow: /assets/projects/quanto-voce-me-ama/
 
 Sitemap: https://luizulrich.com/sitemap.xml
