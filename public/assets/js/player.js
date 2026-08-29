@@ -1,4 +1,8 @@
-document.addEventListener("DOMContentLoaded", () => {
+(function _run() {
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', _run, { once: true });
+    return;
+  }
   const trackButtons = document.querySelectorAll(".play-track-btn");
 
   if (trackButtons.length === 0) {
@@ -424,4 +428,4 @@ document.addEventListener("DOMContentLoaded", () => {
   } else {
     updatePlayerUI();
   }
-});
+})();

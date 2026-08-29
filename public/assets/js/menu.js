@@ -1,4 +1,9 @@
-document.addEventListener("DOMContentLoaded", () => {
+(function run() {
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', run, { once: true });
+    return;
+  }
+  {
   const siteHeader = document.querySelector(".site-header");
   const menuToggle = document.getElementById("menuToggle");
   const mainNav = document.getElementById("mainNav");
@@ -84,4 +89,5 @@ document.addEventListener("DOMContentLoaded", () => {
     ticking = true;
     window.requestAnimationFrame(updateHeaderVisibility);
   }, { passive: true });
-});
+  }
+})();

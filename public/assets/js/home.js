@@ -32,7 +32,11 @@ function initHome() {
   onScroll();
 }
 
-window.addEventListener('DOMContentLoaded', initHome, { once: true });
+if (document.readyState !== 'loading') {
+  initHome();
+} else {
+  window.addEventListener('DOMContentLoaded', initHome, { once: true });
+}
 
 window.addEventListener('beforeunload', () => {
   destroyers.forEach((destroy) => destroy());

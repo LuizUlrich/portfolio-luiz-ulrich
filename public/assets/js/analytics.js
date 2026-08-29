@@ -1,4 +1,8 @@
-document.addEventListener("DOMContentLoaded", () => {
+(function _run() {
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', _run, { once: true });
+    return;
+  }
   let isLocalDebug = ["localhost", "127.0.0.1"].includes(window.location.hostname);
 
   try {
@@ -43,4 +47,4 @@ document.addEventListener("DOMContentLoaded", () => {
       });
     });
   });
-});
+})();
