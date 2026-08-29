@@ -1,0 +1,21 @@
+import { Pool } from 'pg'
+
+const globalForPg = globalThis as unknown as { pool: Pool }
+
+export const pool =
+  globalForPg.pool ??
+  new Pool({
+    connectionString: process.env.DATABASE_URL,
+    max: 5,
+    idleTimeoutMillis: 30_000,
+    connectionTimeoutMillis: 2_000,
+  })
+
+if (process.env.NODE_ENV !== 'production') {
+  globalForPg.pool = pool
+}
+
+export async function query<T = unknown>(sql: string, params?: unknown[]): Promise<T[]> {
+  const result = await pool.query(sql, params)
+  return result.rows as T[]
+}
