@@ -1,0 +1,683 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-domain="dev" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ulrich — Manual de Identidade</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://api.fontshare.com/v2/css?f[]=cabinet-grotesk@700,800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    /* base — tema escuro (padrão) */
+    --bg: #0A0A0A;
+    --s1: #141414;
+    --s2: #1C1C1C;
+    --text: #EDEDEA;
+    --text-strong: #FFFFFF;
+    --text-muted: #8A8A85;
+
+    --font-display: 'Cabinet Grotesk', sans-serif;
+    --font-body: 'Inter', sans-serif;
+    --font-mono: 'JetBrains Mono', monospace;
+
+    /* escala — grid de 8pt, meio-passo = 4px */
+    --sp-1: 4px;
+    --sp-2: 8px;
+    --sp-3: 16px;
+    --sp-4: 24px;
+    --sp-5: 32px;
+    --sp-6: 40px;
+    --sp-7: 48px;
+    --sp-8: 64px;
+    --sp-9: 80px;
+    --sp-10: 96px;
+
+    --r-sm: 4px;
+    --r-md: 8px;
+    --r-lg: 16px;
+
+    /* acento padrão = dev (vinho) */
+    --accent: #8A1F3D;
+    --accent-deep: #4C0F22;
+  }
+
+  [data-theme="light"] {
+    --bg: #F7F6F2;
+    --s1: #FFFFFF;
+    --s2: #ECEAE4;
+    --text: #1A1A1A;
+    --text-strong: #000000;
+    --text-muted: #6B6B66;
+  }
+
+  [data-domain="dj"] {
+    --accent: #4A2C6D;
+    --accent-deep: #2A1740;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font-body);
+    font-size: 16px;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    transition: background 0.2s ease, color 0.2s ease;
+    position: relative;
+  }
+
+  /* textura sutil — corta a chapa lisa de "modo escuro de ferramenta de IA" */
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 999;
+    opacity: 0.05;
+    mix-blend-mode: overlay;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='120' height='120'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+  }
+
+  a { color: inherit; }
+
+  :focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: var(--sp-1);
+  }
+
+  .wrap {
+    max-width: 920px;
+    margin: 0 auto;
+    padding: 0 var(--sp-4);
+  }
+
+  /* ---- topo / toggles ---- */
+  .topbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: var(--sp-3);
+    padding: var(--sp-4) 0;
+  }
+
+  .topbar .mark {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--sp-2);
+    font-family: var(--font-mono);
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    color: var(--text-muted);
+    text-transform: uppercase;
+  }
+
+  .pulse-dot {
+    display: inline-block;
+    width: var(--sp-2);
+    height: var(--sp-2);
+    border-radius: 50%;
+    background: var(--accent);
+    animation: beat 0.469s ease-in-out infinite alternate;
+  }
+
+  @keyframes beat {
+    from { opacity: 0.35; transform: scale(0.8); }
+    to   { opacity: 1;    transform: scale(1.15); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .pulse-dot { animation: none; opacity: 1; }
+  }
+
+  .toggles {
+    display: flex;
+    gap: var(--sp-2);
+    flex-wrap: wrap;
+  }
+
+  .toggle {
+    display: flex;
+    gap: 2px;
+    background: var(--s1);
+    border: 1px solid var(--s2);
+    border-radius: var(--r-sm);
+    padding: var(--sp-1);
+  }
+
+  .toggle button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: var(--sp-6);
+    height: var(--sp-6);
+    background: transparent;
+    border: none;
+    color: var(--text-muted);
+    border-radius: var(--r-sm);
+    cursor: pointer;
+    transition: background 0.15s ease, color 0.15s ease;
+  }
+
+  .toggle button:hover {
+    background: var(--s2);
+    color: var(--text);
+  }
+
+  .toggle button[aria-pressed="true"] {
+    background: var(--accent);
+    color: #fff;
+  }
+
+  .theme-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: var(--sp-6);
+    height: var(--sp-6);
+    background: var(--s1);
+    border: 1px solid var(--s2);
+    border-radius: var(--r-sm);
+    color: var(--text-muted);
+    cursor: pointer;
+    transition: background 0.15s ease, color 0.15s ease;
+  }
+
+  .theme-toggle:hover {
+    background: var(--s2);
+    color: var(--text);
+  }
+
+  /* ---- hero ---- */
+  .hero {
+    padding: var(--sp-8) 0 var(--sp-6);
+  }
+
+  .hero h1 {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: clamp(48px, 14vw, 96px);
+    line-height: 0.92;
+    letter-spacing: -0.02em;
+    margin: 0;
+    color: var(--text-strong);
+  }
+
+  .hero .sub {
+    display: flex;
+    align-items: center;
+    gap: var(--sp-2);
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--accent);
+    margin: var(--sp-2) 0 0;
+    letter-spacing: 0.02em;
+  }
+
+  .hero .concept {
+    max-width: 46ch;
+    margin: var(--sp-4) 0 0;
+    color: var(--text-muted);
+    font-size: 16px;
+  }
+
+  .trace-line {
+    width: 100%;
+    height: auto;
+    margin-top: var(--sp-5);
+    display: block;
+  }
+
+  .trace-line path {
+    fill: none;
+    stroke: var(--accent);
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-dasharray: 1400;
+    stroke-dashoffset: 1400;
+    animation: draw 1.6s ease forwards 0.2s;
+  }
+
+  @keyframes draw {
+    to { stroke-dashoffset: 0; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .trace-line path { animation: none; stroke-dashoffset: 0; }
+  }
+
+  /* ---- seções ---- */
+  section { padding: var(--sp-7) 0; }
+
+  /* painéis alternados no lugar de linha fina — sem hairline entre blocos */
+  section.panel {
+    background: var(--s1);
+    border-radius: var(--r-lg);
+    padding: var(--sp-6) var(--sp-4);
+    margin: var(--sp-3) 0;
+  }
+
+  .eyebrow {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    letter-spacing: 0.1em;
+    color: var(--accent);
+    margin: 0 0 var(--sp-3);
+  }
+
+  h2 {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: clamp(24px, 5vw, 32px);
+    margin: 0 0 var(--sp-4);
+    color: var(--text-strong);
+  }
+
+  /* ---- paleta ---- */
+  .swatches {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--sp-3);
+  }
+
+  @media (min-width: 620px) {
+    .swatches { grid-template-columns: repeat(3, 1fr); }
+  }
+
+  .swatch {
+    background: var(--s1);
+    border: 1px solid var(--s2);
+    border-radius: var(--r-md);
+    overflow: hidden;
+  }
+
+  .swatch .fill { height: var(--sp-8); }
+
+  .swatch .label {
+    padding: var(--sp-2) var(--sp-3);
+    font-family: var(--font-mono);
+    font-size: 12px;
+  }
+
+  .swatch .name { color: var(--text); display: block; margin-bottom: var(--sp-1); }
+  .swatch .hex { color: var(--text-muted); }
+
+  /* ---- tipografia ---- */
+  .type-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    padding: var(--sp-3) 0;
+    gap: var(--sp-3);
+    flex-wrap: wrap;
+  }
+
+  .type-sample.display { font-family: var(--font-display); font-weight: 800; font-size: 32px; color: var(--text-strong); }
+  .type-sample.body { font-family: var(--font-body); font-size: 16px; }
+  .type-sample.mono { font-family: var(--font-mono); font-size: 16px; }
+
+  .type-meta {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--text-muted);
+    white-space: nowrap;
+  }
+
+  /* ---- escala — demo visual da régua de 8 ---- */
+  .scale-bars {
+    display: flex;
+    align-items: flex-end;
+    gap: var(--sp-2);
+    flex-wrap: wrap;
+    margin-top: var(--sp-4);
+  }
+
+  .scale-bar {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--sp-2);
+  }
+
+  .scale-bar .bar {
+    width: var(--sp-3);
+    background: var(--accent);
+    border-radius: var(--r-sm);
+  }
+
+  .scale-bar .val {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--text-muted);
+  }
+
+  /* ---- assinaturas — grid propositalmente assimétrico ---- */
+  .sig-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--sp-3);
+  }
+
+  @media (min-width: 700px) {
+    .sig-grid {
+      grid-template-columns: 1.6fr 1fr;
+      grid-template-rows: auto auto;
+    }
+    .sig-1 { grid-column: 1; grid-row: 1; }
+    .sig-2 { grid-column: 2; grid-row: 1 / 3; align-self: start; }
+    .sig-3 { grid-column: 1; grid-row: 2; margin-top: calc(var(--sp-3) * -1); }
+  }
+
+  .sig-card {
+    background: var(--bg);
+    border: 1px solid var(--s2);
+    border-radius: var(--r-md);
+    padding: var(--sp-4);
+  }
+
+  section.panel .sig-card { background: var(--s2); }
+
+  .sig-card .n {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--accent);
+    margin: 0 0 var(--sp-2);
+  }
+
+  .sig-card p { margin: var(--sp-2) 0 0; color: var(--text-muted); font-size: 12px; }
+
+  .mini-trace { width: 100%; height: var(--sp-5); margin-top: var(--sp-2); }
+  .mini-trace path { fill: none; stroke: var(--accent); stroke-width: 2; }
+
+  .stat-mono {
+    font-family: var(--font-mono);
+    font-size: 32px;
+    color: var(--text-strong);
+    margin-top: var(--sp-2);
+  }
+
+  .stat-mono .unit { font-size: 12px; color: var(--text-muted); margin-left: var(--sp-1); }
+
+  .pulse-demo {
+    margin-top: var(--sp-3);
+    display: inline-flex;
+    align-items: center;
+    gap: var(--sp-2);
+    background: var(--accent);
+    color: #fff;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    height: var(--sp-6);
+    padding: 0 var(--sp-3);
+    border-radius: var(--r-sm);
+    border: none;
+    cursor: pointer;
+  }
+
+  /* ---- aplicação ---- */
+  .app-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--sp-3);
+  }
+
+  @media (min-width: 620px) {
+    .app-grid { grid-template-columns: 1fr 1fr; }
+    .app-grid .card:last-child { transform: translateY(var(--sp-3)); }
+  }
+
+  .card {
+    background: var(--bg);
+    border: 1px solid var(--s2);
+    border-radius: var(--r-md);
+    padding: var(--sp-4);
+    border-top: 4px solid;
+  }
+
+  section.panel .card { background: var(--s2); }
+
+  .card.dev { border-top-color: #8A1F3D; }
+  .card.dj { border-top-color: #4A2C6D; }
+
+  .card .tag {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--text-muted);
+  }
+
+  .card h3 {
+    font-family: var(--font-display);
+    font-size: 24px;
+    margin: var(--sp-2) 0;
+    color: var(--text-strong);
+  }
+
+  .card p.desc { color: var(--text-muted); font-size: 16px; margin: 0; }
+
+  .card .meta {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--text-muted);
+    margin-top: var(--sp-3);
+    display: flex;
+    gap: var(--sp-3);
+  }
+
+  .card .meta span:first-child { color: var(--text); }
+
+  footer {
+    padding: var(--sp-6) 0 var(--sp-8);
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--text-muted);
+    letter-spacing: 0.05em;
+  }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+  <div class="topbar">
+    <span class="mark"><span class="pulse-dot" title="128 BPM — a constante" aria-hidden="true"></span>manual de identidade</span>
+    <div class="toggles">
+      <div class="toggle" role="group" aria-label="Alternar contexto">
+        <button type="button" data-mode="dev" aria-pressed="true" title="Modo dev" aria-label="Ativar modo dev">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16">
+            <polyline points="8 6 3 12 8 18"/>
+            <polyline points="16 6 21 12 16 18"/>
+          </svg>
+        </button>
+        <button type="button" data-mode="dj" aria-pressed="false" title="Modo dj" aria-label="Ativar modo dj">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16">
+            <path d="M4 14v-2a8 8 0 0 1 16 0v2"/>
+            <rect x="2" y="14" width="5" height="7" rx="1.5"/>
+            <rect x="17" y="14" width="5" height="7" rx="1.5"/>
+          </svg>
+        </button>
+      </div>
+      <button type="button" class="theme-toggle" id="theme-toggle" title="Tema claro" aria-label="Mudar para tema claro">
+        <span id="theme-icon-wrap"></span>
+      </button>
+    </div>
+  </div>
+
+  <div class="hero">
+    <h1>ULRICH</h1>
+    <p class="sub"><span class="pulse-dot" aria-hidden="true"></span>modo ativo: <span id="mode-label">dev · vinho · escuro</span></p>
+    <p class="concept">Dois eixos independentes: contexto (dev/dj) decide o acento, tema (escuro/claro) decide a base. Preto continua sendo o padrão — claro existe pra quando o contexto pedir. Tudo — espaçamento, botão, ícone — na régua de 8.</p>
+    <svg class="trace-line" viewBox="0 0 800 120" preserveAspectRatio="none">
+      <path d="M0,60 L120,60 L160,20 L200,100 L240,60 L300,60 C340,20 380,100 420,60 C460,20 500,100 540,60 C580,20 620,100 660,60 C700,20 740,100 780,60" />
+    </svg>
+  </div>
+
+  <section id="paleta">
+    <p class="eyebrow">08 — Paleta</p>
+    <h2>Base muda com o tema, acento com o contexto</h2>
+    <div class="swatches">
+      <div class="swatch"><div class="fill" style="background:var(--bg)"></div><div class="label"><span class="name">Fundo</span><span class="hex" id="hex-bg">#0A0A0A</span></div></div>
+      <div class="swatch"><div class="fill" style="background:var(--s1)"></div><div class="label"><span class="name">Superfície 1</span><span class="hex" id="hex-s1">#141414</span></div></div>
+      <div class="swatch"><div class="fill" style="background:var(--s2)"></div><div class="label"><span class="name">Superfície 2</span><span class="hex" id="hex-s2">#1C1C1C</span></div></div>
+      <div class="swatch"><div class="fill" style="background:#8A1F3D"></div><div class="label"><span class="name">Vinho (dev)</span><span class="hex">#8A1F3D</span></div></div>
+      <div class="swatch"><div class="fill" style="background:#4A2C6D"></div><div class="label"><span class="name">Roxo meia-noite (dj)</span><span class="hex">#4A2C6D</span></div></div>
+      <div class="swatch"><div class="fill" style="background:var(--text)"></div><div class="label"><span class="name">Texto</span><span class="hex" id="hex-text">#EDEDEA</span></div></div>
+    </div>
+  </section>
+
+  <section class="panel" id="tipografia">
+    <p class="eyebrow">16 — Tipografia</p>
+    <h2>Se é dado, é mono. Se é título, é Cabinet.</h2>
+    <div class="type-row">
+      <span class="type-sample display">Cabinet Grotesk</span>
+      <span class="type-meta">display · 32 / 48–96</span>
+    </div>
+    <div class="type-row">
+      <span class="type-sample body">Inter — corpo de texto, parágrafos, UI</span>
+      <span class="type-meta">body · 16px</span>
+    </div>
+    <div class="type-row">
+      <span class="type-sample mono">128.00 BPM · 8A · 2026</span>
+      <span class="type-meta">mono · sempre tabular</span>
+    </div>
+  </section>
+
+  <section id="escala">
+    <p class="eyebrow">24 — Escala</p>
+    <h2>Tudo divisível por 8</h2>
+    <p style="color:var(--text-muted); font-size:16px; max-width:56ch; margin:0;">Espaçamento, botão, raio, ícone. Meio-passo (4px) é a única exceção — reservado pra texto pequeno onde 8 cheio atrapalharia leitura.</p>
+    <div class="scale-bars">
+      <div class="scale-bar"><div class="bar" style="height:8px"></div><span class="val">8</span></div>
+      <div class="scale-bar"><div class="bar" style="height:16px"></div><span class="val">16</span></div>
+      <div class="scale-bar"><div class="bar" style="height:24px"></div><span class="val">24</span></div>
+      <div class="scale-bar"><div class="bar" style="height:32px"></div><span class="val">32</span></div>
+      <div class="scale-bar"><div class="bar" style="height:40px"></div><span class="val">40</span></div>
+      <div class="scale-bar"><div class="bar" style="height:48px"></div><span class="val">48</span></div>
+      <div class="scale-bar"><div class="bar" style="height:64px"></div><span class="val">64</span></div>
+      <div class="scale-bar"><div class="bar" style="height:80px"></div><span class="val">80</span></div>
+    </div>
+  </section>
+
+  <section class="panel" id="assinaturas">
+    <p class="eyebrow">32 — Assinaturas visuais</p>
+    <h2>Pelo menos 2 por peça</h2>
+    <div class="sig-grid">
+      <div class="sig-card sig-1">
+        <p class="n">01 — traço-sinal</p>
+        <svg class="mini-trace" viewBox="0 0 400 40" preserveAspectRatio="none">
+          <path d="M0,20 L60,20 L80,5 L100,35 L120,20 L160,20 C180,5 200,35 220,20 C240,5 260,35 280,20 C300,5 320,35 340,20 L400,20" />
+        </svg>
+        <p>Circuito que vira onda. Divisor, sublinhado, elemento de capa.</p>
+      </div>
+      <div class="sig-card sig-2">
+        <p class="n">02 — dado em mono</p>
+        <div class="stat-mono">03<span class="unit">projetos ativos</span></div>
+        <p>Todo número — ano, BPM, tom, métrica — em JetBrains Mono tabular.</p>
+      </div>
+      <div class="sig-card sig-3">
+        <p class="n">03 — acento como pulso único</p>
+        <p>Um só acento vivo por peça. Cor muda com o contexto, nunca os dois juntos.</p>
+        <button class="pulse-demo" type="button">acento ativo</button>
+      </div>
+    </div>
+  </section>
+
+  <section id="aplicacao">
+    <p class="eyebrow">40 — Aplicação</p>
+    <h2>Os dois modos lado a lado</h2>
+    <div class="app-grid">
+      <div class="card dev">
+        <span class="tag">exemplo · projeto</span>
+        <h3>Sistema de Prospecção</h3>
+        <p class="desc">Automação de captação B2B ponta a ponta.</p>
+        <div class="meta"><span>2026</span><span>Next.js / Supabase</span></div>
+      </div>
+      <div class="card dj">
+        <span class="tag">exemplo · set</span>
+        <h3>Nightfall Signal</h3>
+        <p class="desc">Deep / melodic house — sessão noturna.</p>
+        <div class="meta"><span>128 BPM</span><span>8A</span></div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    ulrich — manual de identidade · desalinhamento é proposital, não erro
+  </footer>
+
+</div>
+
+<script>
+  const domainButtons = document.querySelectorAll('[data-mode]');
+  const themeToggleBtn = document.getElementById('theme-toggle');
+  const themeIconWrap = document.getElementById('theme-icon-wrap');
+  const modeLabel = document.getElementById('mode-label');
+
+  const domainLabels = { dev: 'dev · vinho', dj: 'dj · roxo meia-noite' };
+  const themeLabels = { dark: 'escuro', light: 'claro' };
+  const hexValues = {
+    dark:  { bg: '#0A0A0A', s1: '#141414', s2: '#1C1C1C', text: '#EDEDEA' },
+    light: { bg: '#F7F6F2', s1: '#FFFFFF', s2: '#ECEAE4', text: '#1A1A1A' }
+  };
+
+  const icons = {
+    sun: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="16" height="16"><circle cx="12" cy="12" r="4"/><line x1="12" y1="2" x2="12" y2="5"/><line x1="12" y1="19" x2="12" y2="22"/><line x1="2" y1="12" x2="5" y2="12"/><line x1="19" y1="12" x2="22" y2="12"/><line x1="4.6" y1="4.6" x2="6.7" y2="6.7"/><line x1="17.3" y1="17.3" x2="19.4" y2="19.4"/><line x1="4.6" y1="19.4" x2="6.7" y2="17.3"/><line x1="17.3" y1="6.7" x2="19.4" y2="4.6"/></svg>',
+    moon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="16" height="16"><path d="M20 14.5A8.5 8.5 0 1 1 9.5 4a7 7 0 0 0 10.5 10.5Z"/></svg>'
+  };
+
+  let currentDomain = 'dev';
+  let currentTheme = 'dark';
+
+  function updateLabel() {
+    modeLabel.textContent = domainLabels[currentDomain] + ' · ' + themeLabels[currentTheme];
+  }
+
+  function updateSwatchLabels() {
+    const v = hexValues[currentTheme];
+    document.getElementById('hex-bg').textContent = v.bg;
+    document.getElementById('hex-s1').textContent = v.s1;
+    document.getElementById('hex-s2').textContent = v.s2;
+    document.getElementById('hex-text').textContent = v.text;
+  }
+
+  function renderThemeIcon() {
+    if (currentTheme === 'dark') {
+      themeIconWrap.innerHTML = icons.sun;
+      themeToggleBtn.setAttribute('title', 'Tema claro');
+      themeToggleBtn.setAttribute('aria-label', 'Mudar para tema claro');
+    } else {
+      themeIconWrap.innerHTML = icons.moon;
+      themeToggleBtn.setAttribute('title', 'Tema escuro');
+      themeToggleBtn.setAttribute('aria-label', 'Mudar para tema escuro');
+    }
+  }
+
+  domainButtons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      currentDomain = btn.dataset.mode;
+      document.documentElement.setAttribute('data-domain', currentDomain);
+      domainButtons.forEach(b => b.setAttribute('aria-pressed', b === btn ? 'true' : 'false'));
+      updateLabel();
+    });
+  });
+
+  themeToggleBtn.addEventListener('click', () => {
+    currentTheme = currentTheme === 'dark' ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-theme', currentTheme);
+    updateLabel();
+    updateSwatchLabels();
+    renderThemeIcon();
+  });
+
+  updateSwatchLabels();
+  renderThemeIcon();
+</script>
+
+</body>
+</html>
