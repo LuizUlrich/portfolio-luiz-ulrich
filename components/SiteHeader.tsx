@@ -1,6 +1,6 @@
 'use client'
 
-type ActivePage = 'luiz' | 'ulrich' | 'contato'
+type ActivePage = 'home' | 'contato'
 
 interface SiteHeaderProps {
   activePage: ActivePage
@@ -16,8 +16,7 @@ export function SiteHeader({ activePage }: SiteHeaderProps) {
         </a>
 
         <nav className="main-nav" id="mainNav" aria-label="Navegação principal">
-          <a href="/luiz" className={activePage === 'luiz' ? 'is-active' : ''}>Luiz</a>
-          <a href="/ulrich" className={activePage === 'ulrich' ? 'is-active' : ''}>Ulrich</a>
+          <a href="/" className={activePage === 'home' ? 'is-active' : ''}>Início</a>
           <a href="/contato" className={activePage === 'contato' ? 'is-active' : ''}>Contato</a>
         </nav>
 

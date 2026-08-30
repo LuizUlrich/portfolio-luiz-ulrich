@@ -14,8 +14,6 @@ export function SiteFooter({ kicker, description, hasUlrichSignature }: SiteFoot
         </div>
         <nav className="footer-nav" aria-label="Navegação do rodapé">
           <a href="/">Início</a>
-          <a href="/luiz">Luiz</a>
-          <a href="/ulrich">Ulrich</a>
           <a href="/contato">Contato</a>
         </nav>
       </div>
